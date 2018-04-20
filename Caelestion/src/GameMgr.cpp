@@ -46,6 +46,7 @@ void GameMgr::Init(){
 	  sceneNode->attachObject(ogreEntityFixed);
 	  sceneNode->showBoundingBox(true);
 
+	  MakeEntities();
 }
 
 void GameMgr::LoadLevel(){
@@ -53,6 +54,19 @@ void GameMgr::LoadLevel(){
 }
 
 void GameMgr::MakeEntities(){
+	Ogre::Vector3 position(10000, 0, -750);
+
+	for( int i = 0; i < 7; i++){
+		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,position);
+		  position.z += 250;
+	}
+
+	position.x = -10000;
+	position.z = -750;
+	for( int i = 0; i < 7; i++){
+		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,position);
+		  position.z += 250;
+	}
 
 }
 

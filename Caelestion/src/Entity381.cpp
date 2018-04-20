@@ -157,7 +157,7 @@ friendlyThree::~friendlyThree(){
 
 enemyOne::enemyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "circle.mesh";
+	meshfilename = "sphere.mesh";
 	entityType = enemyTypeOne;
 
 	//these values will need to be changed
@@ -176,7 +176,7 @@ enemyOne::~enemyOne(){
 
 enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "circle.mesh";
+	meshfilename = "sphere.mesh";
 	entityType = enemyTypeTwo;
 
 	//these values will need to be changed
@@ -195,7 +195,7 @@ enemyTwo::~enemyTwo(){
 
 enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "circle.mesh";
+	meshfilename = "sphere.mesh";
 	entityType = enemyTypeThree;
 
 	//these values will need to be changed
