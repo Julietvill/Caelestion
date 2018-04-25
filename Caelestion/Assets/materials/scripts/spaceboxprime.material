@@ -1,0 +1,17 @@
+material spaceboxprime 
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			depth_write off
+
+			texture_unit
+			{
+				cubic_texture SpaceboxFR.png SpaceboxBK.png SpaceboxLF.png SpaceboxRT.png SpaceboxTP.png SpaceboxBT.png separateUV
+				tex_address_mode clamp
+			}
+		}
+	}
+}

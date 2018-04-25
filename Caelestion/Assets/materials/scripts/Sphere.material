@@ -1,0 +1,34 @@
+material Sphere/Earth
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            
+            texture_unit
+            {
+                texture Earth.jpg
+                scale 1.0 1.0
+            }
+        }
+    }
+}
+
+material Sphere/BlackHole
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            specular 0 0 0 0
+            shading phong
+            texture_unit
+            {
+                texture Black_hole.jpg
+                env_map spherical
+            }
+        }
+    }
+}

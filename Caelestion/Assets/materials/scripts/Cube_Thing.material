@@ -1,0 +1,17 @@
+material Cube_Thing/Borg
+{
+    technique
+    {
+        pass
+        {
+            lighting off
+            
+            texture_unit
+            {
+                texture borgcube.png
+
+            }
+        }
+    }
+}
+

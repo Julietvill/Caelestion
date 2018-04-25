@@ -21,6 +21,7 @@ public:
   int identity;
   std::string name;
   std::string meshfilename;
+  std::string matname;
   Ogre::SceneNode* sceneNode;
   Ogre::Entity*    ogreEntity;
   float turnRate, climbRate;
@@ -32,6 +33,12 @@ public:
   Ogre::Vector3 position;
   Ogre::Vector3 velocity;
   float desiredHeading;
+
+  Ogre::Quaternion actualFacing;
+  Ogre::Vector3 desiredRotation;
+
+  int acc; //For player control. -1 is decelerate, 1 is accelerate. 0 is no control action.
+
   float heading, speed;
   float altitude, desiredAltitude;
 

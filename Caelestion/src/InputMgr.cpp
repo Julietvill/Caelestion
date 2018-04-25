@@ -95,7 +95,7 @@ void InputMgr::Tick(float dt){
 	mMouse->capture();
 
 	UpdateCamera(dt);
-	UpdateYawAndPitch(dt);
+	UpdatePlayerShipControl(dt);
 
 }
 
@@ -105,28 +105,68 @@ void InputMgr::UpdateCamera(float dt){
 	//engine->gameMgr->cameraNode->translate(direction * dt, Ogre::Node::TS_LOCAL);
 }
 
-void InputMgr::UpdateYawAndPitch(float dt){
+void InputMgr::UpdatePlayerShipControl(float dt){
 	keyboardTimer -= dt;
 
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_UP)){
+	Ogre::Vector3 relativeFaceAdjust = Ogre::Vector3::ZERO;
+
+	//Player Acceleration Controls.
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LSHIFT)){
 		keyboardTimer = keyTime;
-		engine->entityMgr->playerEntity->desiredAltitude += deltaDesiredAltitude;
+		engine->entityMgr->playerEntity->acc = 1;
+
 	}
 
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_DOWN)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->playerEntity->desiredAltitude -= deltaDesiredAltitude;
+	if((keyboardTimer < 0) && !mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+	{
+			engine->entityMgr->playerEntity->acc = 0;
+
 	}
 
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LEFT)){
+/*
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LCONTROL)){
 		keyboardTimer = keyTime;
-		engine->entityMgr->playerEntity->desiredHeading -= deltaDesiredHeading;
+		engine->entityMgr->playerEntity->acc = -1;
+	}
+	*/
+/*
+	if((keyboardTimer < 0) && !(mKeyboard->isKeyDown(OIS::KC_LSHIFT) != mKeyboard->isKeyDown(OIS::KC_LCONTROL))){
+		keyboardTimer = keyTime;
+		engine->entityMgr->playerEntity->acc = 0;
+	}
+*/
+	//Player Direction Controls
+		//YAW
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
+		keyboardTimer = keyTime;
+		relativeFaceAdjust.x += deltaDesiredHeading;
+	}
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
+		keyboardTimer = keyTime;
+		relativeFaceAdjust.x -= deltaDesiredHeading;
+	}
+		//Yaw, ideally
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
+			keyboardTimer = keyTime;
+			relativeFaceAdjust.y += deltaDesiredHeading;
+		}
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
+		keyboardTimer = keyTime;
+		relativeFaceAdjust.y -= deltaDesiredHeading;
 	}
 
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_RIGHT)){
-		keyboardTimer = keyTime;
-		engine->entityMgr->playerEntity->desiredHeading += deltaDesiredHeading;
+		//Roll?
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD7)){
+			keyboardTimer = keyTime;
+			relativeFaceAdjust.z += deltaDesiredHeading;
 	}
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
+		keyboardTimer = keyTime;
+		relativeFaceAdjust.z -= deltaDesiredHeading;
+	}
+
+
+	engine->entityMgr->playerEntity->desiredRotation = engine->entityMgr->playerEntity->desiredRotation + relativeFaceAdjust;
 }
 
 void InputMgr::LoadLevel(){

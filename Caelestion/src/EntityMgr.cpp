@@ -48,6 +48,7 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	if( ent->entityType == friendlyTypeOne ||ent->entityType == friendlyTypeTwo || ent->entityType == friendlyTypeThree)
 	{
 		friendlies.push_back(ent);
+		ent->sceneNode->setScale(10, 10, 10);
 	}
 	else
 		enemies.push_back(ent);

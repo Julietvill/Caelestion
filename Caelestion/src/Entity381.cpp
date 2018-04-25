@@ -9,6 +9,7 @@
 
 #include<Entity381.h>
 #include <Physics3D.h>
+#include <Physics3Dq.h>
 #include <UnitAI.h>
 
 std::string IntToString(int x){
@@ -23,8 +24,11 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 
 	entityType = defaultEnt;
 	meshfilename = std::string();
+	matname = "";
 	position = pos;
 	velocity = Ogre::Vector3(0, 0, 0);
+	actualFacing = Ogre::Quaternion(1,0,0,1);
+
 	identity = ident;
 	isSelected = false;
 
@@ -32,7 +36,7 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	sceneNode = 0;
 	ogreEntity = 0;
 
-	Physics3D* phx = new Physics3D(this);
+	Physics3Dq* phx = new Physics3Dq(this);
 	aspects.push_back((Aspect*) phx);
 	Renderable * renderable = new Renderable(this);
 	aspects.push_back((Aspect*)renderable);
@@ -41,7 +45,8 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 
 	this->desiredHeading = this->heading = 0;
 	this->turnRate = 0;
-	this->speed = 0;
+	this->speed = 0; //this represents delta speed now, by edict of wmagnus
+	this->acc = 0;
 
 	this->minAltitude = 0;
 	this->maxAltitude = 1000;
@@ -50,6 +55,8 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->climbRate = 1;
 
 	this->pointValue = 0;
+	this->desiredRotation = Ogre::Vector3::ZERO; //ZERO ROTATION DESIRED.
+	//this->desiredRotation = Ogre::Vector3(25, 50, 75);
 }
 
 Entity381::~Entity381(){
@@ -59,6 +66,7 @@ Entity381::~Entity381(){
 void Entity381::Init(){
 	name = meshfilename + IntToString(identity);
 	ogreEntity = engine->gfxMgr->mSceneMgr->createEntity(meshfilename);
+	if(matname != "") ogreEntity->setMaterialName(matname);
 	sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 	sceneNode->attachObject(ogreEntity);
 }
@@ -100,12 +108,15 @@ void Entity381::FollowEnt(Entity381* dest, bool AddToCommand){
 
 friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 		Entity381(engine, pos, identity){
-	meshfilename = "cube.mesh";
+	meshfilename = "Hastatus.mesh";
+	matname = "Hastatus/Texture";
 	entityType = friendlyTypeOne;
 
 	//these values will need to be changed
-	this->speed = 50.0f;
-	this->turnRate = 5.0f;
+	this->velocity = Ogre::Vector3(0,0,-20);
+
+	this->speed = 500.0f;
+	this->turnRate = 50.f;
 	this->climbRate = 1;
 
 	//for friendlies this will be the number of points that you lose if you kill them.
@@ -119,7 +130,8 @@ friendlyOne::~friendlyOne(){
 
 friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "cube.mesh";
+	meshfilename = "Gladius.mesh";
+	matname = "Gladius/Texture";
 	entityType = friendlyTypeTwo;
 
 	//these values will need to be changed

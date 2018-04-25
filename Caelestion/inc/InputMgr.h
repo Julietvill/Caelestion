@@ -49,7 +49,7 @@ public:
 	const static float keyTime = 0.1f;
 	float deltaDesiredHeading, deltaDesiredAltitude;
 	void UpdateCamera(float dt);
-	void UpdateYawAndPitch(float dt);
+	void UpdatePlayerShipControl(float dt);
 
 	void HandleMouseSelection(const OIS::MouseEvent& me);
 };

@@ -1,7 +1,7 @@
 src/EntityMgr.o: ../src/EntityMgr.cpp \
- /home/julietv/workspace/Caelestion/inc/EntityMgr.h \
- /home/julietv/workspace/Caelestion/inc/Mgr.h \
- /home/julietv/workspace/Caelestion/inc/Entity381.h \
+ /home/jsiao/workspace/Caelestion/inc/EntityMgr.h \
+ /home/jsiao/workspace/Caelestion/inc/Mgr.h \
+ /home/jsiao/workspace/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -124,16 +124,16 @@ src/EntityMgr.o: ../src/EntityMgr.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/julietv/workspace/Caelestion/inc/Aspect.h \
- /home/julietv/workspace/Caelestion/inc/Command.h \
- /home/julietv/workspace/Caelestion/inc/Engine.h \
- /home/julietv/workspace/Caelestion/inc/Types381.h
+ /home/jsiao/workspace/Caelestion/inc/Aspect.h \
+ /home/jsiao/workspace/Caelestion/inc/Command.h \
+ /home/jsiao/workspace/Caelestion/inc/Engine.h \
+ /home/jsiao/workspace/Caelestion/inc/Types381.h
 
-/home/julietv/workspace/Caelestion/inc/EntityMgr.h:
+/home/jsiao/workspace/Caelestion/inc/EntityMgr.h:
 
-/home/julietv/workspace/Caelestion/inc/Mgr.h:
+/home/jsiao/workspace/Caelestion/inc/Mgr.h:
 
-/home/julietv/workspace/Caelestion/inc/Entity381.h:
+/home/jsiao/workspace/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -383,10 +383,10 @@ src/EntityMgr.o: ../src/EntityMgr.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/julietv/workspace/Caelestion/inc/Aspect.h:
+/home/jsiao/workspace/Caelestion/inc/Aspect.h:
 
-/home/julietv/workspace/Caelestion/inc/Command.h:
+/home/jsiao/workspace/Caelestion/inc/Command.h:
 
-/home/julietv/workspace/Caelestion/inc/Engine.h:
+/home/jsiao/workspace/Caelestion/inc/Engine.h:
 
-/home/julietv/workspace/Caelestion/inc/Types381.h:
+/home/jsiao/workspace/Caelestion/inc/Types381.h:

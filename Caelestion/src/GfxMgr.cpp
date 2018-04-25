@@ -107,7 +107,7 @@ void GfxMgr::Init(){
 
 void GfxMgr::setUpCamera(){
 	cameraNode = engine->entityMgr->playerEntity->sceneNode->createChildSceneNode();
-	cameraNode->setPosition(0, 200, 1000);
+	cameraNode->setPosition(0, 10, 50); //TODO: default was 0,200,1000. Currently downscaled, fix when meshes are resized.
 	cameraNode->attachObject(mCamera);
 }
 

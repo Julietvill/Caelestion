@@ -41,10 +41,11 @@ void GameMgr::Init(){
 
 	  // a fixed point in the ocean so you can see relative motion
 
-	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("robot.mesh");
+	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("Asteroid_1.mesh");
 	  Ogre::SceneNode* sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 100, -200));
 	  sceneNode->attachObject(ogreEntityFixed);
 	  sceneNode->showBoundingBox(true);
+	  sceneNode->setScale(25,25,25);
 
 	  MakeEntities();
 }
