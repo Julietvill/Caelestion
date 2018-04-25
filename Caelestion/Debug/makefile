@@ -44,7 +44,7 @@ all: Caelestion
 Caelestion: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C++ Linker'
-	g++ -L/usr/local/lib/OGRE -L./src -L/usr/lib/x86_64-linux-gnu -o "Caelestion" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -L/usr/local/lib/OGRE -L/usr/lib/x86_64-linux-gnu -o "Caelestion" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

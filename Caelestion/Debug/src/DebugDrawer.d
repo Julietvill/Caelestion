@@ -1,5 +1,5 @@
 src/DebugDrawer.o: ../src/DebugDrawer.cpp \
- /home/jsiao/workspace/Caelestion/inc/DebugDrawer.h \
+ /home/wmagnus/workspace/Caelestion/inc/DebugDrawer.h \
  /usr/local/include/OGRE/OgreSingleton.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -120,7 +120,7 @@ src/DebugDrawer.o: ../src/DebugDrawer.cpp \
  /usr/local/include/OGRE/OgreManualObject.h \
  /usr/local/include/OGRE/OgreAxisAlignedBox.h
 
-/home/jsiao/workspace/Caelestion/inc/DebugDrawer.h:
+/home/wmagnus/workspace/Caelestion/inc/DebugDrawer.h:
 
 /usr/local/include/OGRE/OgreSingleton.h:
 

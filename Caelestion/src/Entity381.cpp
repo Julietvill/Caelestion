@@ -115,7 +115,7 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	//these values will need to be changed
 	this->velocity = Ogre::Vector3(0,0,-20);
 
-	this->speed = 500.0f;
+	this->speed = 50.0f;
 	this->turnRate = 50.f;
 	this->climbRate = 1;
 

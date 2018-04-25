@@ -36,16 +36,7 @@ GfxMgr::GfxMgr(Engine *engine): Mgr(engine) {
 	yawCameraNode = 0;
 	pitchCameraNode = 0;
 	//oceanSurface(Ogre::Vector3::UNIT_Y, 0);
-}
 
-GfxMgr::~GfxMgr() {
-
-	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
-	windowClosed(mWindow);
-	delete mRoot;
-}
-
-void GfxMgr::Init(){
 #ifdef _DEBUG
   mResourcesCfg = "resources_d.cfg";
   mPluginsCfg = "plugins_d.cfg";
@@ -81,8 +72,7 @@ void GfxMgr::Init(){
 
   mWindow = mRoot->initialise(true, "CS381 Game Engine Version 1.0");
 
-  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+  //////////////
 
   mSceneMgr = mRoot->createSceneManager(Ogre::ST_GENERIC);
 
@@ -102,12 +92,34 @@ void GfxMgr::Init(){
   //mRoot->startRendering();
 
   new DebugDrawer(mSceneMgr, 0.5);
+  std::cout << "literally kill me" << std::endl;
+
+  std::cout << "end gfxcons" << std::endl;
+
+}
+
+GfxMgr::~GfxMgr() {
+
+	Ogre::WindowEventUtilities::removeWindowEventListener(mWindow, this);
+	windowClosed(mWindow);
+	delete mRoot;
+}
+
+void GfxMgr::Init(){
+  std::cout << "begin gfxinit" << std::endl;
+
+  Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
+  std::cout << "literally kill me" << std::endl;
+
+  Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
+  std::cout << "literally kill me" << std::endl;
+
 
 }
 
 void GfxMgr::setUpCamera(){
 	cameraNode = engine->entityMgr->playerEntity->sceneNode->createChildSceneNode();
-	cameraNode->setPosition(0, 10, 50); //TODO: default was 0,200,1000. Currently downscaled, fix when meshes are resized.
+	cameraNode->setPosition(0, 3, 20); //TODO: default was 0,200,1000. Currently downscaled, fix when meshes are resized.
 	cameraNode->attachObject(mCamera);
 }
 

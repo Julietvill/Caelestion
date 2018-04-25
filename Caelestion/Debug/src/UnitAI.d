@@ -1,6 +1,6 @@
 src/UnitAI.o: ../src/UnitAI.cpp \
- /home/jsiao/workspace/Caelestion/inc/UnitAI.h \
- /home/jsiao/workspace/Caelestion/inc/Aspect.h \
+ /home/wmagnus/workspace/Caelestion/inc/UnitAI.h \
+ /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
  /usr/local/include/OGRE/OgreVector3.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -15,9 +15,9 @@ src/UnitAI.o: ../src/UnitAI.cpp \
  /usr/local/include/OGRE/OgreMemoryNedPooling.h \
  /usr/local/include/OGRE/OgreMath.h \
  /usr/local/include/OGRE/OgreQuaternion.h \
- /home/jsiao/workspace/Caelestion/inc/Command.h \
- /home/jsiao/workspace/Caelestion/inc/Engine.h \
- /home/jsiao/workspace/Caelestion/inc/Entity381.h \
+ /home/wmagnus/workspace/Caelestion/inc/Command.h \
+ /home/wmagnus/workspace/Caelestion/inc/Engine.h \
+ /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreCommon.h \
  /usr/local/include/OGRE/OgreString.h \
@@ -127,11 +127,11 @@ src/UnitAI.o: ../src/UnitAI.cpp \
  /usr/local/include/OGRE/OgreFrameListener.h \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
- /home/jsiao/workspace/Caelestion/inc/Types381.h
+ /home/wmagnus/workspace/Caelestion/inc/Types381.h
 
-/home/jsiao/workspace/Caelestion/inc/UnitAI.h:
+/home/wmagnus/workspace/Caelestion/inc/UnitAI.h:
 
-/home/jsiao/workspace/Caelestion/inc/Aspect.h:
+/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
 
 /usr/local/include/OGRE/OgreVector3.h:
 
@@ -161,11 +161,11 @@ src/UnitAI.o: ../src/UnitAI.cpp \
 
 /usr/local/include/OGRE/OgreQuaternion.h:
 
-/home/jsiao/workspace/Caelestion/inc/Command.h:
+/home/wmagnus/workspace/Caelestion/inc/Command.h:
 
-/home/jsiao/workspace/Caelestion/inc/Engine.h:
+/home/wmagnus/workspace/Caelestion/inc/Engine.h:
 
-/home/jsiao/workspace/Caelestion/inc/Entity381.h:
+/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -387,4 +387,4 @@ src/UnitAI.o: ../src/UnitAI.cpp \
 
 /usr/local/include/OGRE/OgreNameGenerator.h:
 
-/home/jsiao/workspace/Caelestion/inc/Types381.h:
+/home/wmagnus/workspace/Caelestion/inc/Types381.h:

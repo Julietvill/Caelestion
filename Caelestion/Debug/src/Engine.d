@@ -1,8 +1,8 @@
 src/Engine.o: ../src/Engine.cpp \
- /home/jsiao/workspace/Caelestion/inc/Engine.h \
- /home/jsiao/workspace/Caelestion/inc/EntityMgr.h \
- /home/jsiao/workspace/Caelestion/inc/Mgr.h \
- /home/jsiao/workspace/Caelestion/inc/Entity381.h \
+ /home/wmagnus/workspace/Caelestion/inc/Engine.h \
+ /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/Mgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -125,11 +125,11 @@ src/Engine.o: ../src/Engine.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/jsiao/workspace/Caelestion/inc/Aspect.h \
- /home/jsiao/workspace/Caelestion/inc/Command.h \
- /home/jsiao/workspace/Caelestion/inc/Types381.h \
- /home/jsiao/workspace/Caelestion/inc/GameMgr.h \
- /home/jsiao/workspace/Caelestion/inc/GfxMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
+ /home/wmagnus/workspace/Caelestion/inc/Command.h \
+ /home/wmagnus/workspace/Caelestion/inc/Types381.h \
+ /home/wmagnus/workspace/Caelestion/inc/GameMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/GfxMgr.h \
  /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgreSceneManagerEnumerator.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
@@ -137,7 +137,7 @@ src/Engine.o: ../src/Engine.cpp \
  /usr/local/include/OGRE/OgreLodStrategy.h \
  /usr/local/include/OGRE/OgreWorkQueue.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /home/jsiao/workspace/Caelestion/inc/InputMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/InputMgr.h \
  /usr/include/OIS/OISEvents.h /usr/include/OIS/OISPrereqs.h \
  /usr/include/OIS/OISConfig.h /usr/include/OIS/OISInputManager.h \
  /usr/include/OIS/OISKeyboard.h /usr/include/OIS/OISObject.h \
@@ -239,15 +239,16 @@ src/Engine.o: ../src/Engine.cpp \
  /usr/include/OIS/OISInputManager.h /usr/include/OIS/OISFactoryCreator.h \
  /usr/include/OIS/OISException.h /usr/include/OIS/OISEffect.h \
  /usr/include/OIS/OISForceFeedback.h \
- /usr/local/include/OGRE/SdkCameraMan.h
+ /usr/local/include/OGRE/SdkCameraMan.h \
+ /home/wmagnus/workspace/Caelestion/inc/UiMgr.h
 
-/home/jsiao/workspace/Caelestion/inc/Engine.h:
+/home/wmagnus/workspace/Caelestion/inc/Engine.h:
 
-/home/jsiao/workspace/Caelestion/inc/EntityMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/EntityMgr.h:
 
-/home/jsiao/workspace/Caelestion/inc/Mgr.h:
+/home/wmagnus/workspace/Caelestion/inc/Mgr.h:
 
-/home/jsiao/workspace/Caelestion/inc/Entity381.h:
+/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -497,15 +498,15 @@ src/Engine.o: ../src/Engine.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/jsiao/workspace/Caelestion/inc/Aspect.h:
+/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
 
-/home/jsiao/workspace/Caelestion/inc/Command.h:
+/home/wmagnus/workspace/Caelestion/inc/Command.h:
 
-/home/jsiao/workspace/Caelestion/inc/Types381.h:
+/home/wmagnus/workspace/Caelestion/inc/Types381.h:
 
-/home/jsiao/workspace/Caelestion/inc/GameMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/GameMgr.h:
 
-/home/jsiao/workspace/Caelestion/inc/GfxMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
@@ -521,7 +522,7 @@ src/Engine.o: ../src/Engine.cpp \
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
-/home/jsiao/workspace/Caelestion/inc/InputMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/InputMgr.h:
 
 /usr/include/OIS/OISEvents.h:
 
@@ -746,3 +747,5 @@ src/Engine.o: ../src/Engine.cpp \
 /usr/include/OIS/OISForceFeedback.h:
 
 /usr/local/include/OGRE/SdkCameraMan.h:
+
+/home/wmagnus/workspace/Caelestion/inc/UiMgr.h:

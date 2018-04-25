@@ -72,6 +72,8 @@ void InputMgr::Init(){
 	  mMouse->setEventCallback(this);
 	  mKeyboard->setEventCallback(this);
 
+	  std::cout << "does it even" << std::endl;
+
 }
 
 
@@ -148,21 +150,21 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 		//Yaw, ideally
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
 			keyboardTimer = keyTime;
-			relativeFaceAdjust.y += deltaDesiredHeading;
+			relativeFaceAdjust.y -= deltaDesiredHeading;
 		}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
 		keyboardTimer = keyTime;
-		relativeFaceAdjust.y -= deltaDesiredHeading;
+		relativeFaceAdjust.y += deltaDesiredHeading;
 	}
 
 		//Roll?
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD7)){
 			keyboardTimer = keyTime;
-			relativeFaceAdjust.z += deltaDesiredHeading;
+			relativeFaceAdjust.z -= deltaDesiredHeading;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
 		keyboardTimer = keyTime;
-		relativeFaceAdjust.z -= deltaDesiredHeading;
+		relativeFaceAdjust.z += deltaDesiredHeading;
 	}
 
 
@@ -215,4 +217,8 @@ void InputMgr::HandleMouseSelection(const OIS::MouseEvent &me){
 
 }
 
+bool InputMgr::buttonHit(OgreBites::Button *button)
+{
+	return true;
+}
 

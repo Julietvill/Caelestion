@@ -36,6 +36,8 @@ public:
 	virtual bool mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID id);
 	virtual bool mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID id);
 
+	virtual bool buttonHit(OgreBites::Button *button);
+
 	OIS::InputManager* mInputMgr;
 	OIS::Keyboard* mKeyboard;
 	OIS::Mouse* mMouse;

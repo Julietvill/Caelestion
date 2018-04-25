@@ -1,5 +1,5 @@
 src/Physics3D.o: ../src/Physics3D.cpp \
- /home/jsiao/workspace/Caelestion/inc/Entity381.h \
+ /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -122,14 +122,14 @@ src/Physics3D.o: ../src/Physics3D.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/jsiao/workspace/Caelestion/inc/Aspect.h \
- /home/jsiao/workspace/Caelestion/inc/Command.h \
- /home/jsiao/workspace/Caelestion/inc/Engine.h \
- /home/jsiao/workspace/Caelestion/inc/Types381.h \
- /home/jsiao/workspace/Caelestion/inc/Physics3D.h \
- /home/jsiao/workspace/Caelestion/inc/Utils.h
+ /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
+ /home/wmagnus/workspace/Caelestion/inc/Command.h \
+ /home/wmagnus/workspace/Caelestion/inc/Engine.h \
+ /home/wmagnus/workspace/Caelestion/inc/Types381.h \
+ /home/wmagnus/workspace/Caelestion/inc/Physics3D.h \
+ /home/wmagnus/workspace/Caelestion/inc/Utils.h
 
-/home/jsiao/workspace/Caelestion/inc/Entity381.h:
+/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -379,14 +379,14 @@ src/Physics3D.o: ../src/Physics3D.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/jsiao/workspace/Caelestion/inc/Aspect.h:
+/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
 
-/home/jsiao/workspace/Caelestion/inc/Command.h:
+/home/wmagnus/workspace/Caelestion/inc/Command.h:
 
-/home/jsiao/workspace/Caelestion/inc/Engine.h:
+/home/wmagnus/workspace/Caelestion/inc/Engine.h:
 
-/home/jsiao/workspace/Caelestion/inc/Types381.h:
+/home/wmagnus/workspace/Caelestion/inc/Types381.h:
 
-/home/jsiao/workspace/Caelestion/inc/Physics3D.h:
+/home/wmagnus/workspace/Caelestion/inc/Physics3D.h:
 
-/home/jsiao/workspace/Caelestion/inc/Utils.h:
+/home/wmagnus/workspace/Caelestion/inc/Utils.h:

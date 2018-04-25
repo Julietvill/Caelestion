@@ -128,10 +128,10 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreMeshManager.h \
  /usr/local/include/OGRE/OgrePatchMesh.h \
  /usr/local/include/OGRE/OgrePatchSurface.h \
- /home/jsiao/workspace/Caelestion/inc/DebugDrawer.h \
+ /home/wmagnus/workspace/Caelestion/inc/DebugDrawer.h \
  /usr/local/include/OGRE/OgreSingleton.h \
- /home/jsiao/workspace/Caelestion/inc/Engine.h \
- /home/jsiao/workspace/Caelestion/inc/GfxMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/Engine.h \
+ /home/wmagnus/workspace/Caelestion/inc/GfxMgr.h \
  /usr/local/include/OGRE/OgreRoot.h \
  /usr/local/include/OGRE/OgreSceneManagerEnumerator.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
@@ -139,13 +139,13 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreLodStrategy.h \
  /usr/local/include/OGRE/OgreWorkQueue.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
- /home/jsiao/workspace/Caelestion/inc/Mgr.h \
- /home/jsiao/workspace/Caelestion/inc/Entity381.h \
+ /home/wmagnus/workspace/Caelestion/inc/Mgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/jsiao/workspace/Caelestion/inc/Aspect.h \
- /home/jsiao/workspace/Caelestion/inc/Command.h \
- /home/jsiao/workspace/Caelestion/inc/Types381.h \
- /home/jsiao/workspace/Caelestion/inc/EntityMgr.h
+ /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
+ /home/wmagnus/workspace/Caelestion/inc/Command.h \
+ /home/wmagnus/workspace/Caelestion/inc/Types381.h \
+ /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -411,13 +411,13 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
 
 /usr/local/include/OGRE/OgrePatchSurface.h:
 
-/home/jsiao/workspace/Caelestion/inc/DebugDrawer.h:
+/home/wmagnus/workspace/Caelestion/inc/DebugDrawer.h:
 
 /usr/local/include/OGRE/OgreSingleton.h:
 
-/home/jsiao/workspace/Caelestion/inc/Engine.h:
+/home/wmagnus/workspace/Caelestion/inc/Engine.h:
 
-/home/jsiao/workspace/Caelestion/inc/GfxMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
@@ -433,16 +433,16 @@ src/GfxMgr.o: ../src/GfxMgr.cpp /usr/local/include/OGRE/OgreEntity.h \
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
-/home/jsiao/workspace/Caelestion/inc/Mgr.h:
+/home/wmagnus/workspace/Caelestion/inc/Mgr.h:
 
-/home/jsiao/workspace/Caelestion/inc/Entity381.h:
+/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/jsiao/workspace/Caelestion/inc/Aspect.h:
+/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
 
-/home/jsiao/workspace/Caelestion/inc/Command.h:
+/home/wmagnus/workspace/Caelestion/inc/Command.h:
 
-/home/jsiao/workspace/Caelestion/inc/Types381.h:
+/home/wmagnus/workspace/Caelestion/inc/Types381.h:
 
-/home/jsiao/workspace/Caelestion/inc/EntityMgr.h:
+/home/wmagnus/workspace/Caelestion/inc/EntityMgr.h:

@@ -54,17 +54,19 @@ void Physics3Dq::Tick(float dt){
 
 
 
-	entity->actualFacing = rotNow * entity->actualFacing * rotNow.Inverse();
+	entity->actualFacing = entity->actualFacing * rotNow.Inverse();
 	entity->actualFacing.normalise();
 	//std::cout << entity->actualFacing << std::endl;
 
 	//entity->actualFacing = Ogre::Quaternion(.5,0.,0.,.5);
 
 
-	//if(entity->acc >= 1)
-	//{
-	//		dv = dt * entity->speed * entity->actualFacing;
-	//}
+	if(entity->acc >= 1)
+	{
+			//dv.x = dt * entity->speed * entity->actualFacing.xAxis();
+			//dv.y = dt * entity->speed * entity->actualFacing.yAxis();
+			dv = -dt * entity->speed * entity->actualFacing.zAxis();
+	}
 	//dv otherwise remains zero, no slowing down for the weak
 
 	entity->velocity = entity->velocity + dv;
