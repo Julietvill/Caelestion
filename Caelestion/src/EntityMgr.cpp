@@ -56,11 +56,17 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 }
 
 void EntityMgr::Tick(float dt){
-	for(unsigned int i = 0; i < friendlies.size(); i++){
-		friendlies[i]->Tick(dt);
+	// Don't simulate during pausetime.
+
+	if(engine->paused == false)
+	{
+		for(unsigned int i = 0; i < friendlies.size(); i++){
+			friendlies[i]->Tick(dt);
+		}
+
+		for(unsigned int index = 0; index < enemies.size(); index++){
+			enemies[index]->Tick(dt);
+		}
 	}
 
-	for(unsigned int index = 0; index < enemies.size(); index++){
-		enemies[index]->Tick(dt);
-	}
 }

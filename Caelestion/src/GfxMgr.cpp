@@ -92,9 +92,6 @@ GfxMgr::GfxMgr(Engine *engine): Mgr(engine) {
   //mRoot->startRendering();
 
   new DebugDrawer(mSceneMgr, 0.5);
-  std::cout << "literally kill me" << std::endl;
-
-  std::cout << "end gfxcons" << std::endl;
 
 }
 
@@ -106,14 +103,10 @@ GfxMgr::~GfxMgr() {
 }
 
 void GfxMgr::Init(){
-  std::cout << "begin gfxinit" << std::endl;
 
   Ogre::TextureManager::getSingleton().setDefaultNumMipmaps(5);
-  std::cout << "literally kill me" << std::endl;
 
   Ogre::ResourceGroupManager::getSingleton().initialiseAllResourceGroups();
-  std::cout << "literally kill me" << std::endl;
-
 
 }
 
@@ -176,9 +169,10 @@ void GfxMgr::Stop(){
 
 void GfxMgr::Tick(float dt){
 
+	//RUN REGARDLESS OF PAUSESTATE.
+
 	DebugDrawer::getSingleton().build();
 
-//call ogre root render one frame method
 	mRoot->renderOneFrame(dt);
 	Ogre::WindowEventUtilities::messagePump();
 

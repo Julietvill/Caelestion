@@ -22,6 +22,7 @@ UiMgr::UiMgr(Engine* eng): Mgr(eng){
 	    //Ogre::WindowEventUtilities::addWindowEventListener(engine->gfxMgr->ogreRenderWindow, this);
 	    std::cout << "end uicons" << std::endl;
 
+	    uiState = InitMenuState;
 }
 
 UiMgr::~UiMgr(){ // before gfxMgr destructor
@@ -36,7 +37,7 @@ void UiMgr::Init(){
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", engine->gfxMgr->mWindow, mInputContext, this);
     //mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-    //mTrayMgr->hideCursor();
+    mTrayMgr->hideCursor();
 }
 
 void UiMgr::stop(){
@@ -49,6 +50,50 @@ void UiMgr::LoadLevel(){
 
 void UiMgr::Tick(float dt){
 	//mTrayMgr->refreshCursor();
+	switch(uiState)
+	{
+	//Splash Screen Invocation States////////////////////////////////////
+	case InitMenuState:
+	case ReSplashMenuState:
+		engine->paused = true;
+		mTrayMgr->showBackdrop("ECSLENT/SPLASH");
+		break;
+	//////////////////////////////////////////////////////////////////////
+
+	//During piloting/////////////////////////////////////////////////////
+	case PilotUIState:
+		engine->paused = false;
+		mTrayMgr->hideBackdrop();
+
+		//BottomRight-bound stats.
+			//HP
+		OgreBites::ProgressBar* hp;
+		hp = (OgreBites::ProgressBar*)mTrayMgr->getWidget("PILOT_HP");
+		if(hp == NULL) hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "", 250., 250.);
+		hp->show();
+		hp->setProgress(.5);
+
+
+
+		mTrayMgr->showTrays();
+		mTrayMgr->showBackdrop("ECSLENT/PILOT_UI");
+		break;
+	//////////////////////////////////////////////////////////////////////
+
+	//Pause Menu (What would traditionally be bound to ESC)///////////////
+	case PauseMenuState:
+		engine->paused = true;
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->destroyAllWidgets();
+
+
+
+
+		break;
+	//////////////////////////////////////////////////////////////////////
+	}
+
+
 }
 
 void UiMgr::windowResized(Ogre::RenderWindow* rw){

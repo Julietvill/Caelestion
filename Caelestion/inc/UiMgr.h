@@ -8,14 +8,16 @@
 #ifndef INC_UIMGR_H_
 #define INC_UIMGR_H_
 
+#include <MenuStates.h>
 #include <OgreWindowEventUtilities.h>
 #include <OISEvents.h>
 #include <OISInputManager.h>
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 #include <Mgr.h>
-
 #include <SdkTrays.h>
+
+
 
 class UiMgr : public Mgr, public Ogre::FrameListener, public OIS::KeyListener, public OIS::MouseListener, public Ogre::WindowEventListener, public OgreBites::SdkTrayListener
 {
@@ -48,6 +50,8 @@ public:
 	OgreBites::SdkTrayManager* mTrayMgr;
 	Ogre::OverlaySystem* mOverlaySystem;
 	OgreBites::Label *mLabel;
+
+	menuStates uiState;
 };
 
 #endif /* INC_UIMGR_H_ */

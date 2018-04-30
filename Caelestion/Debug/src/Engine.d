@@ -240,7 +240,8 @@ src/Engine.o: ../src/Engine.cpp \
  /usr/include/OIS/OISException.h /usr/include/OIS/OISEffect.h \
  /usr/include/OIS/OISForceFeedback.h \
  /usr/local/include/OGRE/SdkCameraMan.h \
- /home/wmagnus/workspace/Caelestion/inc/UiMgr.h
+ /home/wmagnus/workspace/Caelestion/inc/UiMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/MenuStates.h
 
 /home/wmagnus/workspace/Caelestion/inc/Engine.h:
 
@@ -749,3 +750,5 @@ src/Engine.o: ../src/Engine.cpp \
 /usr/local/include/OGRE/SdkCameraMan.h:
 
 /home/wmagnus/workspace/Caelestion/inc/UiMgr.h:
+
+/home/wmagnus/workspace/Caelestion/inc/MenuStates.h:

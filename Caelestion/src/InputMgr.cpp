@@ -11,6 +11,7 @@
 #include <InputMgr.h>
 #include <EntityMgr.h>
 #include <GameMgr.h>
+#include <UiMgr.h>
 
 #include <Utils.h>
 
@@ -72,8 +73,6 @@ void InputMgr::Init(){
 	  mMouse->setEventCallback(this);
 	  mKeyboard->setEventCallback(this);
 
-	  std::cout << "does it even" << std::endl;
-
 }
 
 
@@ -90,14 +89,40 @@ void InputMgr::Stop(){
 
 void InputMgr::Tick(float dt){
 
+	// Pause-independent code.
 	mKeyboard->capture();
+	keyboardTimer -= dt;
+
+
+		// Kill-program
 	if(mKeyboard->isKeyDown(OIS::KC_ESCAPE)){
 		engine->keepRunning = false;
 	}
+
+		// Pause state engage/disengage (Open pause menu)
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_P)){
+		if(engine->uiMgr->uiState != PilotUIState){
+			engine->uiMgr->uiState = PilotUIState;
+		}
+		else
+		{
+			engine->uiMgr->uiState = PauseMenuState;
+		}
+		keyboardTimer = keyTime;
+	}
 	mMouse->capture();
 
-	UpdateCamera(dt);
-	UpdatePlayerShipControl(dt);
+	if(engine->paused == false)
+	{
+		//only handled during non-pause runtime
+		UpdateCamera(dt);
+		UpdatePlayerShipControl(dt);
+	}
+
+	else
+	{
+
+	}
 
 }
 
@@ -108,13 +133,14 @@ void InputMgr::UpdateCamera(float dt){
 }
 
 void InputMgr::UpdatePlayerShipControl(float dt){
-	keyboardTimer -= dt;
 
 	Ogre::Vector3 relativeFaceAdjust = Ogre::Vector3::ZERO;
+	bool resetKT = false;
+
 
 	//Player Acceleration Controls.
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LSHIFT)){
-		keyboardTimer = keyTime;
+		resetKT = true;
 		engine->entityMgr->playerEntity->acc = 1;
 
 	}
@@ -140,32 +166,34 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 	//Player Direction Controls
 		//YAW
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
-		keyboardTimer = keyTime;
+		resetKT = true;
 		relativeFaceAdjust.x += deltaDesiredHeading;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
-		keyboardTimer = keyTime;
+		resetKT = true;
 		relativeFaceAdjust.x -= deltaDesiredHeading;
 	}
 		//Yaw, ideally
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
-			keyboardTimer = keyTime;
-			relativeFaceAdjust.y -= deltaDesiredHeading;
-		}
+		resetKT = true;
+		relativeFaceAdjust.y -= deltaDesiredHeading;
+	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
-		keyboardTimer = keyTime;
+		resetKT = true;
 		relativeFaceAdjust.y += deltaDesiredHeading;
 	}
 
 		//Roll?
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD7)){
-			keyboardTimer = keyTime;
-			relativeFaceAdjust.z -= deltaDesiredHeading;
+		resetKT = true;
+		relativeFaceAdjust.z -= deltaDesiredHeading;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
-		keyboardTimer = keyTime;
+		resetKT = true;
 		relativeFaceAdjust.z += deltaDesiredHeading;
 	}
+
+	if(resetKT) keyboardTimer = keyTime;
 
 
 	engine->entityMgr->playerEntity->desiredRotation = engine->entityMgr->playerEntity->desiredRotation + relativeFaceAdjust;

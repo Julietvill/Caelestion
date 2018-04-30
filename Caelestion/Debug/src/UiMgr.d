@@ -1,5 +1,6 @@
 src/UiMgr.o: ../src/UiMgr.cpp \
  /home/wmagnus/workspace/Caelestion/inc/UiMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/MenuStates.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -241,6 +242,8 @@ src/UiMgr.o: ../src/UiMgr.cpp \
  /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h
 
 /home/wmagnus/workspace/Caelestion/inc/UiMgr.h:
+
+/home/wmagnus/workspace/Caelestion/inc/MenuStates.h:
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 

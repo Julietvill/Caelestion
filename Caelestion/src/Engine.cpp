@@ -19,6 +19,7 @@ Engine::Engine() {
 	inputMgr  = 0;
 	uiMgr     = 0;
 
+	paused = false;
 	keepRunning = true;
 }
 

@@ -239,6 +239,8 @@ src/InputMgr.o: ../src/InputMgr.cpp \
  /usr/local/include/OGRE/SdkCameraMan.h \
  /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h \
  /home/wmagnus/workspace/Caelestion/inc/GameMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/UiMgr.h \
+ /home/wmagnus/workspace/Caelestion/inc/MenuStates.h \
  /home/wmagnus/workspace/Caelestion/inc/Utils.h
 
 /home/wmagnus/workspace/Caelestion/inc/Engine.h:
@@ -746,5 +748,9 @@ src/InputMgr.o: ../src/InputMgr.cpp \
 /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h:
 
 /home/wmagnus/workspace/Caelestion/inc/GameMgr.h:
+
+/home/wmagnus/workspace/Caelestion/inc/UiMgr.h:
+
+/home/wmagnus/workspace/Caelestion/inc/MenuStates.h:
 
 /home/wmagnus/workspace/Caelestion/inc/Utils.h:

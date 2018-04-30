@@ -31,6 +31,7 @@ public:
 	void Cleanup();
 
 	bool keepRunning;
+	bool paused;
 };
 
 #endif /* ENGINE_H_ */

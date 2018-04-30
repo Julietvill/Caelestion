@@ -17,6 +17,8 @@
 #include <OgreOverlay.h>
 #include <OgreSceneNode.h>
 
+//Has no tick. Unaffected by pausing as a result.
+
 
 GameMgr::GameMgr(Engine *engine): Mgr(engine) {
 

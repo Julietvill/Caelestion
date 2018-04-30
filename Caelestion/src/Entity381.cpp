@@ -113,7 +113,7 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	entityType = friendlyTypeOne;
 
 	//these values will need to be changed
-	this->velocity = Ogre::Vector3(0,0,-20);
+	this->velocity = Ogre::Vector3(0,0,-0.1);
 
 	this->speed = 50.0f;
 	this->turnRate = 50.f;

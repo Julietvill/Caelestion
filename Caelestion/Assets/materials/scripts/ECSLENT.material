@@ -1,4 +1,22 @@
-material ECSLENT/UI
+material ECSLENT/SPLASH
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			
+			texture_unit
+			{
+				texture Caelestion_glow_alpha.png
+			}
+		}
+	}
+}
+
+material ECSLENT/PILOT_UI
 {
 	technique
 	{
@@ -15,3 +33,4 @@ material ECSLENT/UI
 		}
 	}
 }
+
