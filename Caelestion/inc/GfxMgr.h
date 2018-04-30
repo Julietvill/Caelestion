@@ -12,6 +12,7 @@
 #include <OgreWindowEventUtilities.h>
 
 #include <Mgr.h>
+#include <Sample.h>
 
 #include <Entity381.h>
 

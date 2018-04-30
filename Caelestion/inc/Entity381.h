@@ -49,13 +49,16 @@ public:
 
   std::vector<Aspect* > aspects;
 
+  //sound
+  std::string soundFile;
+  bool playSound;
+  unsigned int auioID;
+  bool didSelectSoundPlay;
+
+
   void Init();
 
   void Tick(float dt);
-
-  void moveTo(Ogre::Vector3 dest, bool AddToCommand);
-  void InterceptEnt(Entity381* dest, bool AddToCommand);
-  void FollowEnt(Entity381* dest, bool AddtoCommand);
 
 
 protected:

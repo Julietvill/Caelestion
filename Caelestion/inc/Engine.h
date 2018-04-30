@@ -14,6 +14,10 @@ class GfxMgr;
 class InputMgr;
 class UiMgr;
 
+namespace OgreSND{
+class SoundMgr;
+}
+
 class Engine {
 public:
 	Engine();
@@ -24,6 +28,7 @@ public:
 	GfxMgr    *gfxMgr;
 	InputMgr  *inputMgr;
 	UiMgr     *uiMgr;
+	OgreSND::SoundMgr* soundMgr;
 
 	void Init();
 	void Run();

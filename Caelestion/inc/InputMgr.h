@@ -13,8 +13,8 @@
 #include <OISKeyboard.h>
 #include <OISMouse.h>
 
-#  include <SdkTrays.h>
-#  include <SdkCameraMan.h>
+#include <SdkTrays.h>
+#include <SdkCameraMan.h>
 #include <Mgr.h>
 
 class Engine;

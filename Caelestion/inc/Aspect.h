@@ -15,8 +15,6 @@ public:
   Entity381* entity;
 
   virtual void Tick(float dt);
-  virtual void SetCommand(Command* c);
-  virtual void AddCommand(Command* c);
 
 protected:
 
