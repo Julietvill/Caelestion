@@ -57,6 +57,13 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->pointValue = 0;
 	this->desiredRotation = Ogre::Vector3::ZERO; //ZERO ROTATION DESIRED.
 	//this->desiredRotation = Ogre::Vector3(25, 50, 75);
+
+	//sound
+	this->playSound = false;
+	this->auioID = 0;
+	this->soundFile = "Boat-Sound.wav";		//this will need to be changed **NEEDS UPDATE**
+	this->didSelectSoundPlay = false;
+
 }
 
 Entity381::~Entity381(){
@@ -75,33 +82,6 @@ void Entity381::Tick(float dt){
 	for(unsigned int i = 0; i < aspects.size(); i++){
 		aspects[i]->Tick(dt);
 	}
-}
-
-void Entity381::moveTo(Ogre::Vector3 dest, bool AddToCommand){
-	MoveTo* ai = new MoveTo(this);
-	ai->dest = dest;
-
-	if(AddToCommand)
-		aspects[2]->AddCommand(ai);
-	else
-		aspects[2]->SetCommand(ai);
-
-}
-void Entity381::InterceptEnt(Entity381* dest, bool AddToCommand){
-	Intercept* ai = new Intercept(this, dest);
-
-	if(AddToCommand)
-		aspects[2]->AddCommand(ai);
-	else
-		aspects[2]->SetCommand(ai);
-}
-void Entity381::FollowEnt(Entity381* dest, bool AddToCommand){
-	Follow* ai = new Follow(this, dest);
-
-	if(AddToCommand)
-		aspects[2]->AddCommand(ai);
-	else
-		aspects[2]->SetCommand(ai);
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------

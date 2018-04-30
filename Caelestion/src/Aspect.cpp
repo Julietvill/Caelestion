@@ -22,15 +22,6 @@ void Aspect::Tick(float dt){
 
 }
 
-void Aspect::SetCommand(Command* c){
-
-}
-
-void Aspect::AddCommand(Command* C){
-
-}
-
-
 Renderable::Renderable(Entity381* ent):Aspect(ent){
 
 }
