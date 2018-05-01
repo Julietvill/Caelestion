@@ -28,7 +28,7 @@ namespace OgreSND {
     const int soundPerEnt = 3;      // max different sounds to randomly choose per entity
 	const int maxAudioBuffers = 63; // + 1 for background music
 	const int maxAudioSources = 15; // + 1 for background music
-	const std::string backgroundMusicFilename = "data/watercraft/sounds/backgroundMusic.wav";
+	const std::string backgroundMusicFilename = "Assets/SFX/SpaceSeed16.wav";
 	///home/sushil/workspace/fe1/
 
 
@@ -85,9 +85,9 @@ namespace OgreSND {
 		//default methods
 		void initialize();
 		void crosslink();
-		void init();
-		void loadLevel();
-		void tick(double dtime);
+		void Init();
+		void LoadLevel();
+		void Tick(float dt);
 		void releaseLevel();
 		void cleanup ();
                 
