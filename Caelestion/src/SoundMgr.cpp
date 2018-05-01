@@ -54,7 +54,7 @@ OgreSND::SoundMgr::~SoundMgr(){
 	std::cout << "Bye audio. ....   Sounds good, bye" << std::endl;
 }
 
-void OgreSND::SoundMgr::init(){
+void OgreSND::SoundMgr::Init(){
 	initialize();
 }
 
@@ -104,7 +104,7 @@ void OgreSND::SoundMgr::initialize(void){
 
 	unsigned int sid;
         //background music
-	std::string filename = "data/watercraft/sounds/backgroundMusic.wav";
+	std::string filename = OgreSND::backgroundMusicFilename;
 	if (this->reserveAudio(filename, true, sid)){
 		std::cout << "background music loaded" << std::endl;
                 backgroundMusicSource = sourceInfo[sid].source;
@@ -226,7 +226,7 @@ void OgreSND::SoundMgr::syncListenerToCamera(){
 
 bool OgreSND::SoundMgr::frameRenderingQueued(const Ogre::FrameEvent& evt)
 {
-	tick(evt.timeSinceLastFrame);
+	Tick(evt.timeSinceLastFrame);
 	return true;
 }
 bool OgreSND::SoundMgr::frameStarted(const Ogre::FrameEvent& evt){
@@ -243,7 +243,7 @@ void OgreSND::SoundMgr::crosslink(void){
 	return;
 }
 
-void OgreSND::SoundMgr::loadLevel(void){
+void OgreSND::SoundMgr::LoadLevel(void){
 	syncListenerToCamera();
 	//load sounds, bind buffers, start background music
 	//read sound files
@@ -267,7 +267,7 @@ void OgreSND::SoundMgr::attachSelectedNodeToSoundIndex(Entity381 *ent, unsigned 
 	setSoundPosition(this->sourceInfo[index].source, pos);
 }
 
-void OgreSND::SoundMgr::tick(double dtime){
+void OgreSND::SoundMgr::Tick(float dt){
 
 	syncListenerToCamera();
         
