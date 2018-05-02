@@ -23,6 +23,7 @@ public:
 	void MakeEntities();
 
 	Ogre::Plane oceanSurface;
+	int points;
 
 };
 

@@ -13,8 +13,7 @@ public:
 
   //Engine *engine;
 
-  std::vector<Entity381*> enemies;
-  std::vector<Entity381*> friendlies;
+  std::vector<Entity381*> entities;
   Entity381* playerEntity;
 
   //Ogre::SceneManager *sceneMgr;
@@ -26,8 +25,7 @@ public:
 protected:
 
 private:
-  int friendlyCount;
-  int enemyCount;
+  int entCount;
 
 };
 

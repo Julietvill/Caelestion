@@ -35,37 +35,26 @@ public:
 	Ogre::Vector3 dest;
 
 };
+
 //-------------------------------------------------------------------------------------------------------------------------------
 
-class Follow : public MoveTo{
+class Attack : public MoveTo{
 public:
-	Follow(Entity381* myEnt,Entity381* targetEnt);
-	virtual ~Follow();
-	void Tick(float dt);
-
-	Entity381* targetEnt;
-};
-//-------------------------------------------------------------------------------------------------------------------------------
-
-class Intercept : public MoveTo{
-public:
-	Intercept(Entity381* myEnt,Entity381* targetEnt);
-	virtual ~Intercept();
-	void Tick(float dt);
-
-	Entity381* targetEnt;
-	Ogre::Vector3 relVel;
-	float relTime;
-
-};
-//-------------------------------------------------------------------------------------------------------------------------------
-
-class Attack : public Command{
-public:
-	Attack();
+	Attack(Entity381* Ent, Entity381* target);
 	~Attack();
 	void Tick(float dt);
-	//will need a target
+
+	Entity381* enemyTarget;
+};
+
+class Avoid : public MoveTo{
+public:
+	Avoid(Entity381* Ent, Entity381* target);
+	~Avoid();
+	void Tick(float dt);
+
+	Entity381* friendlyTarget;
+	float distSqr;
 };
 
 

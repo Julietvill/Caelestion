@@ -31,6 +31,7 @@ public:
 
   //dynamic data
   Ogre::Vector3 position;
+  Ogre::Vector3 startPosition;
   Ogre::Vector3 velocity;
   float desiredHeading;
 
@@ -55,11 +56,16 @@ public:
   unsigned int auioID;
   bool didSelectSoundPlay;
 
+  Ogre::Vector3 enemyHQ;
+  std::vector<Ogre::Vector3> weaponPositions;
+
+  bool enemy;
 
   void Init();
 
   void Tick(float dt);
 
+  void Lobotomize();
 
 protected:
 

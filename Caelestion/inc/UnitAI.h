@@ -10,7 +10,7 @@
 
 #include <Aspect.h>
 #include <Command.h>
-#include <queue>
+#include <stack>
 
 class UnitAI : public Aspect {
 public:
@@ -19,11 +19,12 @@ public:
 	void Tick(float dt);
 
 
-	void SetCommand(Command* c);
-	void AddCommand(Command* c);
+	void addCommand(Command* c);
 	void clear();
 
-	std::queue<Command*> listOfCommands;
+	float distanceSqr;
+	std::stack<Command*> listOfCommands;
+	bool avoiding;
 
 private:
 };
