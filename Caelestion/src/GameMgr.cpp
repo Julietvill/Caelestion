@@ -20,7 +20,8 @@
 //Has no tick. Unaffected by pausing as a result.
 
 
-GameMgr::GameMgr(Engine *engine): Mgr(engine) {
+GameMgr::GameMgr(Engine *engine): Mgr(engine), points(200)
+{
 
 }
 
@@ -37,7 +38,8 @@ void GameMgr::Init(){
 	  //engine->gfxMgr->MakeGround();
 	  engine->gfxMgr->MakeSky();
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,0));
-	  engine->entityMgr->playerEntity = engine->entityMgr->friendlies[0];
+	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
+	  engine->entityMgr->playerEntity->Lobotomize();
 
 	  //engine->gfxMgr->cameraFollow = engine->entityMgr->playerEntity;
 
@@ -57,14 +59,14 @@ void GameMgr::LoadLevel(){
 }
 
 void GameMgr::MakeEntities(){
-	Ogre::Vector3 position(10000, 0, -750);
+	Ogre::Vector3 position(1000, 0, -750);
 
 	for( int i = 0; i < 7; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,position);
 		  position.z += 250;
 	}
 
-	position.x = -10000;
+	position.x = -1000;
 	position.z = -750;
 	for( int i = 0; i < 7; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,position);

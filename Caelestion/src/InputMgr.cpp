@@ -12,6 +12,8 @@
 #include <EntityMgr.h>
 #include <GameMgr.h>
 #include <UiMgr.h>
+#include <DebugDrawer.h>
+
 
 #include <Utils.h>
 
@@ -139,16 +141,24 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 
 
 	//Player Acceleration Controls.
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LSHIFT)){
+	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LSHIFT) && !mKeyboard->isKeyDown(OIS::KC_Z)){
 		resetKT = true;
 		engine->entityMgr->playerEntity->acc = 1;
-
 	}
 
-	if((keyboardTimer < 0) && !mKeyboard->isKeyDown(OIS::KC_LSHIFT))
+	if((keyboardTimer < 0) && !mKeyboard->isKeyDown(OIS::KC_LSHIFT) && mKeyboard->isKeyDown(OIS::KC_Z)){
+		resetKT = true;
+		engine->entityMgr->playerEntity->acc = -1;
+	}
+
+	if((keyboardTimer < 0) && !mKeyboard->isKeyDown(OIS::KC_LSHIFT) && !mKeyboard->isKeyDown(OIS::KC_Z))
 	{
 			engine->entityMgr->playerEntity->acc = 0;
 
+	}
+
+	if((keyboardTimer < 0) && !mKeyboard->isKeyDown(OIS::KC_SPACE)){
+		DebugDrawer::getSingleton().drawLine(engine->entityMgr->playerEntity->position, engine->entityMgr->playerEntity->position + Ogre::Vector3( 2, 0, 2), Ogre::ColourValue::White);
 	}
 
 /*
@@ -167,11 +177,11 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 		//YAW
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
 		resetKT = true;
-		relativeFaceAdjust.x += deltaDesiredHeading;
+		relativeFaceAdjust.x -= deltaDesiredHeading;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
 		resetKT = true;
-		relativeFaceAdjust.x -= deltaDesiredHeading;
+		relativeFaceAdjust.x += deltaDesiredHeading;
 	}
 		//Yaw, ideally
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){

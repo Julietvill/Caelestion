@@ -10,6 +10,7 @@
 #include<Entity381.h>
 #include <Physics3D.h>
 #include <Physics3Dq.h>
+#include <Physics3DqConstSpeed.h>
 #include <UnitAI.h>
 
 std::string IntToString(int x){
@@ -26,6 +27,7 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	meshfilename = std::string();
 	matname = "";
 	position = pos;
+	startPosition = pos;
 	velocity = Ogre::Vector3(0, 0, 0);
 	actualFacing = Ogre::Quaternion(1,0,0,1);
 
@@ -36,7 +38,9 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	sceneNode = 0;
 	ogreEntity = 0;
 
-	Physics3Dq* phx = new Physics3Dq(this);
+	enemyHQ = Ogre::Vector3::ZERO;
+
+	Physics3DqCS* phx = new Physics3DqCS(this);
 	aspects.push_back((Aspect*) phx);
 	Renderable * renderable = new Renderable(this);
 	aspects.push_back((Aspect*)renderable);
@@ -58,11 +62,14 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->desiredRotation = Ogre::Vector3::ZERO; //ZERO ROTATION DESIRED.
 	//this->desiredRotation = Ogre::Vector3(25, 50, 75);
 
+
 	//sound
 	this->playSound = false;
 	this->auioID = 0;
 	this->soundFile = "Boat-Sound.wav";		//this will need to be changed **NEEDS UPDATE**
 	this->didSelectSoundPlay = false;
+
+	enemy = false;
 
 }
 
@@ -84,6 +91,18 @@ void Entity381::Tick(float dt){
 	}
 }
 
+void Entity381::Lobotomize()
+{
+	aspects.clear(); //Erase all aspects
+
+	//Restore aspects that aren't AI
+	Physics3DqCS* phx = new Physics3DqCS(this);
+	aspects.push_back((Aspect*) phx);
+	Renderable * renderable = new Renderable(this);
+	aspects.push_back((Aspect*)renderable);
+}
+
+
 //-------------------------------------------------------------------------------------------------------------------------------
 
 friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
@@ -93,11 +112,15 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	entityType = friendlyTypeOne;
 
 	//these values will need to be changed
-	this->velocity = Ogre::Vector3(0,0,-0.1);
+	this->velocity = Ogre::Vector3(0,0,-50);
+
 
 	this->speed = 50.0f;
 	this->turnRate = 50.f;
 	this->climbRate = 1;
+
+	enemyHQ = Ogre::Vector3(1000,0,0);
+	enemy = false;
 
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = 10;
@@ -114,11 +137,16 @@ friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 	matname = "Gladius/Texture";
 	entityType = friendlyTypeTwo;
 
+	this->velocity = Ogre::Vector3(0,0,-0.1);
+
+
 	//these values will need to be changed
 	this->speed = 15.0f;
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
 
+	enemyHQ = Ogre::Vector3(1000,0,0);
+	enemy = false;
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = 10;
 }
@@ -133,11 +161,15 @@ friendlyThree::friendlyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 	meshfilename = "cube.mesh";
 	entityType = friendlyTypeThree;
 
+	this->velocity = Ogre::Vector3(0,0,-0.1);
+
+
 	//these values will need to be changed
 	this->speed = 15.0f;
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
-
+	enemy = false;
+	enemyHQ = Ogre::Vector3(1000,0,0);
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = 10;
 }
@@ -149,14 +181,19 @@ friendlyThree::~friendlyThree(){
 
 enemyOne::enemyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "sphere.mesh";
-	entityType = enemyTypeOne;
+	meshfilename = "Aesir.mesh";
+		matname = "Aesir/Texture";
+		entityType = enemyTypeOne;
+
+	this->velocity = Ogre::Vector3(0,0,-0.1);
+
 
 	//these values will need to be changed
 	this->speed = 15.0f;
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
-
+	enemy = true;
+	enemyHQ = Ogre::Vector3(-1000,0,0);
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 25;
 }
@@ -168,13 +205,18 @@ enemyOne::~enemyOne(){
 
 enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "sphere.mesh";
+	meshfilename = "cube.mesh";
 	entityType = enemyTypeTwo;
+
+	this->velocity = Ogre::Vector3(0,0,-0.1);
+
 
 	//these values will need to be changed
 	this->speed = 15.0f;
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
+	enemy = true;
+	enemyHQ = Ogre::Vector3(-1000,0,0);
 
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 50;
@@ -187,13 +229,18 @@ enemyTwo::~enemyTwo(){
 
 enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "sphere.mesh";
+	meshfilename = "cube.mesh";
 	entityType = enemyTypeThree;
+
+	this->velocity = Ogre::Vector3(0,0,-0.1);
+
 
 	//these values will need to be changed
 	this->speed = 15.0f;
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
+	enemy = false;
+	enemyHQ = Ogre::Vector3(-1000,0,0);
 
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 75;

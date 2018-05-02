@@ -132,25 +132,7 @@ bool OgreSND::SoundMgr::initWatercraftSounds(){
         std::string selection2Filename = "data/watercraft/sounds/GoodDay.wav";
         //std::string createShipFilename = "data/watercraft/sounds/boatMoving.wav";
         //std::string createBuildingFilename = "data/watercraft/sounds/clong.wav";
-        for(std::vector<Entity381 *>::const_iterator et = engine->entityMgr->enemies.begin(); et != engine->entityMgr->enemies.end(); ++et)
-        	{
-            //this->registerBattleSound(et, battleFilename);
-            if (true){
-                if ((*et)->auioID == 1){
-                        this->registerSelection(**et, selection2Filename);
-                }
-                else{
-                        this->registerSelection(**et, selectionFilename);
-                }
-                //this->registerCreate(et, createShipFilename);entities
-            }
-            else{
-                //no selection sound for buildings right now
-                //this->registerCreate(et, createBuildingFilename);
-            }
-        }
-
-        for(std::vector<Entity381 *>::const_iterator et = engine->entityMgr->friendlies.begin(); et != engine->entityMgr->friendlies.end(); ++et)
+        for(std::vector<Entity381 *>::const_iterator et = engine->entityMgr->entities.begin(); et != engine->entityMgr->entities.end(); ++et)
         	{
             //this->registerBattleSound(et, battleFilename);
             if (true){
@@ -272,7 +254,7 @@ void OgreSND::SoundMgr::Tick(float dt){
 	syncListenerToCamera();
         
         //selection sound
-		for(std::vector<Entity381 *>::const_iterator it = engine->entityMgr->enemies.begin(); it != engine->entityMgr->enemies.end(); ++it){
+		for(std::vector<Entity381 *>::const_iterator it = engine->entityMgr->entities.begin(); it != engine->entityMgr->entities.end(); ++it){
            if ((*it)->isSelected && !(*it)->didSelectSoundPlay){
         	   playSelectionSound(*(*it));
         	   (*it)->didSelectSoundPlay = true;
@@ -282,15 +264,6 @@ void OgreSND::SoundMgr::Tick(float dt){
            }
         }
 
-		for(std::vector<Entity381 *>::const_iterator it = engine->entityMgr->friendlies.begin(); it != engine->entityMgr->friendlies.end(); ++it){
-           if ((*it)->isSelected && !(*it)->didSelectSoundPlay){
-        	   playSelectionSound(*(*it));
-        	   (*it)->didSelectSoundPlay = true;
-           }
-           else if (!(*it)->isSelected && (*it)->didSelectSoundPlay){
-        	   (*it)->didSelectSoundPlay = false;
-           }
-        }
 }
         
         //this was for moving sound but playing sound for all moving objects does not seem to be a good idea

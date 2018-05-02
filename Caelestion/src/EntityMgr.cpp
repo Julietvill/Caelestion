@@ -10,8 +10,7 @@
 
 EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
 	playerEntity = 0;
-	friendlyCount = 0;
-	enemyCount = 0;
+	entCount = 0;
 }
 
 EntityMgr::~EntityMgr(){
@@ -23,35 +22,30 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	Entity381 * ent;
 	switch(entType){
 	case friendlyTypeOne:
-		ent = (Entity381 *) ( new friendlyOne(engine, pos, friendlyCount++));
+		ent = new friendlyOne(engine, pos, entCount++);
 		break;
 	case friendlyTypeTwo:
-		ent = (Entity381 *) (new friendlyTwo(engine, pos, friendlyCount++));
+		ent = new friendlyTwo(engine, pos, entCount++);
 		break;
 	case friendlyTypeThree:
-		ent =  (Entity381 *) (new friendlyThree(engine, pos, friendlyCount++));
+		ent =  new friendlyThree(engine, pos, entCount++);
 		break;
 	case enemyTypeOne:
-		ent = (Entity381 *) (new enemyOne(engine, pos, enemyCount++));
+		ent = new enemyOne(engine, pos, entCount++);
 		break;
 	case enemyTypeTwo:
-		ent = (Entity381 *) (new enemyTwo(engine, pos, enemyCount++));
+		ent = new enemyTwo(engine, pos, entCount++);
 		break;
 	case enemyTypeThree:
-		ent = (Entity381 *) (new enemyThree(engine, pos, enemyCount++));
+		ent = new enemyThree(engine, pos, entCount++);
 		break;
 	default:
-		ent = (Entity381*) (new friendlyOne(engine, pos, friendlyCount++));//CreateEntity("robot.mesh", pos);
+		ent = new friendlyOne(engine, pos, entCount++);//CreateEntity("robot.mesh", pos);
 		break;
 	}
 	ent->Init();
-	if( ent->entityType == friendlyTypeOne ||ent->entityType == friendlyTypeTwo || ent->entityType == friendlyTypeThree)
-	{
-		friendlies.push_back(ent);
-		ent->sceneNode->setScale(10, 10, 10);
-	}
-	else
-		enemies.push_back(ent);
+
+	entities.push_back(ent);
 
 }
 
@@ -60,12 +54,8 @@ void EntityMgr::Tick(float dt){
 
 	if(engine->paused == false)
 	{
-		for(unsigned int i = 0; i < friendlies.size(); i++){
-			friendlies[i]->Tick(dt);
-		}
-
-		for(unsigned int index = 0; index < enemies.size(); index++){
-			enemies[index]->Tick(dt);
+		for(unsigned int i = 0; i < entities.size(); i++){
+			entities[i]->Tick(dt);
 		}
 	}
 
