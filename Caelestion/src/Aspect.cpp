@@ -60,9 +60,9 @@ healthStatus::~healthStatus(){
 
 void healthStatus::Tick(float dt){
 
-	if(entity->currentHealth == 0){
+	if(entity->currentHealth <= 0){
 		entity->position = entity->startPosition;
-		entity->currentHealth = 100; // TODO: Set a max
+		entity->currentHealth = entity->maxHealth; // TODO: Set a max
 		if(entity == entity->engine->entityMgr->playerEntity){
 			//throw up pause screen with three buttons for respawn
 		}

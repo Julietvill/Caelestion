@@ -39,6 +39,12 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	case enemyTypeThree:
 		ent = new enemyThree(engine, pos, entCount++);
 		break;
+	case friendlyStation:
+		ent = new caelestionStation(engine, pos, entCount++);
+		break;
+	case Yggdrasil:
+
+		break;
 	default:
 		ent = new friendlyOne(engine, pos, entCount++);//CreateEntity("robot.mesh", pos);
 		break;

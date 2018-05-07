@@ -9,12 +9,14 @@
 #include <Entity381.h>
 #include <Utils.h>
 #include <math.h>
+#include <UnitAI.h>
 
 using namespace std;
 
 #define PI 3.14156265
 
-Command::Command(){
+Command::Command(UnitAI* ai){
+	this->ai = ai;
 	isComplete = false;
 }
 Command::~Command(){
@@ -25,7 +27,7 @@ void Command::Tick(float dt){
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-MoveTo::MoveTo(Entity381* Ent){
+MoveTo::MoveTo(UnitAI* ai,Entity381* Ent): Command(ai){
 	this->myEnt = Ent;
 
 	this->difference = Ogre::Vector3::ZERO;
@@ -47,8 +49,9 @@ void MoveTo::Tick(float dt){
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-Attack::Attack(Entity381* Ent, Entity381* target) : MoveTo(Ent){
+Attack::Attack(UnitAI* ai, Entity381* Ent, Entity381* target) : MoveTo(ai, Ent){
 	this->enemyTarget = target;
+	this->attackTimer = this->attackTime;
 
 }
 
@@ -57,6 +60,8 @@ Attack::~Attack(){
 }
 
 void Attack::Tick(float dt){
+	ai->attacking = true;
+	attackTimer -= dt;
 	difference = enemyTarget->position - myEnt->position;
 	difference = (myEnt->actualFacing.UnitInverse() * difference);
 
@@ -65,17 +70,22 @@ void Attack::Tick(float dt){
 
 	myEnt->desiredRotation = Ogre::Vector3(-dpitch,dyaw,0);
 
-	//need to add a dimention of time
-	if( !myEnt->weapons.empty())
-		myEnt->weapons[0]->Fire(dt);
+	cout << "Enemy Health" << enemyTarget->currentHealth << endl;
 
+	//need to add a dimention of time
+	if( !myEnt->weapons.empty() && attackTimer < 0){
+		cout << myEnt->identity << " - Attack" << endl;
+		myEnt->weapons[0]->Fire(dt);
+		attackTimer = attackTime;
+	}
 	if( enemyTarget->currentHealth == 0){
 		isComplete = true;
+		ai->attacking = false;
 	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-Avoid::Avoid(Entity381* Ent, Entity381* target) : MoveTo(Ent){
+Avoid::Avoid(UnitAI* ai,Entity381* Ent, Entity381* target) : MoveTo(ai, Ent){
 	this->target = target;
 	this->distSqr = 2500;
 }
@@ -85,7 +95,7 @@ Avoid::~Avoid(){
 }
 
 void Avoid::Tick(float dt){
-	//myEnt->desiredRotation = Ogre::Vector3(45,0,0);
+	ai->avoiding = true;
 
 	difference = myEnt->position - target->position;
 	difference = (myEnt->actualFacing.UnitInverse() * difference);
@@ -99,5 +109,6 @@ void Avoid::Tick(float dt){
 
 	if( distSqr > thresholdSqr){
 		isComplete = true;
+		ai->avoiding = false;
 	}
 }

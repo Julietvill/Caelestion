@@ -16,11 +16,12 @@ using namespace std;
 UnitAI::UnitAI(Entity381* ent)
 : Aspect(ent)
 {
-	MoveTo* enemyHQ = new MoveTo(entity);
+	MoveTo* enemyHQ = new MoveTo(this,entity);
 	enemyHQ->dest = Ogre::Vector3::ZERO;
 	listOfCommands.push(enemyHQ);
 	distanceSqr = 0;
 	avoiding = false;
+	attacking = false;
 }
 
 UnitAI::~UnitAI(){
@@ -38,22 +39,23 @@ void UnitAI::Tick(float dt){
 			if( entity->enemy == entity->engine->entityMgr->entities[index]->enemy )
 			{
 				if( distanceSqr < 2500 && entity->engine->entityMgr->entities[index] != this->entity && !avoiding){
-					avoiding = true;
-					Avoid* avoid = new Avoid(entity, entity->engine->entityMgr->entities[index]);
+					Avoid* avoid = new Avoid(this,entity, entity->engine->entityMgr->entities[index]);
 					listOfCommands.push(avoid);
+					cout << "Add Avoid" << endl;
 				}
 			}
 
 			else{
-				if( distanceSqr < 62500 && entity->engine->entityMgr->entities[index] != this->entity){
-					Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
+				if( distanceSqr < 62500 && entity->engine->entityMgr->entities[index] != this->entity && !attacking){
+					Attack* attackEnemy = new Attack(this,entity, entity->engine->entityMgr->entities[index]);
 					listOfCommands.push(attackEnemy);
+					cout << "Add Attack" << endl;
 				}
 
 				else if( distanceSqr < 2500 && entity->engine->entityMgr->entities[index] != this->entity){
-					avoiding = true;
-					Avoid* avoid = new Avoid(entity, entity->engine->entityMgr->entities[index]);
+					Avoid* avoid = new Avoid(this,entity, entity->engine->entityMgr->entities[index]);
 					listOfCommands.push(avoid);
+					cout << "Add Avoid " << endl;
 				}
 			}
 
@@ -61,7 +63,6 @@ void UnitAI::Tick(float dt){
 
 		if( listOfCommands.top()->isComplete ){
 			listOfCommands.pop();
-			avoiding = false;
 		}
 	}
 }

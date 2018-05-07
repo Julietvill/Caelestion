@@ -22,6 +22,9 @@
 
 GameMgr::GameMgr(Engine *engine): Mgr(engine), points(200)
 {
+	this->waveOneUnlocked = false;
+	this->waveTwoUnlocked = false;
+	this->waveThreeUnlocked = false;
 
 }
 
@@ -38,16 +41,11 @@ void GameMgr::Init(){
 	  engine->gfxMgr->MakeSky();
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,0));
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
+	  engine->entityMgr->playerEntity->
 	  engine->entityMgr->playerEntity->Lobotomize();
 
-	  //using this entity for AI obervation
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,-100));
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,-100));
-
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,Ogre::Vector3(0,0,100));
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,Ogre::Vector3(0,0,100));
-
-
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyStation,Ogre::Vector3(0,0,-2500));
+	  engine->entityMgr->entities[1]->sceneNode->setScale(100,100,100);
 
 	  // a fixed point in the ocean so you can see relative motion
 	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("Asteroid_1.mesh");
@@ -56,24 +54,48 @@ void GameMgr::Init(){
 	  sceneNode->showBoundingBox(true);
 	  sceneNode->setScale(25,25,25);
 
-	  //MakeEntities();
+	  //MakeEntities(friendlyTypeOne, enemyTypeOne, 25);
 }
 
 void GameMgr::LoadLevel(){
 
 }
 
-void GameMgr::MakeEntities(){
-
-	//change the position, it can now be the same
-	Ogre::Vector3 position(-500, 0, -750);
-
-	for( int i = 0; i < 7; i++){
-		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,position);
+void GameMgr::Tick(float dt){
+	if( !waveOneUnlocked && points >= 200){
+		waveOneUnlocked = true;
+		MakeEntities(friendlyTypeOne, enemyTypeOne, 25);
+	}
+	if( !waveTwoUnlocked && points >= 300){
+		waveTwoUnlocked = true;
+		MakeEntities(friendlyTypeTwo, enemyTypeTwo, 10);
+	}
+	if( !waveThreeUnlocked && points >= 400){
+		waveThreeUnlocked = true;
+		MakeEntities(friendlyTypeThree, enemyTypeThree, 5);
 	}
 
-	for( int i = 0; i < 7; i++){
-		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,position);
+	if( points <= 0 ){
+		//game is over
+	}
+
+}
+
+void GameMgr::MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int amount){
+
+	//change the position, it can now be the same
+	Ogre::Vector3 position(0, 0, 500);
+
+	for( int i = 0; i < amount; i++){
+		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyType,position);
+		  position.x -= 1;
+	}
+
+	position.x = 0;
+	position.z = -500;
+	for( int i = 0; i < amount; i++){
+		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyType,position);
+		  position.x -= 1;
 	}
 
 }

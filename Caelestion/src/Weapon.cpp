@@ -25,7 +25,7 @@ Weapon::~Weapon(){}
 void Weapon::Fire(float dt){}
 
 T1Killray::T1Killray(Ogre::Vector3 placement, Entity381* own):
-		Weapon(80, placement, own)
+		Weapon(800, placement, own)
 {
 
 }
@@ -57,7 +57,7 @@ void T1Killray::Fire(float dt)
 			cur->currentHealth -= dmgOnHit*dt;
 			if(owner == owner->engine->entityMgr->playerEntity)
 			{
-				if (cur->currentHealth == 0)
+				if (cur->currentHealth <= 0)
 				{
 					owner->engine->gameMgr->points += cur->pointValue;
 				}

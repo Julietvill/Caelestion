@@ -129,9 +129,6 @@ void InputMgr::Tick(float dt){
 }
 
 void InputMgr::UpdateCamera(float dt){
-	//the camera is going to follow the player distance should always be (0,250,900)
-	//Ogre::Vector3 direction = engine->entityMgr->playerEntity->position - Ogre::Vector3(0,250,900);
-	//engine->gameMgr->cameraNode->translate(direction * dt, Ogre::Node::TS_LOCAL);
 }
 
 void InputMgr::UpdatePlayerShipControl(float dt){
