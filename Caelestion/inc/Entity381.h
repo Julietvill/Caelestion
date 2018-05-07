@@ -29,6 +29,7 @@ public:
   float minAltitude, maxAltitude;
   int pointValue;
   bool enemy;
+  int maxHealth;
 
 
   //dynamic data
@@ -100,6 +101,14 @@ private:
 };
 //-------------------------------------------------------------------------------------------------------------------------------
 
+class caelestionStation : public Entity381{
+public:
+	caelestionStation(Engine *engine, Ogre::Vector3 pos, int identity);
+	~caelestionStation();
+private:
+};
+//-------------------------------------------------------------------------------------------------------------------------------
+
 class enemyOne : public Entity381{
 public:
 	enemyOne(Engine *engine, Ogre::Vector3 pos, int identity);
@@ -120,6 +129,14 @@ class enemyThree : public Entity381{
 public:
 	enemyThree(Engine *engine, Ogre::Vector3 pos, int identity);
 	~enemyThree();
+private:
+};
+//-------------------------------------------------------------------------------------------------------------------------------
+
+class Yggdrasil : public Entity381{
+public:
+	Yggdrasil(Engine *engine, Ogre::Vector3 pos, int identity);
+	~Yggdrasil();
 private:
 };
 #endif // #ifndef __Entity381_h_

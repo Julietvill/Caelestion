@@ -12,20 +12,22 @@
 #include <OgreVector3.h>
 
 class Entity381;
+class UnitAI;
 
 class Command {
 public:
-	Command();
+	Command(UnitAI* ai);
 	virtual ~Command();
 	virtual void Tick(float dt);
 
 	bool isComplete;
+	UnitAI* ai;
 };
 //-------------------------------------------------------------------------------------------------------------------------------
 
 class MoveTo: public Command{
 public:
-	MoveTo(Entity381* ent);
+	MoveTo(UnitAI* ai, Entity381* ent);
 	virtual ~MoveTo();
 	virtual void Tick(float dt);
 
@@ -40,16 +42,20 @@ public:
 
 class Attack : public MoveTo{
 public:
-	Attack(Entity381* Ent, Entity381* target);
+	Attack(UnitAI* ai, Entity381* Ent, Entity381* target);
 	~Attack();
 	void Tick(float dt);
+
+	float attackTimer;
+	const static float attackTime = 0.5f;
+
 
 	Entity381* enemyTarget;
 };
 
 class Avoid : public MoveTo{
 public:
-	Avoid(Entity381* Ent, Entity381* entTarget);
+	Avoid(UnitAI* ai, Entity381* Ent, Entity381* entTarget);
 	~Avoid();
 	void Tick(float dt);
 

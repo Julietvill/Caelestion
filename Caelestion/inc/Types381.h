@@ -7,10 +7,12 @@ enum EntityTypes {
 	friendlyTypeOne,
 	friendlyTypeTwo,
 	friendlyTypeThree,
+	friendlyStation,
 	enemyTypeOne,
 	enemyTypeTwo,
 	enemyTypeThree,
 	defaultEnt,
+	Yggdrasil
 };
 
 #endif // #ifndef __Entity381_h_

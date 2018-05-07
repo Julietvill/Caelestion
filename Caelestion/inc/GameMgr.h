@@ -9,6 +9,7 @@
 #define GAMEMGR_H_
 
 #include <Mgr.h>
+#include <Types381.h>
 
 class GameMgr: public Mgr {
 public:
@@ -20,7 +21,12 @@ public:
 
 	void MakeGround();
 	void MakeSky();
-	void MakeEntities();
+	void MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int amount);
+	void Tick(float dt);
+
+	bool waveOneUnlocked;
+	bool waveTwoUnlocked;
+	bool waveThreeUnlocked;
 
 	Ogre::Plane oceanSurface;
 	int points;
