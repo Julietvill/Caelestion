@@ -59,6 +59,9 @@ void UiMgr::stop(){
 
 void UiMgr::LoadLevel(){
 	//mTrayMgr->showBackdrop("ECSLENT/UI");
+	mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
+	mTrayMgr->createButton(OgreBites::TL_TOPRIGHT, "credit", "Credits", 250);
+	//mTrayMgr->createButton(OgreBites::TL_BOTTOMLEFT,"test","test",250);
 }
 
 void UiMgr::Tick(float dt){
@@ -67,13 +70,23 @@ void UiMgr::Tick(float dt){
 	{
 	//Splash Screen Invocation States////////////////////////////////////
 	case InitMenuState:
-	case ReSplashMenuState:
 		engine->paused = true;
+		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/SPLASH");
 
-		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
+		/*mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
 		if( mButton == NULL)
+		{
 			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
+		}*/
+		break;
+
+	case ReSplashMenuState:
+		engine->paused = true;
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
+
+		mButton->setCaption("Play");
 
 		break;
 	//////////////////////////////////////////////////////////////////////
@@ -96,23 +109,46 @@ void UiMgr::Tick(float dt){
 		hp = (OgreBites::ProgressBar*)mTrayMgr->getWidget("PILOT_HP");
 		if(hp == NULL) hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "HEALTH", 250., 240.);
 		hp->show();
-		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/100); //TODO: Base on proper max
+
+		OgreBites::Label* wave;
+		wave = (OgreBites::Label*)mTrayMgr->getWidget("WAVE");
+		if(wave == NULL) wave = mTrayMgr->createLabel(OgreBites::TL_BOTTOMLEFT, "WAVE", "WAVE 1", 250);
+		if(engine->gameMgr->waveTwoUnlocked) wave->setCaption("WAVE 2");
+		if(engine->gameMgr->waveThreeUnlocked) wave->setCaption("WAVE 3");
+
+		//Instructions button placement
+		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
+		if( mButton == NULL)
+		{
+			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
+		}
 
 
+
+		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth)); //TODO: Base on proper max
+
+		mButton->setCaption("Instructions");
+
+		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->show();
 
 		mTrayMgr->showTrays();
 		mTrayMgr->showBackdrop("ECSLENT/PILOT_UI");
 		break;
-	//////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////helpBtn/
 
 	//Pause Menu (What would traditionally be bound to ESC)///////////////
 	case PauseMenuState:
 		engine->paused = true;
 		mTrayMgr->hideBackdrop();
-		mTrayMgr->destroyAllWidgets();
+		//mTrayMgr->destroyAllWidgets();
 
+		mTrayMgr->hideAll();
 
+		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
+		mTrayMgr->showCursor();
+		mTrayMgr->showTrays();
 
+		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
 
 		break;
 	//////////////////////////////////////////////////////////////////////
@@ -142,6 +178,19 @@ void UiMgr::Tick(float dt){
 		//mTrayMgr->createButton(OgreBites::TL_CENTER, "","");
 
 		break;
+
+	case creditState:
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showBackdrop("ECSLENT/Credits");
+		//Instructions button placement
+		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
+		if( mButton == NULL)
+		{
+			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
+		}
+
+		break;
+
 	}
 
 
@@ -183,11 +232,20 @@ bool UiMgr::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
 }
 
 void UiMgr::buttonHit(OgreBites::Button *b){
+
+	std::cout << "do I ever happen" << std::endl;
     if(b->getName() == "helpBtn"){
     	std::cout << "Help Button pressed" << std::endl;
-    	mTrayMgr->hideBackdrop();
-    	mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
+    	if(uiState!= ReSplashMenuState) uiState = ReSplashMenuState;
+    	else uiState = PilotUIState;
     }
+
+    if(b->getName() == "credit"){
+    	std::cout << "Help Button pressed" << std::endl;
+    	uiState = creditState;
+    }
+
+
     /*
     else if(b->getName()=="HastatusButton")
     {

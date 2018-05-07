@@ -131,7 +131,8 @@ src/Aspect.o: ../src/Aspect.cpp \
  /home/julietv/workspace/Caelestion/Caelestion/inc/DebugDrawer.h \
  /usr/local/include/OGRE/OgreSingleton.h \
  /home/julietv/workspace/Caelestion/Caelestion/inc/EntityMgr.h \
- /home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/GameMgr.h
 
 /home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h:
 
@@ -400,3 +401,5 @@ src/Aspect.o: ../src/Aspect.cpp \
 /home/julietv/workspace/Caelestion/Caelestion/inc/EntityMgr.h:
 
 /home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/GameMgr.h:

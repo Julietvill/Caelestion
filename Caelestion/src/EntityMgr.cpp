@@ -13,6 +13,9 @@ EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
 	caelestion = 0;
 	yggdrasil = 0;
 	entCount = 0;
+
+	yggdrasilPos = Ogre::Vector3(0,0,2500);
+	caelestionPos = Ogre::Vector3(0,0,-2500);
 }
 
 EntityMgr::~EntityMgr(){

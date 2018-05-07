@@ -54,7 +54,7 @@ void InputMgr::Init(){
 		pl.insert(std::make_pair(std::string("w32_keyboard"), std::string("DISCL_NONEXCLUSIVE")));
 		#elif defined OIS_LINUX_PLATFORM
 		pl.insert(std::make_pair(std::string("x11_mouse_grab"), std::string("false")));
-		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("false")));
+		pl.insert(std::make_pair(std::string("x11_mouse_hide"), std::string("true")));
 		//pl.insert(std::make_pair(std::string("x11_keyboard_grab"), std::string("false")));
 		pl.insert(std::make_pair(std::string("XAutoRepeatOn"), std::string("true")));
 		#endif
@@ -230,6 +230,7 @@ bool InputMgr::mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID id){
 }
 
 bool InputMgr::mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID mid){
+	if (engine->uiMgr->mTrayMgr->injectMouseUp(me, mid)) return true;
 	return true;
 }
 
@@ -237,9 +238,14 @@ bool InputMgr::mouseReleased(const OIS::MouseEvent& me, OIS::MouseButtonID mid){
 void InputMgr::HandleMouseSelection(const OIS::MouseEvent &me){
 
 }
-
+/*
 bool InputMgr::buttonHit(OgreBites::Button *button)
 {
+	std::cout << "do I ever happen" << std::endl;
+	    if(button->getName() == "helpBtn"){
+	    	std::cout << "Help Button pressed" << std::endl;
+	    	engine->uiMgr->uiState = ReSplashMenuState;
+	    }
 	return true;
 }
-
+*/

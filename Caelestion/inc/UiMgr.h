@@ -33,8 +33,8 @@ protected:
     virtual bool mouseMoved(const OIS::MouseEvent &arg);
     virtual bool mousePressed(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
     virtual bool mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id);
+    virtual void buttonHit(OgreBites::Button *b);
 
-    void buttonHit(OgreBites::Button *b);
     void itemSelected(OgreBites::SelectMenu *m);
 
 public:

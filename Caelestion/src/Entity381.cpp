@@ -39,8 +39,6 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	sceneNode = 0;
 	ogreEntity = 0;
 
-	//enemyHQ = Ogre::Vector3::ZERO;
-
 	//add all aspects that the entities will need to function
 	Physics3DqCS* phx = new Physics3DqCS(this);
 	aspects.push_back((Aspect*) phx);
@@ -174,7 +172,8 @@ friendlyTwo::~friendlyTwo(){
 
 friendlyThree::friendlyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "cube.mesh";
+	meshfilename = "gladius.mesh";
+	matname = "Gladius/Texture";
 	entityType = friendlyTypeThree;
 
 	this->velocity = Ogre::Vector3(0,0,0.1);
@@ -255,7 +254,8 @@ enemyOne::~enemyOne(){
 
 enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "cube.mesh";
+	meshfilename = "Aesir.mesh";
+	matname = "Aesir/Texture";
 	entityType = enemyTypeTwo;
 
 	this->velocity = Ogre::Vector3(0,0,-15);
@@ -283,7 +283,8 @@ enemyTwo::~enemyTwo(){
 
 enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "cube.mesh";
+	meshfilename = "Aesir.mesh";
+	matname = "Aesir/Texture";
 	entityType = enemyTypeThree;
 
 	this->velocity = Ogre::Vector3(0,0,-0.1);

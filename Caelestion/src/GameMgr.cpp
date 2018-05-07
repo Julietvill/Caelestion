@@ -39,16 +39,17 @@ void GameMgr::Init(){
 	  light->setPosition(20.0, 80.0, 50.0);
 
 	  engine->gfxMgr->MakeSky();
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,0));
+	  Ogre::Vector3 startPos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,startPos);
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
 	  engine->entityMgr->playerEntity->
 	  engine->entityMgr->playerEntity->Lobotomize();
 
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,Ogre::Vector3(0,0,2500));
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,engine->entityMgr->yggdrasilPos);
 	  engine->entityMgr->yggdrasil = engine->entityMgr->entities[1];
 	  engine->entityMgr->entities[1]->sceneNode->setScale(100,100,100);
 
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyStation,Ogre::Vector3(0,0,-2500));
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyStation,engine->entityMgr->caelestionPos);
 	  engine->entityMgr->caelestion = engine->entityMgr->entities[2];
 	  engine->entityMgr->entities[2]->sceneNode->setScale(100,100,100);
 
@@ -90,18 +91,17 @@ void GameMgr::Tick(float dt){
 void GameMgr::MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int amount){
 
 	//change the position, it can now be the same
-	Ogre::Vector3 position(0, 0, 500);
+	Ogre::Vector3 position = engine->entityMgr->yggdrasilPos;
 
 	for( int i = 0; i < amount; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyType,position);
-		  position.x -= 1;
+		  position.x += 0.5;
 	}
 
-	position.x = 0;
-	position.z = -500;
+	position = engine->entityMgr->caelestionPos;
 	for( int i = 0; i < amount; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyType,position);
-		  position.x -= 1;
+		  position.x += 0.5;
 	}
 
 }

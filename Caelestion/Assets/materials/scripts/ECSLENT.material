@@ -51,3 +51,20 @@ material ECSLENT/INSTRUCTION
 	}
 }
 
+material ECSLENT/Credits
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			
+			texture_unit
+			{
+				texture Credits.png
+			}
+		}
+	}
+}

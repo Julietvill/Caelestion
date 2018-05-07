@@ -10,6 +10,7 @@
 #include <DebugDrawer.h>
 #include <Engine.h>
 #include <EntityMgr.h>
+#include <GameMgr.h>
 
 
 Aspect::Aspect(Entity381 *ent){
@@ -66,5 +67,9 @@ void healthStatus::Tick(float dt){
 		if(entity == entity->engine->entityMgr->playerEntity){
 			//throw up pause screen with three buttons for respawn
 		}
+	}
+
+	if( (entity == entity->engine->entityMgr->caelestion || entity == entity->engine->entityMgr->yggdrasil) && !entity->engine->gameMgr->waveTwoUnlocked){
+		entity->currentHealth = entity->maxHealth;
 	}
 }

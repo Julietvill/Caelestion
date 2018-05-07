@@ -21,6 +21,9 @@ public:
   Entity381* caelestion;
   Entity381* yggdrasil;
 
+  Ogre::Vector3 yggdrasilPos;
+  Ogre::Vector3 caelestionPos;
+
   //Ogre::SceneManager *sceneMgr;
 
   void CreateEntityOfTypeAtPosition(EntityTypes type, Ogre::Vector3 pos);

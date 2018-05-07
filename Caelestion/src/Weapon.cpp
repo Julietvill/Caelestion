@@ -25,7 +25,7 @@ Weapon::~Weapon(){}
 void Weapon::Fire(float dt){}
 
 T1Killray::T1Killray(Ogre::Vector3 placement, Entity381* own):
-		Weapon(800, placement, own)
+		Weapon(150, placement, own)
 {
 
 }
