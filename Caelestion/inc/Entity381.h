@@ -6,6 +6,7 @@
 #include <OgreVector3.h>
 #include <Aspect.h>
 #include <Types381.h>
+#include <Weapon.h>
 
 #include <Engine.h>
 
@@ -27,6 +28,7 @@ public:
   float turnRate, climbRate;
   float minAltitude, maxAltitude;
   int pointValue;
+  bool enemy;
 
 
   //dynamic data
@@ -34,7 +36,10 @@ public:
   Ogre::Vector3 startPosition;
   Ogre::Vector3 velocity;
   float desiredHeading;
+  int currentHealth;
+  bool hit;
 
+  //values for Quaternion math (both dynamic)
   Ogre::Quaternion actualFacing;
   Ogre::Vector3 desiredRotation;
 
@@ -56,10 +61,8 @@ public:
   unsigned int auioID;
   bool didSelectSoundPlay;
 
-  Ogre::Vector3 enemyHQ;
-  std::vector<Ogre::Vector3> weaponPositions;
-
-  bool enemy;
+  //Ogre::Vector3 enemyHQ;
+  std::vector<Weapon*> weapons; //nevuh enough dakka
 
   void Init();
 

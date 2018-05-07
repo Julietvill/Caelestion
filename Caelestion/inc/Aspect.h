@@ -31,6 +31,13 @@ public:
 	void Tick(float dt);
 };
 
+class healthStatus : Aspect{
+public:
+	healthStatus(Entity381* ent);
+	~healthStatus();
+
+	void Tick(float dt);
+};
 
 
 #endif // #ifndef __Aspect_h_

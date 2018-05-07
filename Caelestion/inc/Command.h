@@ -49,11 +49,11 @@ public:
 
 class Avoid : public MoveTo{
 public:
-	Avoid(Entity381* Ent, Entity381* target);
+	Avoid(Entity381* Ent, Entity381* entTarget);
 	~Avoid();
 	void Tick(float dt);
 
-	Entity381* friendlyTarget;
+	Entity381* target;
 	float distSqr;
 };
 
