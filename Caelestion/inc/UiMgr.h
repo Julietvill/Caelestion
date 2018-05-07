@@ -50,6 +50,11 @@ public:
 	OgreBites::SdkTrayManager* mTrayMgr;
 	Ogre::OverlaySystem* mOverlaySystem;
 	OgreBites::Label *mLabel;
+	OgreBites::Button *mButton;
+	OgreBites::Button *GladiusBtn;
+	OgreBites::Button *HastatusBtn;
+	OgreBites::Label *GladiusLbl;
+	OgreBites::Label *HastatusLbl;
 
 	menuStates uiState;
 };

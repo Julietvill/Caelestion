@@ -13,6 +13,7 @@
 #include <GameMgr.h>
 #include <UiMgr.h>
 #include <DebugDrawer.h>
+#include <UiMgr.h>
 
 
 #include <Utils.h>
@@ -224,23 +225,7 @@ bool InputMgr::mouseMoved(const OIS::MouseEvent& me){
 }
 
 bool InputMgr::mousePressed(const OIS::MouseEvent& me, OIS::MouseButtonID id){
-/*
-	Ogre::Real screenWidth = Ogre::Root::getSingleton().getAutoCreatedWindow()->getWidth();
-	Ogre::Real screenHeight = Ogre::Root::getSingleton().getAutoCreatedWindow()->getHeight();
-	OIS::MouseState arg = mMouse->getMouseState();
-
-	Ogre::Real offsetX = arg.X.abs / screenWidth;
-	Ogre::Real offsetY = arg.Y.abs / screenHeight;
-
-	Ogre::Ray mouseRay = engine->gfxMgr->mCamera->getCameraToViewportRay(offsetX, offsetY);
-	std::pair<bool, float> result;
-*/
-/*
-	for( unsigned int index = 0; index < engine->entityMgr->enemies.size(); index++){
-		result = mouseRay.intersects(engine->entityMgr->enemies[index]->sceneNode->_getWorldAABB());
-		engine->entityMgr->enemies[index]->isSelected = true;
-	}
-*/
+    if (engine->uiMgr->mTrayMgr->injectMouseDown(me, id)) return true;
 	return true;
 }
 

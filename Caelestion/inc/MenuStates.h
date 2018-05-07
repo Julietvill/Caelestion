@@ -12,7 +12,8 @@ enum menuStates {
 	InitMenuState,
 	ReSplashMenuState,
 	PilotUIState,
-	PauseMenuState
+	PauseMenuState,
+	respawState
 };
 
 

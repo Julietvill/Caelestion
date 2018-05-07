@@ -30,6 +30,12 @@ UiMgr::UiMgr(Engine* eng): Mgr(eng){
 	    std::cout << "end uicons" << std::endl;
 
 	    uiState = InitMenuState;
+	    mButton = 0;
+		GladiusBtn = 0;
+		HastatusBtn = 0;
+		GladiusLbl= 0;
+		HastatusLbl = 0;
+
 }
 
 UiMgr::~UiMgr(){ // before gfxMgr destructor
@@ -44,7 +50,7 @@ void UiMgr::Init(){
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", engine->gfxMgr->mWindow, mInputContext, this);
     //mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
-    mTrayMgr->hideCursor();
+    //mTrayMgr->hideCursor();
 }
 
 void UiMgr::stop(){
@@ -56,7 +62,7 @@ void UiMgr::LoadLevel(){
 }
 
 void UiMgr::Tick(float dt){
-	//mTrayMgr->refreshCursor();
+	mTrayMgr->refreshCursor();
 	switch(uiState)
 	{
 	//Splash Screen Invocation States////////////////////////////////////
@@ -64,6 +70,11 @@ void UiMgr::Tick(float dt){
 	case ReSplashMenuState:
 		engine->paused = true;
 		mTrayMgr->showBackdrop("ECSLENT/SPLASH");
+
+		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
+		if( mButton == NULL)
+			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
+
 		break;
 	//////////////////////////////////////////////////////////////////////
 
@@ -105,6 +116,32 @@ void UiMgr::Tick(float dt){
 
 		break;
 	//////////////////////////////////////////////////////////////////////
+
+	case respawState:
+
+		engine->paused = true;
+		mTrayMgr->showBackdrop();
+
+		HastatusLbl = (OgreBites::Label*)mTrayMgr->getWidget("HastatusPointLabel");
+		if( mButton == NULL)
+			mTrayMgr->createLabel(OgreBites::TL_CENTER, "HastatusPointLabel","100",250.);
+
+		HastatusBtn = (OgreBites::Button*)mTrayMgr->getWidget("HastatusButton");
+		if( mButton == NULL)
+			mTrayMgr->createButton(OgreBites::TL_CENTER,"HastatusButton", "Hastatus");
+
+		GladiusLbl = (OgreBites::Label*)mTrayMgr->getWidget("GladiusPointLabel");
+		if( mButton == NULL)
+			mTrayMgr->createLabel(OgreBites::TL_CENTER, "GladiusPointLabel","250",250.);
+
+		GladiusBtn = (OgreBites::Button*)mTrayMgr->getWidget("GladiusButton");
+		if( mButton == NULL)
+			mTrayMgr->createButton(OgreBites::TL_CENTER, "GladiusButton","Gladius");
+
+		//mTrayMgr->createLabel(OgreBites::TL_CENTER, "HastatusPointLabel","100",250.);
+		//mTrayMgr->createButton(OgreBites::TL_CENTER, "","");
+
+		break;
 	}
 
 
@@ -132,30 +169,34 @@ bool UiMgr::keyReleased(const OIS::KeyEvent &arg){
 	return true;
 }
 bool UiMgr::mouseMoved(const OIS::MouseEvent &arg){
-    //if (mTrayMgr->injectMouseMove(arg)) return true;
+    if (mTrayMgr->injectMouseMove(arg)) return true;
 	return false;
 }
 bool UiMgr::mousePressed(const OIS::MouseEvent &me, OIS::MouseButtonID mid) {
 	std::cout << "mouse clicked" << std::endl;
-	//if (mTrayMgr->injectMouseDown(me, mid)) return true;
+	if (mTrayMgr->injectMouseDown(me, mid)) return true;
 	return false;
 }
 bool UiMgr::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
-    //if (mTrayMgr->injectMouseUp(arg, id)) return true;
-    /* normal mouse processing here... */
-	return false;
+    if (mTrayMgr->injectMouseUp(arg, id)) return true;
+    return false;
 }
 
 void UiMgr::buttonHit(OgreBites::Button *b){
-    if(b->getName()=="MyButton")
-    {
-        std::cout <<"Boat Spawned!" << std::endl;
-        Ogre::Vector3 pos;
-        pos.x = 0;
-        pos.y = 0;
-        pos.z = -100;
-        engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,pos);
+    if(b->getName() == "helpBtn"){
+    	std::cout << "Help Button pressed" << std::endl;
+    	mTrayMgr->hideBackdrop();
+    	mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
     }
+    /*
+    else if(b->getName()=="HastatusButton")
+    {
+
+    }
+    else if(b->getName()=="GladiusButton")
+    {
+
+    }*/
 
 }
 

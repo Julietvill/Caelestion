@@ -13,7 +13,7 @@
 #include <OgreVector3.h>
 class Entity381;    //Forward declaration of the Entity381 class
 
-class Weapon : public Aspect
+class Weapon
 {
 public:
 	Weapon(int dmg, Ogre::Vector3 placement, Entity381* own);
@@ -48,11 +48,6 @@ public:
 	float cooldown;
 	float coolstate;
 
-    std::string projmeshfilename;
-	std::string projmatname;
-
-	Ogre::SceneNode missileNode;
-	Ogre::Entity missile;
 
 };
 
