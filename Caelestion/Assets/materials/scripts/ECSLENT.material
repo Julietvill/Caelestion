@@ -10,7 +10,7 @@ material ECSLENT/SPLASH
 			
 			texture_unit
 			{
-				texture Caelestion_glow_alpha.png
+				texture Splash.png
 			}
 		}
 	}

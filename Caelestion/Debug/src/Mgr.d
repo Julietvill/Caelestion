@@ -1,6 +1,7 @@
-src/Mgr.o: ../src/Mgr.cpp /home/wmagnus/workspace/Caelestion/inc/Engine.h \
- /home/wmagnus/workspace/Caelestion/inc/Mgr.h
+src/Mgr.o: ../src/Mgr.cpp \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h
 
-/home/wmagnus/workspace/Caelestion/inc/Engine.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Mgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h:

@@ -1,6 +1,6 @@
 src/UiMgr.o: ../src/UiMgr.cpp \
- /home/wmagnus/workspace/Caelestion/inc/UiMgr.h \
- /home/wmagnus/workspace/Caelestion/inc/MenuStates.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/UiMgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/MenuStates.h \
  /usr/local/include/OGRE/OgreWindowEventUtilities.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -19,7 +19,7 @@ src/UiMgr.o: ../src/UiMgr.cpp \
  /usr/include/OIS/OISInputManager.h /usr/include/OIS/OISKeyboard.h \
  /usr/include/OIS/OISObject.h /usr/include/OIS/OISInterface.h \
  /usr/include/OIS/OISEvents.h /usr/include/OIS/OISMouse.h \
- /home/wmagnus/workspace/Caelestion/inc/Mgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h \
  /usr/local/include/OGRE/SdkTrays.h /usr/local/include/OGRE/Ogre.h \
  /usr/local/include/OGRE/OgreAnimation.h \
  /usr/local/include/OGRE/OgreIteratorWrappers.h \
@@ -227,23 +227,26 @@ src/UiMgr.o: ../src/UiMgr.cpp \
  /usr/include/OIS/OISInputManager.h /usr/include/OIS/OISFactoryCreator.h \
  /usr/include/OIS/OISException.h /usr/include/OIS/OISEffect.h \
  /usr/include/OIS/OISForceFeedback.h \
- /home/wmagnus/workspace/Caelestion/inc/Engine.h \
- /home/wmagnus/workspace/Caelestion/inc/GfxMgr.h \
- /usr/local/include/OGRE/OgreRoot.h \
- /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/GfxMgr.h \
+ /usr/local/include/OGRE/OgreRoot.h /usr/local/include/OGRE/Sample.h \
+ /usr/local/include/OGRE/OgreFileSystemLayer.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreSceneManager.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
- /home/wmagnus/workspace/Caelestion/inc/Command.h \
- /home/wmagnus/workspace/Caelestion/inc/Types381.h \
- /home/wmagnus/workspace/Caelestion/inc/InputMgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Command.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/GameMgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/InputMgr.h \
  /usr/local/include/OGRE/SdkCameraMan.h \
- /home/wmagnus/workspace/Caelestion/inc/EntityMgr.h
+ /home/julietv/workspace/Caelestion/Caelestion/inc/EntityMgr.h
 
-/home/wmagnus/workspace/Caelestion/inc/UiMgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/UiMgr.h:
 
-/home/wmagnus/workspace/Caelestion/inc/MenuStates.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/MenuStates.h:
 
 /usr/local/include/OGRE/OgreWindowEventUtilities.h:
 
@@ -291,7 +294,7 @@ src/UiMgr.o: ../src/UiMgr.cpp \
 
 /usr/include/OIS/OISMouse.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Mgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Mgr.h:
 
 /usr/local/include/OGRE/SdkTrays.h:
 
@@ -723,13 +726,17 @@ src/UiMgr.o: ../src/UiMgr.cpp \
 
 /usr/include/OIS/OISForceFeedback.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Engine.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h:
 
-/home/wmagnus/workspace/Caelestion/inc/GfxMgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/GfxMgr.h:
 
 /usr/local/include/OGRE/OgreRoot.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
+/usr/local/include/OGRE/Sample.h:
+
+/usr/local/include/OGRE/OgreFileSystemLayer.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -737,14 +744,18 @@ src/UiMgr.o: ../src/UiMgr.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Command.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Command.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Types381.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h:
 
-/home/wmagnus/workspace/Caelestion/inc/InputMgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/GameMgr.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/InputMgr.h:
 
 /usr/local/include/OGRE/SdkCameraMan.h:
 
-/home/wmagnus/workspace/Caelestion/inc/EntityMgr.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/EntityMgr.h:

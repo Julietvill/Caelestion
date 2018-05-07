@@ -1,6 +1,6 @@
 src/Command.o: ../src/Command.cpp \
- /home/wmagnus/workspace/Caelestion/inc/Command.h \
- /home/wmagnus/workspace/Caelestion/inc/Engine.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Command.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h \
  /usr/local/include/OGRE/OgreVector3.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -15,7 +15,7 @@ src/Command.o: ../src/Command.cpp \
  /usr/local/include/OGRE/OgreMemoryNedPooling.h \
  /usr/local/include/OGRE/OgreMath.h \
  /usr/local/include/OGRE/OgreQuaternion.h \
- /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgreCommon.h \
  /usr/local/include/OGRE/OgreString.h \
@@ -125,13 +125,15 @@ src/Command.o: ../src/Command.cpp \
  /usr/local/include/OGRE/OgreFrameListener.h \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
- /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
- /home/wmagnus/workspace/Caelestion/inc/Types381.h \
- /home/wmagnus/workspace/Caelestion/inc/Utils.h
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Utils.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/UnitAI.h
 
-/home/wmagnus/workspace/Caelestion/inc/Command.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Command.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Engine.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h:
 
 /usr/local/include/OGRE/OgreVector3.h:
 
@@ -161,7 +163,7 @@ src/Command.o: ../src/Command.cpp \
 
 /usr/local/include/OGRE/OgreQuaternion.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -383,8 +385,12 @@ src/Command.o: ../src/Command.cpp \
 
 /usr/local/include/OGRE/OgreNameGenerator.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Types381.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Utils.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/Utils.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/UnitAI.h:

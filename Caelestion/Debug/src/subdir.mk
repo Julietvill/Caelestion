@@ -16,9 +16,12 @@ CPP_SRCS += \
 ../src/Mgr.cpp \
 ../src/Physics3D.cpp \
 ../src/Physics3Dq.cpp \
+../src/Physics3DqConstSpeed.cpp \
+../src/SoundMgr.cpp \
 ../src/UiMgr.cpp \
 ../src/UnitAI.cpp \
 ../src/Utils.cpp \
+../src/Weapon.cpp \
 ../src/main.cpp 
 
 OBJS += \
@@ -34,9 +37,12 @@ OBJS += \
 ./src/Mgr.o \
 ./src/Physics3D.o \
 ./src/Physics3Dq.o \
+./src/Physics3DqConstSpeed.o \
+./src/SoundMgr.o \
 ./src/UiMgr.o \
 ./src/UnitAI.o \
 ./src/Utils.o \
+./src/Weapon.o \
 ./src/main.o 
 
 CPP_DEPS += \
@@ -52,9 +58,12 @@ CPP_DEPS += \
 ./src/Mgr.d \
 ./src/Physics3D.d \
 ./src/Physics3Dq.d \
+./src/Physics3DqConstSpeed.d \
+./src/SoundMgr.d \
 ./src/UiMgr.d \
 ./src/UnitAI.d \
 ./src/Utils.d \
+./src/Weapon.d \
 ./src/main.d 
 
 
@@ -62,7 +71,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	g++ -I/usr/local/include/OGRE -I/usr/local/include/OGRE/Overlay -I/usr/include/OIS -I"/home/wmagnus/workspace/Caelestion/inc" -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	g++ -I"/home/julietv/workspace/Caelestion/Caelestion/inc" -I/usr/include/audio -I/usr/include/AL -I/usr/local/include/OGRE/Overlay -I/usr/include/OIS -I/usr/local/include/OGRE -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

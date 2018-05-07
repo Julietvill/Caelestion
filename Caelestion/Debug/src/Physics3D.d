@@ -1,5 +1,5 @@
 src/Physics3D.o: ../src/Physics3D.cpp \
- /home/wmagnus/workspace/Caelestion/inc/Entity381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h \
  /usr/local/include/OGRE/OgreEntity.h \
  /usr/local/include/OGRE/OgrePrerequisites.h \
  /usr/local/include/OGRE/OgrePlatform.h \
@@ -122,14 +122,15 @@ src/Physics3D.o: ../src/Physics3D.cpp \
  /usr/local/include/OGRE/OgreConfigOptionMap.h \
  /usr/local/include/OGRE/OgreNameGenerator.h \
  /usr/local/include/OGRE/OgreVector3.h \
- /home/wmagnus/workspace/Caelestion/inc/Aspect.h \
- /home/wmagnus/workspace/Caelestion/inc/Command.h \
- /home/wmagnus/workspace/Caelestion/inc/Engine.h \
- /home/wmagnus/workspace/Caelestion/inc/Types381.h \
- /home/wmagnus/workspace/Caelestion/inc/Physics3D.h \
- /home/wmagnus/workspace/Caelestion/inc/Utils.h
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Command.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Physics3D.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Utils.h
 
-/home/wmagnus/workspace/Caelestion/inc/Entity381.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Entity381.h:
 
 /usr/local/include/OGRE/OgreEntity.h:
 
@@ -379,14 +380,16 @@ src/Physics3D.o: ../src/Physics3D.cpp \
 
 /usr/local/include/OGRE/OgreVector3.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Aspect.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Command.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Command.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Engine.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Types381.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Types381.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Physics3D.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Weapon.h:
 
-/home/wmagnus/workspace/Caelestion/inc/Utils.h:
+/home/julietv/workspace/Caelestion/Caelestion/inc/Physics3D.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/Utils.h:
