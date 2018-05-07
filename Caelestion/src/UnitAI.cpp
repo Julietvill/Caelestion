@@ -17,7 +17,7 @@ UnitAI::UnitAI(Entity381* ent)
 : Aspect(ent)
 {
 	MoveTo* enemyHQ = new MoveTo(entity);
-	enemyHQ->dest = entity->enemyHQ;
+	enemyHQ->dest = Ogre::Vector3::ZERO;
 	listOfCommands.push(enemyHQ);
 	distanceSqr = 0;
 	avoiding = false;
@@ -34,20 +34,29 @@ void UnitAI::Tick(float dt){
 		//check the distances between the entities, for avoidance and attacking
 		for( unsigned int index = 0; index < entity->engine->entityMgr->entities.size(); index++){
 			distanceSqr = entity->position.squaredDistance(entity->engine->entityMgr->entities[index]->position);
+
 			if( entity->enemy == entity->engine->entityMgr->entities[index]->enemy )
 			{
-				if( distanceSqr < 2500 && entity->engine->entityMgr->entities[index] != this->entity){
+				if( distanceSqr < 2500 && entity->engine->entityMgr->entities[index] != this->entity && !avoiding){
 					avoiding = true;
 					Avoid* avoid = new Avoid(entity, entity->engine->entityMgr->entities[index]);
 					listOfCommands.push(avoid);
 				}
 			}
+
 			else{
 				if( distanceSqr < 62500 && entity->engine->entityMgr->entities[index] != this->entity){
 					Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
 					listOfCommands.push(attackEnemy);
 				}
+
+				else if( distanceSqr < 2500 && entity->engine->entityMgr->entities[index] != this->entity){
+					avoiding = true;
+					Avoid* avoid = new Avoid(entity, entity->engine->entityMgr->entities[index]);
+					listOfCommands.push(avoid);
+				}
 			}
+
 		}
 
 		if( listOfCommands.top()->isComplete ){

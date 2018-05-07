@@ -8,9 +8,16 @@
 #include <UiMgr.h>
 #include <Engine.h>
 #include <GfxMgr.h>
+#include <GameMgr.h>
 #include <InputMgr.h>
 #include <EntityMgr.h>
 #include <Types381.h>
+
+std::string intToString(int x){
+	char tmp[10000];
+	sprintf(tmp, "%i", x);
+	return std::string(tmp);
+}
 
 UiMgr::UiMgr(Engine* eng): Mgr(eng){
 	// Initialize the OverlaySystem (changed for Ogre 1.9)
@@ -65,13 +72,20 @@ void UiMgr::Tick(float dt){
 		engine->paused = false;
 		mTrayMgr->hideBackdrop();
 
+
+		mLabel = (OgreBites::Label*)mTrayMgr->getWidget("PILOT_POINTS");
+		if( mLabel == NULL)
+			mLabel = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT,"PILOT_POINTS", "0",250);
+
+		mLabel->setCaption(intToString( engine->gameMgr->points));
+
 		//BottomRight-bound stats.
 			//HP
 		OgreBites::ProgressBar* hp;
 		hp = (OgreBites::ProgressBar*)mTrayMgr->getWidget("PILOT_HP");
-		if(hp == NULL) hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "", 250., 250.);
+		if(hp == NULL) hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "HEALTH", 250., 240.);
 		hp->show();
-		hp->setProgress(.5);
+		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/100); //TODO: Base on proper max
 
 
 

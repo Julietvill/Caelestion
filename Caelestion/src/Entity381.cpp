@@ -12,6 +12,7 @@
 #include <Physics3Dq.h>
 #include <Physics3DqConstSpeed.h>
 #include <UnitAI.h>
+#include <SoundMgr.h>
 
 std::string IntToString(int x){
 	char tmp[10000];
@@ -38,14 +39,17 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	sceneNode = 0;
 	ogreEntity = 0;
 
-	enemyHQ = Ogre::Vector3::ZERO;
+	//enemyHQ = Ogre::Vector3::ZERO;
 
+	//add all aspects that the entities will need to function
 	Physics3DqCS* phx = new Physics3DqCS(this);
 	aspects.push_back((Aspect*) phx);
 	Renderable * renderable = new Renderable(this);
 	aspects.push_back((Aspect*)renderable);
 	UnitAI* ai = new UnitAI(this);
 	aspects.push_back((Aspect*) ai);
+	healthStatus* health = new healthStatus(this);
+	aspects.push_back((Aspect*)health);
 
 	this->desiredHeading = this->heading = 0;
 	this->turnRate = 0;
@@ -69,7 +73,10 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->soundFile = "Boat-Sound.wav";		//this will need to be changed **NEEDS UPDATE**
 	this->didSelectSoundPlay = false;
 
-	enemy = false;
+
+	this->currentHealth = 100;				//we can change this based on how much health we want each entity to have
+	this->hit = false;						//determines if the entity was hit or not.
+	this->enemy = false;					//determines if the entity is an emeny or friendly, helps with attacking and avoidance.
 
 }
 
@@ -102,7 +109,6 @@ void Entity381::Lobotomize()
 	aspects.push_back((Aspect*)renderable);
 }
 
-
 //-------------------------------------------------------------------------------------------------------------------------------
 
 friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
@@ -116,14 +122,17 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 
 
 	this->speed = 50.0f;
-	this->turnRate = 50.f;
+	this->turnRate = 50.0f;
 	this->climbRate = 1;
 
-	enemyHQ = Ogre::Vector3(1000,0,0);
 	enemy = false;
 
 	//for friendlies this will be the number of points that you lose if you kill them.
-	this->pointValue = 10;
+	this->pointValue = -100;
+
+	this->weapons.push_back((Weapon*) new T1Killray(Ogre::Vector3(0,0,0), this));
+	this->soundFile = "Assets/SFX/Laser_light.wav";
+
 }
 
 friendlyOne::~friendlyOne(){
@@ -145,10 +154,9 @@ friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
 
-	enemyHQ = Ogre::Vector3(1000,0,0);
 	enemy = false;
 	//for friendlies this will be the number of points that you lose if you kill them.
-	this->pointValue = 10;
+	this->pointValue = -250;
 }
 
 friendlyTwo::~friendlyTwo(){
@@ -163,15 +171,13 @@ friendlyThree::friendlyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 
 	this->velocity = Ogre::Vector3(0,0,-0.1);
 
-
-	//these values will need to be changed
 	this->speed = 15.0f;
-	this->turnRate = 10.0f;
+	this->turnRate = 40.0f;
 	this->climbRate = 1;
 	enemy = false;
-	enemyHQ = Ogre::Vector3(1000,0,0);
+
 	//for friendlies this will be the number of points that you lose if you kill them.
-	this->pointValue = 10;
+	this->pointValue = -1000;
 }
 
 friendlyThree::~friendlyThree(){
@@ -182,18 +188,17 @@ friendlyThree::~friendlyThree(){
 enemyOne::enemyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
 	meshfilename = "Aesir.mesh";
-		matname = "Aesir/Texture";
-		entityType = enemyTypeOne;
+	matname = "Aesir/Texture";
+	entityType = enemyTypeOne;
 
-	this->velocity = Ogre::Vector3(0,0,-0.1);
+	this->velocity = Ogre::Vector3(0,0,-50);
 
-
-	//these values will need to be changed
-	this->speed = 15.0f;
-	this->turnRate = 10.0f;
+	this->speed = 50.0f;
+	this->turnRate = 50.0f;
 	this->climbRate = 1;
+
 	enemy = true;
-	enemyHQ = Ogre::Vector3(-1000,0,0);
+
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 25;
 }
@@ -213,10 +218,9 @@ enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 
 	//these values will need to be changed
 	this->speed = 15.0f;
-	this->turnRate = 10.0f;
+	this->turnRate = 50.0f;
 	this->climbRate = 1;
 	enemy = true;
-	enemyHQ = Ogre::Vector3(-1000,0,0);
 
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 50;
@@ -240,8 +244,6 @@ enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 	this->turnRate = 10.0f;
 	this->climbRate = 1;
 	enemy = false;
-	enemyHQ = Ogre::Vector3(-1000,0,0);
-
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 75;
 }

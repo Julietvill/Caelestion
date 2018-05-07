@@ -8,6 +8,8 @@
 #include <Aspect.h>
 #include <Entity381.h>  //Aspect includes Entity381.h
 #include <DebugDrawer.h>
+#include <Engine.h>
+#include <EntityMgr.h>
 
 
 Aspect::Aspect(Entity381 *ent){
@@ -21,6 +23,8 @@ Aspect::~Aspect(){
 void Aspect::Tick(float dt){
 
 }
+
+//-------------------------------------------------------------------------------------------------------------------------------
 
 Renderable::Renderable(Entity381* ent):Aspect(ent){
 
@@ -41,4 +45,26 @@ void Renderable::Tick(float dt){
 	else
 		entity->sceneNode->showBoundingBox(false); //or we could do this in the entity mgr every time tab is pressed....
 	//DebugDrawer::getSingleton().drawLine(entity->sceneNode->getPosition() + Ogre::Vector3(0,25,0), entity->sceneNode->getPosition() + (Ogre::Vector3(Ogre::Math::Cos(Ogre::Degree(entity->desiredHeading)), 0.25,Ogre::Math::Sin(Ogre::Degree(entity->desiredHeading))) * 100), Ogre::ColourValue::Blue);
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------
+
+healthStatus::healthStatus( Entity381* ent) : Aspect(ent){
+
+}
+
+
+healthStatus::~healthStatus(){
+
+}
+
+void healthStatus::Tick(float dt){
+
+	if(entity->currentHealth == 0){
+		entity->position = entity->startPosition;
+		entity->currentHealth = 100; // TODO: Set a max
+		if(entity == entity->engine->entityMgr->playerEntity){
+			//throw up pause screen with three buttons for respawn
+		}
+	}
 }

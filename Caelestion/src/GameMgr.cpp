@@ -35,23 +35,28 @@ void GameMgr::Init(){
 	  Ogre::Light* light = engine->gfxMgr->mSceneMgr->createLight("MainLight");
 	  light->setPosition(20.0, 80.0, 50.0);
 
-	  //engine->gfxMgr->MakeGround();
 	  engine->gfxMgr->MakeSky();
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,0));
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
 	  engine->entityMgr->playerEntity->Lobotomize();
 
-	  //engine->gfxMgr->cameraFollow = engine->entityMgr->playerEntity;
+	  //using this entity for AI obervation
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,-100));
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,Ogre::Vector3(0,0,-100));
+
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,Ogre::Vector3(0,0,100));
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,Ogre::Vector3(0,0,100));
+
+
 
 	  // a fixed point in the ocean so you can see relative motion
-
 	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("Asteroid_1.mesh");
-	  Ogre::SceneNode* sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 100, -200));
+	  Ogre::SceneNode* sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
 	  sceneNode->attachObject(ogreEntityFixed);
 	  sceneNode->showBoundingBox(true);
 	  sceneNode->setScale(25,25,25);
 
-	  MakeEntities();
+	  //MakeEntities();
 }
 
 void GameMgr::LoadLevel(){
@@ -59,18 +64,16 @@ void GameMgr::LoadLevel(){
 }
 
 void GameMgr::MakeEntities(){
-	Ogre::Vector3 position(1000, 0, -750);
+
+	//change the position, it can now be the same
+	Ogre::Vector3 position(-500, 0, -750);
 
 	for( int i = 0; i < 7; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyTypeOne,position);
-		  position.z += 250;
 	}
 
-	position.x = -1000;
-	position.z = -750;
 	for( int i = 0; i < 7; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,position);
-		  position.z += 250;
 	}
 
 }
