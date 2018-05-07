@@ -76,7 +76,7 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->currentHealth = this->maxHealth = 100;				//we can change this based on how much health we want each entity to have
 	this->hit = false;						//determines if the entity was hit or not.
 	this->enemy = false;					//determines if the entity is an emeny or friendly, helps with attacking and avoidance.
-
+	this->killMe = false;					//determines if the e381 needs purging
 }
 
 Entity381::~Entity381(){
@@ -311,9 +311,9 @@ enemyThree::~enemyThree(){
 
 Yggdrasil::Yggdrasil(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "Caelestion_station.mesh";
-	matname = "Caelestion_Station";
-	entityType = enemyTypeOne;
+	meshfilename = "Yggdrasill.mesh";
+	matname = "Yggdrasill";
+	entityType = enemyStation;
 
 	this->velocity = Ogre::Vector3(0,0,0);
 

@@ -44,8 +44,13 @@ void GameMgr::Init(){
 	  engine->entityMgr->playerEntity->
 	  engine->entityMgr->playerEntity->Lobotomize();
 
-	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyStation,Ogre::Vector3(0,0,-2500));
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,Ogre::Vector3(0,0,2500));
+	  engine->entityMgr->yggdrasil = engine->entityMgr->entities[1];
 	  engine->entityMgr->entities[1]->sceneNode->setScale(100,100,100);
+
+	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyStation,Ogre::Vector3(0,0,-2500));
+	  engine->entityMgr->caelestion = engine->entityMgr->entities[2];
+	  engine->entityMgr->entities[2]->sceneNode->setScale(100,100,100);
 
 	  // a fixed point in the ocean so you can see relative motion
 	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("Asteroid_1.mesh");
@@ -77,6 +82,7 @@ void GameMgr::Tick(float dt){
 
 	if( points <= 0 ){
 		//game is over
+		engine->keepRunning = false;
 	}
 
 }

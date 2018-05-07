@@ -14,7 +14,12 @@ public:
   //Engine *engine;
 
   std::vector<Entity381*> entities;
+
+  std::vector<Entity381*> projectiles;
+
   Entity381* playerEntity;
+  Entity381* caelestion;
+  Entity381* yggdrasil;
 
   //Ogre::SceneManager *sceneMgr;
 

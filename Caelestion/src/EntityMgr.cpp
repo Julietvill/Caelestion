@@ -10,6 +10,8 @@
 
 EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
 	playerEntity = 0;
+	caelestion = 0;
+	yggdrasil = 0;
 	entCount = 0;
 }
 
@@ -42,8 +44,8 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	case friendlyStation:
 		ent = new caelestionStation(engine, pos, entCount++);
 		break;
-	case Yggdrasil:
-
+	case enemyStation:
+		ent = new Yggdrasil(engine, pos, entCount++);
 		break;
 	default:
 		ent = new friendlyOne(engine, pos, entCount++);//CreateEntity("robot.mesh", pos);
@@ -63,6 +65,18 @@ void EntityMgr::Tick(float dt){
 		for(unsigned int i = 0; i < entities.size(); i++){
 			entities[i]->Tick(dt);
 		}
+
+		for(unsigned int i = 0; i < projectiles.size(); i++)
+		{
+			projectiles[i]->Tick(dt);
+		}
+
+		for(unsigned int i = 0; i < projectiles.size(); i++)
+		{
+			if(projectiles[i]->killMe) projectiles.erase(projectiles.begin()+i);
+			i--;
+		}
+
 	}
 
 }

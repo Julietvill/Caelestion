@@ -66,3 +66,20 @@ void T1Killray::Fire(float dt)
 
 	}
 }
+
+T1Projectile::T1Projectile(Ogre::Vector3 placement, Entity381* own):
+		Weapon(1000, placement, own)
+{
+	projmeshfilename = "cube.mesh";
+
+	cooldown = 1.5;
+	coolstate = 0.f;
+}
+
+T1Projectile::~T1Projectile(){}
+
+void T1Projectile::Fire(float dt)
+{
+	cooldown
+}
+

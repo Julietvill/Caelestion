@@ -64,6 +64,8 @@ public:
 
   //Ogre::Vector3 enemyHQ;
   std::vector<Weapon*> weapons; //nevuh enough dakka
+  bool killMe;
+
 
   void Init();
 
