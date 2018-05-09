@@ -11,6 +11,8 @@
 #include <Engine.h>
 #include <EntityMgr.h>
 #include <GameMgr.h>
+#include <UiMgr.h>
+#include <MenuStates.h>
 
 
 Aspect::Aspect(Entity381 *ent){
@@ -63,9 +65,11 @@ void healthStatus::Tick(float dt){
 
 	if(entity->currentHealth <= 0){
 		entity->position = entity->startPosition;
-		entity->currentHealth = entity->maxHealth; // TODO: Set a max
+		entity->currentHealth = entity->maxHealth;
 		if(entity == entity->engine->entityMgr->playerEntity){
-			//throw up pause screen with three buttons for respawn
+			entity->engine->uiMgr->prevState = entity->engine->uiMgr->uiState;
+			entity->engine->uiMgr->uiState = respawState;
+
 		}
 	}
 

@@ -14,7 +14,8 @@ enum menuStates {
 	PilotUIState,
 	PauseMenuState,
 	respawState,
-	creditState
+	creditState,
+	controlState
 };
 
 

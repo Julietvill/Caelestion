@@ -30,11 +30,20 @@ UiMgr::UiMgr(Engine* eng): Mgr(eng){
 	    std::cout << "end uicons" << std::endl;
 
 	    uiState = InitMenuState;
-	    mButton = 0;
+	    helpBtn = 0;
+	    creditsBtn = 0;
+
 		GladiusBtn = 0;
 		HastatusBtn = 0;
+		friendlythreeBtn = 0;
+
 		GladiusLbl= 0;
 		HastatusLbl = 0;
+		hp = 0;
+		prevState = uiState;
+		waveLbl = 0;
+		pauseLbl = 0;
+		playPauseBtn = 0;
 
 }
 
@@ -48,6 +57,7 @@ void UiMgr::Init(){
     mInputContext.mKeyboard = engine->inputMgr->mKeyboard;
     mInputContext.mMouse = engine->inputMgr->mMouse;
     mTrayMgr = new OgreBites::SdkTrayManager("InterfaceName", engine->gfxMgr->mWindow, mInputContext, this);
+
     //mTrayMgr->showFrameStats(OgreBites::TL_BOTTOMLEFT);
     //mTrayMgr->showLogo(OgreBites::TL_BOTTOMRIGHT);
     //mTrayMgr->hideCursor();
@@ -58,36 +68,39 @@ void UiMgr::stop(){
 }
 
 void UiMgr::LoadLevel(){
-	//mTrayMgr->showBackdrop("ECSLENT/UI");
-	mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
-	mTrayMgr->createButton(OgreBites::TL_TOPRIGHT, "credit", "Credits", 250);
+	//create tray for Menu Screen
+	helpBtn = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Controls",250);
+	creditsBtn = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT, "credit", "Credits", 250);
+	playPauseBtn = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT, "play", "Play", 250);
+
+	//mTrayMgr->hideAll();
 	//mTrayMgr->createButton(OgreBites::TL_BOTTOMLEFT,"test","test",250);
 }
 
 void UiMgr::Tick(float dt){
 	mTrayMgr->refreshCursor();
+
 	switch(uiState)
 	{
-	//Splash Screen Invocation States////////////////////////////////////
+	/*************************Splash Screen Invocation States********************************/
 	case InitMenuState:
 		engine->paused = true;
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/SPLASH");
+		helpBtn->setCaption( "Controls");
 
-		/*mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
-		if( mButton == NULL)
-		{
-			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
-		}*/
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(115.);
+
+
+		if(pauseLbl != NULL)
+			pauseLbl->hide();
 		break;
 
 	case ReSplashMenuState:
 		engine->paused = true;
+		pauseLbl->hide();
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
-
-		mButton->setCaption("Play");
-
 		break;
 	//////////////////////////////////////////////////////////////////////
 
@@ -95,99 +108,125 @@ void UiMgr::Tick(float dt){
 	case PilotUIState:
 		engine->paused = false;
 		mTrayMgr->hideBackdrop();
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPLEFT)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		//mTrayMgr->hideCursor();
+		playPauseBtn->hide();
 
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
 
+		//Number of points
 		mLabel = (OgreBites::Label*)mTrayMgr->getWidget("PILOT_POINTS");
 		if( mLabel == NULL)
 			mLabel = mTrayMgr->createLabel(OgreBites::TL_BOTTOMRIGHT,"PILOT_POINTS", "0",250);
-
 		mLabel->setCaption(intToString( engine->gameMgr->points));
 
-		//BottomRight-bound stats.
-			//HP
-		OgreBites::ProgressBar* hp;
+		//Amount of health
 		hp = (OgreBites::ProgressBar*)mTrayMgr->getWidget("PILOT_HP");
-		if(hp == NULL) hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "HEALTH", 250., 240.);
+		if(hp == NULL)
+			hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "HEALTH", 250., 240.);
 		hp->show();
+		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth));
 
-		OgreBites::Label* wave;
-		wave = (OgreBites::Label*)mTrayMgr->getWidget("WAVE");
-		if(wave == NULL) wave = mTrayMgr->createLabel(OgreBites::TL_BOTTOMLEFT, "WAVE", "WAVE 1", 250);
-		if(engine->gameMgr->waveTwoUnlocked) wave->setCaption("WAVE 2");
-		if(engine->gameMgr->waveThreeUnlocked) wave->setCaption("WAVE 3");
+		//Wave that you are currently on
+		waveLbl = (OgreBites::Label*)mTrayMgr->getWidget("WAVE");
+		if(waveLbl == NULL)
+			waveLbl = mTrayMgr->createLabel(OgreBites::TL_BOTTOMLEFT, "WAVE", "WAVE 1", 250);
+		if(engine->gameMgr->waveTwoUnlocked)
+			waveLbl->setCaption("WAVE 2");
+		if(engine->gameMgr->waveThreeUnlocked)
+			waveLbl->setCaption("WAVE 3");
 
 		//Instructions button placement
-		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
-		if( mButton == NULL)
-		{
-			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
-		}
+		helpBtn->setCaption("Controls");
 
-
-
-		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth)); //TODO: Base on proper max
-
-		mButton->setCaption("Instructions");
-
-		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->show();
-
-		mTrayMgr->showTrays();
-		mTrayMgr->showBackdrop("ECSLENT/PILOT_UI");
 		break;
 	/////////////////////////////////////////////////////////////////////helpBtn/
 
 	//Pause Menu (What would traditionally be bound to ESC)///////////////
 	case PauseMenuState:
 		engine->paused = true;
-		mTrayMgr->hideBackdrop();
-		//mTrayMgr->destroyAllWidgets();
-
-		mTrayMgr->hideAll();
-
-		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
 		mTrayMgr->showCursor();
-		mTrayMgr->showTrays();
 
-		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
+
+		helpBtn->setCaption("Controls");
+
+		pauseLbl = (OgreBites::Label*)mTrayMgr->getWidget("pause");
+		if(pauseLbl == NULL)
+			pauseLbl = mTrayMgr->createLabel(OgreBites::TL_TOPLEFT, "pause", "PAUSED", 250);
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPLEFT)->show();
+
 
 		break;
 	//////////////////////////////////////////////////////////////////////
 
 	case respawState:
-
 		engine->paused = true;
-		mTrayMgr->showBackdrop();
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showCursor();
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
 
-		HastatusLbl = (OgreBites::Label*)mTrayMgr->getWidget("HastatusPointLabel");
-		if( mButton == NULL)
-			mTrayMgr->createLabel(OgreBites::TL_CENTER, "HastatusPointLabel","100",250.);
 
-		HastatusBtn = (OgreBites::Button*)mTrayMgr->getWidget("HastatusButton");
-		if( mButton == NULL)
-			mTrayMgr->createButton(OgreBites::TL_CENTER,"HastatusButton", "Hastatus");
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->show();
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setWidth(800.);
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setPosition(-400.0,0.0);
 
-		GladiusLbl = (OgreBites::Label*)mTrayMgr->getWidget("GladiusPointLabel");
-		if( mButton == NULL)
-			mTrayMgr->createLabel(OgreBites::TL_CENTER, "GladiusPointLabel","250",250.);
+		GladiusLbl= (OgreBites::Label*)mTrayMgr->getWidget("gladius_label");
+		if(GladiusLbl == NULL){
+			GladiusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "gladius_label", "# of points for Gladuis", 250);
+			//GladiusLbl->getOverlayElement()->setLeft(-400);
+			mTrayMgr->getWidget("gladius_label")->getOverlayElement()->setLeft(-400);
+		}
 
-		GladiusBtn = (OgreBites::Button*)mTrayMgr->getWidget("GladiusButton");
-		if( mButton == NULL)
-			mTrayMgr->createButton(OgreBites::TL_CENTER, "GladiusButton","Gladius");
+		HastatusLbl = (OgreBites::Label*)mTrayMgr->getWidget("Hastatus_label");
+		if(HastatusLbl == NULL)
+			HastatusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Hastatus_label", "# of points for Hastatus", 250);
 
-		//mTrayMgr->createLabel(OgreBites::TL_CENTER, "HastatusPointLabel","100",250.);
-		//mTrayMgr->createButton(OgreBites::TL_CENTER, "","");
+		OgreBites::Separator* separate;
+		separate = (OgreBites::Separator*)mTrayMgr->getWidget("sep");
+		if( separate == NULL)
+			separate = mTrayMgr->createSeparator(OgreBites::TL_CENTER,"sep", 800);
+
+		HastatusBtn = (OgreBites::Button*)mTrayMgr->getWidget("hastatus_button");
+		if(HastatusBtn == NULL)
+			HastatusBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "hastatus_button", "Hastatus", 250);
+
+		GladiusBtn = (OgreBites::Button*)mTrayMgr->getWidget("gladius_button");
+		if(GladiusBtn == NULL)
+			GladiusBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "gladius_button", "Gladius", 250);
+
+		friendlythreeBtn = (OgreBites::Button*)mTrayMgr->getWidget("friendlythree_button");
+		if(friendlythreeBtn == NULL)
+			friendlythreeBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "friendlythree_button", "FriendlyThree", 250);
 
 		break;
 
 	case creditState:
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/Credits");
+
 		//Instructions button placement
-		mButton = (OgreBites::Button*)mTrayMgr->getWidget("helpBtn");
-		if( mButton == NULL)
-		{
-			mButton = mTrayMgr->createButton(OgreBites::TL_TOPRIGHT,"helpBtn","Instructions",250);
-		}
+		if(prevState == InitMenuState)
+			helpBtn->setCaption("Main Menu");
+		else if( prevState == PilotUIState)
+			helpBtn->setCaption("Play");
+		else if (prevState == respawState)
+			helpBtn->setCaption( "Respawn Screen");
+
+		break;
+
+	case controlState:
+		engine->paused = true;
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
+
+		if(prevState == InitMenuState)
+			helpBtn->setCaption("Main Menu");
+		else if( prevState == PilotUIState || prevState == PauseMenuState)
+			helpBtn->setCaption("Play");
+		else if (prevState == respawState)
+			helpBtn->setCaption( "Respawn Screen");
 
 		break;
 
@@ -232,29 +271,53 @@ bool UiMgr::mouseReleased(const OIS::MouseEvent &arg, OIS::MouseButtonID id){
 }
 
 void UiMgr::buttonHit(OgreBites::Button *b){
-
-	std::cout << "do I ever happen" << std::endl;
     if(b->getName() == "helpBtn"){
-    	std::cout << "Help Button pressed" << std::endl;
-    	if(uiState!= ReSplashMenuState) uiState = ReSplashMenuState;
-    	else uiState = PilotUIState;
+    	if(uiState == creditState){
+    		uiState = prevState;
+    	}
+    	else if(uiState != controlState){
+    		prevState = uiState;
+    		uiState = controlState;
+    	}
+    	else if( prevState == PauseMenuState){
+    		uiState = PilotUIState;
+    	}
+    	else{
+    		uiState = prevState;
+
+    	}
     }
 
     if(b->getName() == "credit"){
-    	std::cout << "Help Button pressed" << std::endl;
     	uiState = creditState;
     }
 
-
-    /*
-    else if(b->getName()=="HastatusButton")
-    {
-
+    if(b->getName() == "play"){
+    	if( uiState != PilotUIState)
+    		uiState = PilotUIState;
+    	else{
+    		uiState = PauseMenuState;
+    	}
     }
-    else if(b->getName()=="GladiusButton")
-    {
 
-    }*/
+    if(b->getName()=="Hastatus_label")
+    {
+    	/*
+    	Ogre::Vector3 pos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
+    	engine->entityMgr->playerEntity = new friendlyOne(engine, pos , 0);
+    	engine->entityMgr->playerEntity->Lobotomize();
+    	*/
+    	uiState = PilotUIState;
+    }
+    if(b->getName()=="gladius_button")
+    {
+    	Ogre::Vector3 pos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
+    	//delete engine->entityMgr->playerEntity;
+    	//engine->entityMgr->entities[0] = new friendlyTwo(engine, pos , 0);
+    	//engine->entityMgr->entities[0]->Lobotomize();
+
+    	uiState = PilotUIState;
+    }
 
 }
 

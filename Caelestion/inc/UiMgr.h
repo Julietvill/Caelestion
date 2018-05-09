@@ -49,14 +49,25 @@ public:
 	OgreBites::InputContext mInputContext;
 	OgreBites::SdkTrayManager* mTrayMgr;
 	Ogre::OverlaySystem* mOverlaySystem;
-	OgreBites::Label *mLabel;
-	OgreBites::Button *mButton;
-	OgreBites::Button *GladiusBtn;
-	OgreBites::Button *HastatusBtn;
-	OgreBites::Label *GladiusLbl;
-	OgreBites::Label *HastatusLbl;
 
 	menuStates uiState;
+	menuStates prevState;
+
+private:
+	OgreBites::Button *helpBtn;
+	OgreBites::Button *creditsBtn;
+	OgreBites::Button *GladiusBtn;
+	OgreBites::Button *HastatusBtn;
+	OgreBites::Button *friendlythreeBtn;
+	OgreBites::Button *playPauseBtn;
+
+	OgreBites::Label *mLabel;
+	OgreBites::Label *GladiusLbl;
+	OgreBites::Label *HastatusLbl;
+	OgreBites::Label *waveLbl;
+	OgreBites::Label *pauseLbl;
+
+	OgreBites::ProgressBar *hp;
 };
 
 #endif /* INC_UIMGR_H_ */

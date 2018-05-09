@@ -42,8 +42,8 @@ void GameMgr::Init(){
 	  Ogre::Vector3 startPos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,startPos);
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
-	  engine->entityMgr->playerEntity->
 	  engine->entityMgr->playerEntity->Lobotomize();
+	  engine->entityMgr->playerEntity->currentHealth = 1;
 
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,engine->entityMgr->yggdrasilPos);
 	  engine->entityMgr->yggdrasil = engine->entityMgr->entities[1];
@@ -83,7 +83,7 @@ void GameMgr::Tick(float dt){
 
 	if( points <= 0 ){
 		//game is over
-		engine->keepRunning = false;
+		//engine->keepRunning = false;
 	}
 
 }

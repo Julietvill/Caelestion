@@ -70,11 +70,8 @@ void Attack::Tick(float dt){
 
 	myEnt->desiredRotation = Ogre::Vector3(-dpitch,dyaw,0);
 
-	cout << "Enemy Health" << enemyTarget->currentHealth << endl;
-
 	//need to add a dimention of time
 	if( !myEnt->weapons.empty() && attackTimer < 0){
-		cout << myEnt->identity << " - Attack" << endl;
 		myEnt->weapons[0]->Fire(dt);
 		attackTimer = attackTime;
 	}

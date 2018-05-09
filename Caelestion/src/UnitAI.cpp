@@ -62,7 +62,6 @@ void UnitAI::Tick(float dt){
 			enemyHQ->dest = entity->engine->entityMgr->yggdrasilPos;
 		else
 			enemyHQ->dest = entity->engine->entityMgr->caelestionPos;
-		cout << "dest" << enemyHQ->dest << endl;
 		listOfCommands.push(enemyHQ);
 		distanceSqr = 0;
 		avoiding = false;

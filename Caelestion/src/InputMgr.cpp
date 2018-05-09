@@ -105,10 +105,12 @@ void InputMgr::Tick(float dt){
 		// Pause state engage/disengage (Open pause menu)
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_P)){
 		if(engine->uiMgr->uiState != PilotUIState){
+			engine->uiMgr->prevState = engine->uiMgr->uiState;
 			engine->uiMgr->uiState = PilotUIState;
 		}
 		else
 		{
+			engine->uiMgr->prevState = engine->uiMgr->uiState;
 			engine->uiMgr->uiState = PauseMenuState;
 		}
 		keyboardTimer = keyTime;
