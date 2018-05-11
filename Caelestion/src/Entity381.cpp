@@ -75,6 +75,8 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->hit = false;						//determines if the entity was hit or not.
 	this->enemy = false;					//determines if the entity is an emeny or friendly, helps with attacking and avoidance.
 	this->killMe = false;					//determines if the e381 needs purging
+	this->attacking = false;				//determines if the entity is already attacking something so it doesn't add another entity to attack
+	this->avoiding = false;
 }
 
 Entity381::~Entity381(){
@@ -83,10 +85,11 @@ Entity381::~Entity381(){
 
 void Entity381::Init(){
 	name = meshfilename + IntToString(identity);
-	ogreEntity = engine->gfxMgr->mSceneMgr->createEntity(meshfilename);
+	ogreEntity = engine->gfxMgr->mSceneMgr->createEntity(name, meshfilename);
 	if(matname != "") ogreEntity->setMaterialName(matname);
 	sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 	sceneNode->attachObject(ogreEntity);
+
 }
 
 void Entity381::Tick(float dt){
@@ -107,6 +110,67 @@ void Entity381::Lobotomize()
 	healthStatus* health = new healthStatus(this);
 	aspects.push_back((Aspect*)health);
 }
+
+void Entity381::switchPlayerEnt( EntityTypes type){
+	/*
+	this->Lobotomize();
+	Ogre::Degree z = Ogre::Degree(180.);
+	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
+	enemy = false;
+
+	//delete ogreEntity;
+	//delete sceneNode;
+
+	sceneNode->detachObject(name);
+
+	switch( type ){
+	case friendlyTypeOne:
+		meshfilename = "Hastatus.mesh";
+		matname = "Hastatus/Texture";
+		entityType = friendlyTypeOne;
+		//these values will need to be changed
+		this->velocity = Ogre::Vector3(0,0,50);
+		this->speed = 50.0f;
+		this->turnRate = 50.0f;
+		this->climbRate = 1;
+		this->currentHealth = this->maxHealth = 100;
+		this->weapons.push_back((Weapon*) new T1Killray(Ogre::Vector3(0,0,0), this));
+		break;
+
+	case friendlyTypeTwo:
+		meshfilename = "gladius.mesh";
+		matname = "Gladius/Texture";
+		entityType = friendlyTypeTwo;
+		this->velocity = Ogre::Vector3(0,0,30);
+		//these values will need to be changed
+		this->speed = 30.0f;
+		this->turnRate = 30.0f;
+		this->climbRate = 1;
+		this->currentHealth = this->maxHealth = 100;
+		break;
+
+	case friendlyTypeThree:
+		meshfilename = "gladius.mesh";
+		matname = "Gladius/Texture";
+		entityType = friendlyTypeThree;
+		this->velocity = Ogre::Vector3(0,0,0.1);
+		this->speed = 15.0f;
+		this->turnRate = 40.0f;
+		this->climbRate = 1;
+		this->currentHealth = this->maxHealth = 100;
+		break;
+	default:
+		break;
+	}
+
+	Ogre::Entity* newEntity = engine->gfxMgr->mSceneMgr->createEntity(meshfilename);
+	if(matname != "") newEntity->setMaterialName(matname);
+	sceneNode->attachObject( newEntity );
+
+	//engine->gfxMgr->setUpCamera();
+	 */
+}
+
 
 //-------------------------------------------------------------------------------------------------------------------------------
 

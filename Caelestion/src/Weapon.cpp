@@ -53,7 +53,6 @@ void T1Killray::Fire(float dt)
 		cur = owner->engine->entityMgr->entities[i];
 		if (cur != owner && rc.intersects(cur->sceneNode->_getWorldAABB()).first)
 		{
-			std::cout << "HIT" << std::endl;
 			cur->currentHealth -= dmgOnHit*dt;
 			if(owner == owner->engine->entityMgr->playerEntity)
 			{

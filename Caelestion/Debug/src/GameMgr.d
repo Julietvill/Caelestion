@@ -237,6 +237,11 @@ src/GameMgr.o: ../src/GameMgr.cpp \
  /usr/include/OIS/OISFactoryCreator.h /usr/include/OIS/OISException.h \
  /usr/include/OIS/OISEffect.h /usr/include/OIS/OISForceFeedback.h \
  /usr/local/include/OGRE/OgreFileSystemLayer.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/UiMgr.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/MenuStates.h \
+ /usr/include/OIS/OISEvents.h /usr/include/OIS/OISInputManager.h \
+ /usr/include/OIS/OISKeyboard.h /usr/include/OIS/OISMouse.h \
+ /usr/local/include/OGRE/SdkTrays.h \
  /usr/local/include/OGRE/Overlay/OgreOverlay.h
 
 /home/julietv/workspace/Caelestion/Caelestion/inc/Engine.h:
@@ -736,5 +741,19 @@ src/GameMgr.o: ../src/GameMgr.cpp \
 /usr/include/OIS/OISForceFeedback.h:
 
 /usr/local/include/OGRE/OgreFileSystemLayer.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/UiMgr.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/MenuStates.h:
+
+/usr/include/OIS/OISEvents.h:
+
+/usr/include/OIS/OISInputManager.h:
+
+/usr/include/OIS/OISKeyboard.h:
+
+/usr/include/OIS/OISMouse.h:
+
+/usr/local/include/OGRE/SdkTrays.h:
 
 /usr/local/include/OGRE/Overlay/OgreOverlay.h:

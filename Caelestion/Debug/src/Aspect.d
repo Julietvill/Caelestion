@@ -240,7 +240,9 @@ src/Aspect.o: ../src/Aspect.cpp \
  /usr/include/OIS/OISJoyStick.h /usr/include/OIS/OISMultiTouch.h \
  /usr/include/OIS/OISInputManager.h /usr/include/OIS/OISFactoryCreator.h \
  /usr/include/OIS/OISException.h /usr/include/OIS/OISEffect.h \
- /usr/include/OIS/OISForceFeedback.h
+ /usr/include/OIS/OISForceFeedback.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/Physics3DqConstSpeed.h \
+ /home/julietv/workspace/Caelestion/Caelestion/inc/UnitAI.h
 
 /home/julietv/workspace/Caelestion/Caelestion/inc/Aspect.h:
 
@@ -747,3 +749,7 @@ src/Aspect.o: ../src/Aspect.cpp \
 /usr/include/OIS/OISEffect.h:
 
 /usr/include/OIS/OISForceFeedback.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/Physics3DqConstSpeed.h:
+
+/home/julietv/workspace/Caelestion/Caelestion/inc/UnitAI.h:

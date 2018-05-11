@@ -24,8 +24,6 @@ public:
 
 	float distanceSqr;
 	std::stack<Command*> listOfCommands;
-	bool avoiding;
-	bool attacking;
 
 private:
 };

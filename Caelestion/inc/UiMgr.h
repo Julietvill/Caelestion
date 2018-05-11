@@ -60,12 +60,14 @@ private:
 	OgreBites::Button *HastatusBtn;
 	OgreBites::Button *friendlythreeBtn;
 	OgreBites::Button *playPauseBtn;
+	OgreBites::Button *returnToMM;
 
 	OgreBites::Label *mLabel;
 	OgreBites::Label *GladiusLbl;
 	OgreBites::Label *HastatusLbl;
 	OgreBites::Label *waveLbl;
 	OgreBites::Label *pauseLbl;
+	OgreBites::Label *friendlyThreeLbl;
 
 	OgreBites::ProgressBar *hp;
 };

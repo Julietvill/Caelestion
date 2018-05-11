@@ -13,6 +13,9 @@
 #include <GameMgr.h>
 #include <UiMgr.h>
 #include <MenuStates.h>
+#include <Physics3DqConstSpeed.h>
+#include <UnitAI.h>
+
 
 
 Aspect::Aspect(Entity381 *ent){
@@ -61,11 +64,26 @@ healthStatus::~healthStatus(){
 
 }
 
+void healthStatus::resetStats(){
+	entity->aspects.clear();
+	//add all aspects that the entities will need to function
+	Physics3DqCS* phx = new Physics3DqCS(entity);
+	entity->aspects.push_back((Aspect*) phx);
+	Renderable * renderable = new Renderable(entity);
+	entity->aspects.push_back((Aspect*)renderable);
+	UnitAI* ai = new UnitAI(entity);
+	entity->aspects.push_back((Aspect*) ai);
+	healthStatus* health = new healthStatus(entity);
+	entity->aspects.push_back((Aspect*)health);
+}
+
 void healthStatus::Tick(float dt){
 
 	if(entity->currentHealth <= 0){
 		entity->position = entity->startPosition;
 		entity->currentHealth = entity->maxHealth;
+		resetStats();
+
 		if(entity == entity->engine->entityMgr->playerEntity){
 			entity->engine->uiMgr->prevState = entity->engine->uiMgr->uiState;
 			entity->engine->uiMgr->uiState = respawState;

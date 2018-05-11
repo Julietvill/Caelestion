@@ -15,7 +15,9 @@ enum menuStates {
 	PauseMenuState,
 	respawState,
 	creditState,
-	controlState
+	controlState,
+	gameLostState,
+	gameWinState
 };
 
 

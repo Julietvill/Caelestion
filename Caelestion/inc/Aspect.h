@@ -36,6 +36,7 @@ public:
 	healthStatus(Entity381* ent);
 	~healthStatus();
 
+	void resetStats();
 	void Tick(float dt);
 };
 

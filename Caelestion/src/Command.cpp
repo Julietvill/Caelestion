@@ -15,8 +15,7 @@ using namespace std;
 
 #define PI 3.14156265
 
-Command::Command(UnitAI* ai){
-	this->ai = ai;
+Command::Command(){
 	isComplete = false;
 }
 Command::~Command(){
@@ -27,7 +26,7 @@ void Command::Tick(float dt){
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-MoveTo::MoveTo(UnitAI* ai,Entity381* Ent): Command(ai){
+MoveTo::MoveTo(Entity381* Ent){
 	this->myEnt = Ent;
 
 	this->difference = Ogre::Vector3::ZERO;
@@ -49,9 +48,10 @@ void MoveTo::Tick(float dt){
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-Attack::Attack(UnitAI* ai, Entity381* Ent, Entity381* target) : MoveTo(ai, Ent){
+Attack::Attack(Entity381* Ent, Entity381* target): MoveTo(Ent){
 	this->enemyTarget = target;
 	this->attackTimer = this->attackTime;
+	myEnt->attacking = true;
 
 }
 
@@ -60,7 +60,6 @@ Attack::~Attack(){
 }
 
 void Attack::Tick(float dt){
-	ai->attacking = true;
 	attackTimer -= dt;
 	difference = enemyTarget->position - myEnt->position;
 	difference = (myEnt->actualFacing.UnitInverse() * difference);
@@ -77,14 +76,15 @@ void Attack::Tick(float dt){
 	}
 	if( enemyTarget->currentHealth == 0){
 		isComplete = true;
-		ai->attacking = false;
+		myEnt->attacking = false;
 	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------------------
-Avoid::Avoid(UnitAI* ai,Entity381* Ent, Entity381* target) : MoveTo(ai, Ent){
+Avoid::Avoid(Entity381* Ent, Entity381* target) : MoveTo(Ent){
 	this->target = target;
 	this->distSqr = 2500;
+	myEnt->avoiding = true;
 }
 
 Avoid::~Avoid(){
@@ -92,7 +92,6 @@ Avoid::~Avoid(){
 }
 
 void Avoid::Tick(float dt){
-	ai->avoiding = true;
 
 	difference = myEnt->position - target->position;
 	difference = (myEnt->actualFacing.UnitInverse() * difference);
@@ -106,6 +105,6 @@ void Avoid::Tick(float dt){
 
 	if( distSqr > thresholdSqr){
 		isComplete = true;
-		ai->avoiding = false;
+		myEnt->avoiding = false;
 	}
 }

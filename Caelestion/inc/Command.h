@@ -16,18 +16,17 @@ class UnitAI;
 
 class Command {
 public:
-	Command(UnitAI* ai);
+	Command();
 	virtual ~Command();
 	virtual void Tick(float dt);
 
 	bool isComplete;
-	UnitAI* ai;
 };
 //-------------------------------------------------------------------------------------------------------------------------------
 
 class MoveTo: public Command{
 public:
-	MoveTo(UnitAI* ai, Entity381* ent);
+	MoveTo(Entity381* ent);
 	virtual ~MoveTo();
 	virtual void Tick(float dt);
 
@@ -42,7 +41,7 @@ public:
 
 class Attack : public MoveTo{
 public:
-	Attack(UnitAI* ai, Entity381* Ent, Entity381* target);
+	Attack(Entity381* Ent, Entity381* target);
 	~Attack();
 	void Tick(float dt);
 
@@ -55,7 +54,7 @@ public:
 
 class Avoid : public MoveTo{
 public:
-	Avoid(UnitAI* ai, Entity381* Ent, Entity381* entTarget);
+	Avoid(Entity381* Ent, Entity381* entTarget);
 	~Avoid();
 	void Tick(float dt);
 

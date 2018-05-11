@@ -43,7 +43,9 @@ UiMgr::UiMgr(Engine* eng): Mgr(eng){
 		prevState = uiState;
 		waveLbl = 0;
 		pauseLbl = 0;
+		friendlyThreeLbl = 0;
 		playPauseBtn = 0;
+		returnToMM = 0;
 
 }
 
@@ -90,6 +92,9 @@ void UiMgr::Tick(float dt){
 		helpBtn->setCaption( "Controls");
 
 		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(115.);
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPLEFT)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 
 
 		if(pauseLbl != NULL)
@@ -110,6 +115,7 @@ void UiMgr::Tick(float dt){
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->getTrayContainer(OgreBites::TL_TOPLEFT)->hide();
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 		//mTrayMgr->hideCursor();
 		playPauseBtn->hide();
 
@@ -149,6 +155,8 @@ void UiMgr::Tick(float dt){
 		mTrayMgr->showCursor();
 
 		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 
 		helpBtn->setCaption("Controls");
 
@@ -165,46 +173,70 @@ void UiMgr::Tick(float dt){
 		engine->paused = true;
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showCursor();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
 
 
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->show();
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setWidth(800.);
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setPosition(-400.0,0.0);
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setHeight(155.);
+
+
+		friendlyThreeLbl= (OgreBites::Label*)mTrayMgr->getWidget("friendlyThree_label");
+		if(friendlyThreeLbl == NULL)
+			friendlyThreeLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "friendlyThree_label", "# of points for frd3", 250);
+		friendlyThreeLbl->getOverlayElement()->setPosition(140,5.);
+		friendlyThreeLbl->getOverlayElement()->setWidth(250);
+
 
 		GladiusLbl= (OgreBites::Label*)mTrayMgr->getWidget("gladius_label");
-		if(GladiusLbl == NULL){
+		if(GladiusLbl == NULL)
 			GladiusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "gladius_label", "# of points for Gladuis", 250);
-			//GladiusLbl->getOverlayElement()->setLeft(-400);
-			mTrayMgr->getWidget("gladius_label")->getOverlayElement()->setLeft(-400);
-		}
+		GladiusLbl->getOverlayElement()->setPosition(-125,5.);
+		GladiusLbl->getOverlayElement()->setWidth(250);
 
 		HastatusLbl = (OgreBites::Label*)mTrayMgr->getWidget("Hastatus_label");
 		if(HastatusLbl == NULL)
 			HastatusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Hastatus_label", "# of points for Hastatus", 250);
+		HastatusLbl->getOverlayElement()->setPosition(-390.,5.);
+		HastatusLbl->getOverlayElement()->setWidth(250);
+
 
 		OgreBites::Separator* separate;
 		separate = (OgreBites::Separator*)mTrayMgr->getWidget("sep");
 		if( separate == NULL)
-			separate = mTrayMgr->createSeparator(OgreBites::TL_CENTER,"sep", 800);
+			separate = mTrayMgr->createSeparator(OgreBites::TL_CENTER,"sep", 900);
+		separate->getOverlayElement()->setPosition(-400., 50.);
+
 
 		HastatusBtn = (OgreBites::Button*)mTrayMgr->getWidget("hastatus_button");
 		if(HastatusBtn == NULL)
 			HastatusBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "hastatus_button", "Hastatus", 250);
+		HastatusBtn->getOverlayElement()->setPosition(-390.,70.);
+		HastatusBtn->getOverlayElement()->setWidth(250);
+		HastatusBtn->getOverlayElement()->setHeight(80.);
 
 		GladiusBtn = (OgreBites::Button*)mTrayMgr->getWidget("gladius_button");
 		if(GladiusBtn == NULL)
 			GladiusBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "gladius_button", "Gladius", 250);
+		GladiusBtn->getOverlayElement()->setPosition(-125,70.);
+		GladiusBtn->getOverlayElement()->setWidth(250);
+		GladiusBtn->getOverlayElement()->setHeight(80.);
 
 		friendlythreeBtn = (OgreBites::Button*)mTrayMgr->getWidget("friendlythree_button");
 		if(friendlythreeBtn == NULL)
 			friendlythreeBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "friendlythree_button", "FriendlyThree", 250);
+		friendlythreeBtn->getOverlayElement()->setPosition(140.,70.);
+		friendlythreeBtn->getOverlayElement()->setWidth(250);
+		friendlythreeBtn->getOverlayElement()->setHeight(80.);
 
 		break;
 
 	case creditState:
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/Credits");
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 
 		//Instructions button placement
 		if(prevState == InitMenuState)
@@ -220,6 +252,7 @@ void UiMgr::Tick(float dt){
 		engine->paused = true;
 		mTrayMgr->hideBackdrop();
 		mTrayMgr->showBackdrop("ECSLENT/INSTRUCTION");
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->hide();
 
 		if(prevState == InitMenuState)
 			helpBtn->setCaption("Main Menu");
@@ -228,6 +261,37 @@ void UiMgr::Tick(float dt){
 		else if (prevState == respawState)
 			helpBtn->setCaption( "Respawn Screen");
 
+		break;
+	case gameLostState:
+		engine->paused = true;
+
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showBackdrop("");		//replace with the lost screen
+
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->show();
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
+
+
+		returnToMM = (OgreBites::Button*)mTrayMgr->getWidget("returnToMM_button");
+				if(returnToMM == NULL)
+					returnToMM = mTrayMgr->createButton(OgreBites::TL_LEFT, "returnToMM_button", "Main Menu", 250);
+		break;
+	case gameWinState:
+		engine->paused = true;
+
+		mTrayMgr->hideBackdrop();
+		mTrayMgr->showBackdrop("");		//replace with the win screen
+
+		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
+		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->show();
+		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
+
+		returnToMM = (OgreBites::Button*)mTrayMgr->getWidget("returnToMM_button");
+						if(returnToMM == NULL)
+							returnToMM = mTrayMgr->createButton(OgreBites::TL_LEFT, "returnToMM_button", "Main Menu", 250);
 		break;
 
 	}
@@ -300,22 +364,20 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     	}
     }
 
-    if(b->getName()=="Hastatus_label")
+    if(b->getName()=="hastatus_button")
     {
-    	/*
-    	Ogre::Vector3 pos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
-    	engine->entityMgr->playerEntity = new friendlyOne(engine, pos , 0);
-    	engine->entityMgr->playerEntity->Lobotomize();
-    	*/
+    	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeOne);
     	uiState = PilotUIState;
     }
     if(b->getName()=="gladius_button")
     {
-    	Ogre::Vector3 pos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
-    	//delete engine->entityMgr->playerEntity;
-    	//engine->entityMgr->entities[0] = new friendlyTwo(engine, pos , 0);
-    	//engine->entityMgr->entities[0]->Lobotomize();
+    	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeTwo);
+    	uiState = PilotUIState;
+    }
 
+    if(b->getName()=="friendlythree_button")
+    {
+    	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeThree);
     	uiState = PilotUIState;
     }
 

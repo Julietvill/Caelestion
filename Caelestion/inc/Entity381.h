@@ -39,6 +39,8 @@ public:
   float desiredHeading;
   int currentHealth;
   bool hit;
+  bool attacking;
+  bool avoiding;
 
   //values for Quaternion math (both dynamic)
   Ogre::Quaternion actualFacing;
@@ -67,10 +69,9 @@ public:
 
 
   void Init();
-
   void Tick(float dt);
-
   void Lobotomize();
+  void switchPlayerEnt( EntityTypes type);
 
 protected:
 

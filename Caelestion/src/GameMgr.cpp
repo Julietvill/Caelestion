@@ -10,6 +10,8 @@
 #include <EntityMgr.h>
 #include <GameMgr.h>
 #include <GfxMgr.h>
+#include <UiMgr.h>
+#include <MenuStates.h>
 
 #include <iostream>
 #include <Types381.h>
@@ -82,6 +84,7 @@ void GameMgr::Tick(float dt){
 	}
 
 	if( points <= 0 ){
+		engine->uiMgr->uiState = gameLostState;
 		//game is over
 		//engine->keepRunning = false;
 	}
@@ -95,13 +98,11 @@ void GameMgr::MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int 
 
 	for( int i = 0; i < amount; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyType,position);
-		  position.x += 0.5;
 	}
 
 	position = engine->entityMgr->caelestionPos;
 	for( int i = 0; i < amount; i++){
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyType,position);
-		  position.x += 0.5;
 	}
 
 }
