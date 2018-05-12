@@ -158,8 +158,8 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 	}
 
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_SPACE)){
-		DebugDrawer::getSingleton().drawLine(engine->entityMgr->playerEntity->position, engine->entityMgr->playerEntity->position + (-100)* engine->entityMgr->playerEntity->actualFacing.zAxis() , Ogre::ColourValue::White);
-		engine->entityMgr->playerEntity->weapons[0]->Fire(dt);
+		//DebugDrawer::getSingleton().drawLine(engine->entityMgr->playerEntity->position, engine->entityMgr->playerEntity->position + (-100)* engine->entityMgr->playerEntity->actualFacing.zAxis() , Ogre::ColourValue::White);
+		engine->entityMgr->playerEntity->weapons[0]->Fire();
 	}
 
 /*

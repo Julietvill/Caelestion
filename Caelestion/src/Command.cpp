@@ -60,7 +60,6 @@ Attack::~Attack(){
 }
 
 void Attack::Tick(float dt){
-	attackTimer -= dt;
 	difference = enemyTarget->position - myEnt->position;
 	difference = (myEnt->actualFacing.UnitInverse() * difference);
 
@@ -70,9 +69,8 @@ void Attack::Tick(float dt){
 	myEnt->desiredRotation = Ogre::Vector3(-dpitch,dyaw,0);
 
 	//need to add a dimention of time
-	if( !myEnt->weapons.empty() && attackTimer < 0){
-		myEnt->weapons[0]->Fire(dt);
-		attackTimer = attackTime;
+	if( !myEnt->weapons.empty()){
+		myEnt->weapons[0]->Fire();
 	}
 	if( enemyTarget->currentHealth == 0){
 		isComplete = true;

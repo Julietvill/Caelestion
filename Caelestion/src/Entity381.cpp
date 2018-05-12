@@ -13,6 +13,7 @@
 #include <Physics3DqConstSpeed.h>
 #include <UnitAI.h>
 #include <SoundMgr.h>
+#include <EntityMgr.h>
 
 std::string IntToString(int x){
 	char tmp[10000];
@@ -77,6 +78,9 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 	this->killMe = false;					//determines if the e381 needs purging
 	this->attacking = false;				//determines if the entity is already attacking something so it doesn't add another entity to attack
 	this->avoiding = false;
+
+	this->owner = NULL;
+	this->count = 20000;
 }
 
 Entity381::~Entity381(){
@@ -90,7 +94,19 @@ void Entity381::Init(){
 	sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(position);
 	sceneNode->attachObject(ogreEntity);
 
+	if(entityType == projectileGeneric)
+	{
+		sceneNode->setScale(0.005, 0.005, 0.05);
+		this->Lobotomize();
+	}
+/*
+	if(entityType == friendlyTypeTwo )
+	{
+		sceneNode->setScale(0.1,0.1,0.1);
+	}
+	*/
 }
+
 
 void Entity381::Tick(float dt){
 	for(unsigned int i = 0; i < aspects.size(); i++){
@@ -109,82 +125,96 @@ void Entity381::Lobotomize()
 	aspects.push_back((Aspect*)renderable);
 	healthStatus* health = new healthStatus(this);
 	aspects.push_back((Aspect*)health);
+
+	//weapons.push_back(new T1Projectile(Ogre::Vector3(0,0,0), this));
+
+	for (unsigned int i = 0; i < weapons.size(); i++)
+	{
+		aspects.push_back(weapons[i]);
+	}
 }
 
+
 void Entity381::switchPlayerEnt( EntityTypes type){
-	/*
+
 	this->Lobotomize();
+	Ogre::Vector3 position = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
-	enemy = false;
+	this->Lobotomize();
 
-	//delete ogreEntity;
-	//delete sceneNode;
+	this->sceneNode->detachObject(this->name);
+	delete ogreEntity;
+	ogreEntity = NULL;
 
-	sceneNode->detachObject(name);
 
-	switch( type ){
+	Ogre::Entity* newTypeOfEntity = NULL;
+
+	switch(type){
 	case friendlyTypeOne:
-		meshfilename = "Hastatus.mesh";
-		matname = "Hastatus/Texture";
-		entityType = friendlyTypeOne;
-		//these values will need to be changed
+		this->name =  meshfilename + IntToString(count);
+		count++;
+		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"Hastatus.mesh");
+		if(matname != "") newTypeOfEntity->setMaterialName("Hastatus");
+
 		this->velocity = Ogre::Vector3(0,0,50);
+
 		this->speed = 50.0f;
 		this->turnRate = 50.0f;
 		this->climbRate = 1;
 		this->currentHealth = this->maxHealth = 100;
-		this->weapons.push_back((Weapon*) new T1Killray(Ogre::Vector3(0,0,0), this));
-		break;
 
+		break;
 	case friendlyTypeTwo:
-		meshfilename = "gladius.mesh";
-		matname = "Gladius/Texture";
-		entityType = friendlyTypeTwo;
+		this->name =  meshfilename + IntToString(count);
+		count++;
+		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"gladius.mesh");
+		if(matname != "") newTypeOfEntity->setMaterialName("Gladius/Texture");
+
 		this->velocity = Ogre::Vector3(0,0,30);
-		//these values will need to be changed
+
 		this->speed = 30.0f;
 		this->turnRate = 30.0f;
 		this->climbRate = 1;
 		this->currentHealth = this->maxHealth = 100;
-		break;
 
+		break;
 	case friendlyTypeThree:
-		meshfilename = "gladius.mesh";
-		matname = "Gladius/Texture";
-		entityType = friendlyTypeThree;
+		this->name =  meshfilename + IntToString(count);
+		count++;
+		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"gladius.mesh");
+		if(matname != "") newTypeOfEntity->setMaterialName("Gladius/Texture");
+
 		this->velocity = Ogre::Vector3(0,0,0.1);
 		this->speed = 15.0f;
 		this->turnRate = 40.0f;
 		this->climbRate = 1;
 		this->currentHealth = this->maxHealth = 100;
+
 		break;
 	default:
+		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"Hastatus.mesh");
+		if(matname != "") newTypeOfEntity->setMaterialName("Hastatus");
 		break;
 	}
 
-	Ogre::Entity* newEntity = engine->gfxMgr->mSceneMgr->createEntity(meshfilename);
-	if(matname != "") newEntity->setMaterialName(matname);
-	sceneNode->attachObject( newEntity );
-
-	//engine->gfxMgr->setUpCamera();
-	 */
+	this->sceneNode->attachObject(newTypeOfEntity);
+	this->sceneNode->setPosition(position);
 }
-
 
 //-------------------------------------------------------------------------------------------------------------------------------
 
 friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 		Entity381(engine, pos, identity){
 	meshfilename = "Hastatus.mesh";
-	matname = "Hastatus/Texture";
+	matname = "Hastatus";
 	entityType = friendlyTypeOne;
 
 	//these values will need to be changed
-	this->velocity = Ogre::Vector3(0,0,50);
 
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
+	this->velocity = Ogre::Vector3(0,0,50);
 
 	this->speed = 50.0f;
 	this->turnRate = 50.0f;
@@ -196,8 +226,13 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = -100;
 
-	this->weapons.push_back((Weapon*) new T1Killray(Ogre::Vector3(0,0,0), this));
+	this->weapons.push_back((Weapon*) new T1Projectile(Ogre::Vector3(0,0,0), this));
 	this->soundFile = "Assets/SFX/Laser_light.wav";
+
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
 
 }
 
@@ -212,10 +247,10 @@ friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 	matname = "Gladius/Texture";
 	entityType = friendlyTypeTwo;
 
-	this->velocity = Ogre::Vector3(0,0,30);
-
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
+
+	this->velocity = Ogre::Vector3(0,0,30);
 
 
 	//these values will need to be changed
@@ -240,10 +275,10 @@ friendlyThree::friendlyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 	matname = "Gladius/Texture";
 	entityType = friendlyTypeThree;
 
-	this->velocity = Ogre::Vector3(0,0,0.1);
-
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
+
+	this->velocity = Ogre::Vector3(0,0,0.1);
 	this->speed = 15.0f;
 	this->turnRate = 40.0f;
 	this->climbRate = 1;
@@ -306,9 +341,14 @@ enemyOne::enemyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	enemy = true;
 
 	//for enemies this will be the number of points that you gain when you kill them.
-	this->weapons.push_back((Weapon*) new T1Killray(Ogre::Vector3(0,0,0), this));
+	this->weapons.push_back((Weapon*) new T1Projectile(Ogre::Vector3(0,0,0), this));
 	this->soundFile = "Assets/SFX/Laser_light.wav";
 	this->pointValue = 25;
+
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
 }
 
 enemyOne::~enemyOne(){
@@ -397,3 +437,34 @@ Yggdrasil::Yggdrasil(Engine *engine, Ogre::Vector3 pos, int identity):
 Yggdrasil::~Yggdrasil(){
 
 }
+
+//--------------------------------------------------------------------------------------------------------------------------
+Projectile::Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* owner):
+		Entity381(engine,pos,identity)
+{
+	meshfilename = "cube.mesh";
+	entityType = projectileGeneric;
+
+	if(owner != NULL && owner->entity != NULL)
+	{
+		this->velocity = Ogre::Vector3(0,0,-500) + owner->entity->velocity;
+		this->actualFacing = owner->entity->actualFacing;
+	}
+	else
+	{
+		this->velocity = Ogre::Vector3(0,0,0);
+		this->actualFacing = Ogre::Quaternion::IDENTITY;
+	}
+
+	this->currentHealth = this->maxHealth = 5;
+
+	this->speed = 0.f;
+	this->turnRate = 0.f;
+	this->climbRate = 0;
+
+	enemy = false;
+
+	this->owner= owner;
+}
+
+Projectile::~Projectile(){}

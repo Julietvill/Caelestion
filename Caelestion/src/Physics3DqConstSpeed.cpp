@@ -9,6 +9,9 @@
 #define Physics3DqConstSpeed_C_
 
 #include <Entity381.h>
+#include <Engine.h>
+#include <EntityMgr.h>
+#include <GameMgr.h>
 #include <Physics3DqConstSpeed.h>
 #include <Utils.h>
 
@@ -90,19 +93,32 @@ void Physics3DqCS::Tick(float dt){
 
 	entity->position = entity->position + entity->velocity*dt;
 
-	/*
-	entity->heading = Ogre::Math::lerp(entity->heading, entity->desiredHeading, entity->turnRate * dt);
-	entity->altitude = Ogre::Math::lerp(entity->altitude, entity->desiredAltitude, entity->climbRate * dt);
+	//And now, collision.
 
+	//Projectile Weapons case only.
+	bool intersect = false;
+	for(unsigned int i = 0; i < entity->engine->entityMgr->projectiles.size(); i++)
+	{
+		if(entity != entity->engine->entityMgr->projectiles[i])
+		{
+			if(entity->engine->entityMgr->projectiles[i]->owner != NULL && entity->engine->entityMgr->projectiles[i]->owner->entity != entity)
+			{
+				intersect = (entity->sceneNode->_getWorldAABB().intersects(entity->engine->entityMgr->projectiles[i]->sceneNode->_getWorldAABB()));
+			}
+		}
+		if(intersect)
+		{
+			std::cout << "INTERSECT AT " << entity->identity << ": " << entity->engine->entityMgr->projectiles[i]->position << std:: endl;
+			entity->engine->entityMgr->projectiles[i]->killMe = true;
+			entity->currentHealth -= entity->engine->entityMgr->projectiles[i]->owner->dmgOnHit;
 
-	//Now do the trig
-	entity->velocity.y = 0.0f; // just to be safe, we do not want ships in the air.
-	entity->velocity.x = Ogre::Math::Sin(Ogre::Degree(entity->heading)) * entity->speed;
-	entity->velocity.z = Ogre::Math::Cos(Ogre::Degree(entity->heading)) * entity->speed * -1;
-
-
-	entity->position = entity->position + entity->velocity * dt;
-	*/
+			if(entity->currentHealth <= 0 && entity->engine->entityMgr->projectiles[i]->owner->entity == entity->engine->entityMgr->playerEntity)
+			{
+				entity->engine->gameMgr->points += entity->pointValue;
+			}
+		}
+		intersect = false;
+	}
 }
 
 #endif /* Physics3DqConstSpeed_C_ */

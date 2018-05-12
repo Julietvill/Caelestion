@@ -27,6 +27,8 @@ public:
   //Ogre::SceneManager *sceneMgr;
 
   void CreateEntityOfTypeAtPosition(EntityTypes type, Ogre::Vector3 pos);
+  void CreateProjectile(Ogre::Vector3 pos, Weapon* owner);
+
 
   void Tick(float dt);
 
@@ -34,7 +36,7 @@ protected:
 
 private:
   int entCount;
-
+  int projCount;
 };
 
 #endif // #ifndef __EntityMgr_h_

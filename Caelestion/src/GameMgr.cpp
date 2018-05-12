@@ -22,11 +22,12 @@
 //Has no tick. Unaffected by pausing as a result.
 
 
-GameMgr::GameMgr(Engine *engine): Mgr(engine), points(200)
+GameMgr::GameMgr(Engine *engine): Mgr(engine), points(300)
 {
 	this->waveOneUnlocked = false;
 	this->waveTwoUnlocked = false;
 	this->waveThreeUnlocked = false;
+
 
 }
 
@@ -41,11 +42,19 @@ void GameMgr::Init(){
 	  light->setPosition(20.0, 80.0, 50.0);
 
 	  engine->gfxMgr->MakeSky();
+	  this->CreateMainEntities();
+}
+
+void GameMgr::LoadLevel(){
+
+}
+
+void GameMgr::CreateMainEntities(){
+	  //create the start ship
 	  Ogre::Vector3 startPos = engine->entityMgr->caelestionPos + Ogre::Vector3(0,0,50);
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyTypeOne,startPos);
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
 	  engine->entityMgr->playerEntity->Lobotomize();
-	  engine->entityMgr->playerEntity->currentHealth = 1;
 
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,engine->entityMgr->yggdrasilPos);
 	  engine->entityMgr->yggdrasil = engine->entityMgr->entities[1];
@@ -61,15 +70,10 @@ void GameMgr::Init(){
 	  sceneNode->attachObject(ogreEntityFixed);
 	  sceneNode->showBoundingBox(true);
 	  sceneNode->setScale(25,25,25);
-
-	  //MakeEntities(friendlyTypeOne, enemyTypeOne, 25);
-}
-
-void GameMgr::LoadLevel(){
-
 }
 
 void GameMgr::Tick(float dt){
+
 	if( !waveOneUnlocked && points >= 200){
 		waveOneUnlocked = true;
 		MakeEntities(friendlyTypeOne, enemyTypeOne, 25);
@@ -83,11 +87,22 @@ void GameMgr::Tick(float dt){
 		MakeEntities(friendlyTypeThree, enemyTypeThree, 5);
 	}
 
-	if( points <= 0 ){
+	if( points <= 0 || engine->entityMgr->caelestion->currentHealth <= 0){
 		engine->uiMgr->uiState = gameLostState;
-		//game is over
-		//engine->keepRunning = false;
 	}
+
+	else if( engine->entityMgr->yggdrasil->currentHealth <= 0){
+		engine->uiMgr->uiState = gameWinState;
+	}
+
+}
+
+void GameMgr::restart(){
+	engine->entityMgr->entities.clear();
+	this->CreateMainEntities();
+	this->waveOneUnlocked = false;
+	this->waveTwoUnlocked = false;
+	this->waveThreeUnlocked = false;
 
 }
 

@@ -11,19 +11,24 @@
 #include <OgreEntity.h>
 #include <OgreSceneManager.h>
 #include <OgreVector3.h>
+#include <Aspect.h>
+
 class Entity381;    //Forward declaration of the Entity381 class
 
-class Weapon
+class Weapon : public Aspect
 {
 public:
 	Weapon(int dmg, Ogre::Vector3 placement, Entity381* own);
 	virtual ~Weapon();
 
-	virtual void Fire(float dt);
+	virtual void Fire();
+	virtual void Tick(float dt);
+
 
 	int dmgOnHit;
 	Ogre::Vector3 placement;
-	Entity381* owner;
+	bool fire;
+
 protected:
 };
 
@@ -34,8 +39,10 @@ public:
 	T1Killray(Ogre::Vector3 placement, Entity381* own);
 	~T1Killray();
 
-	void Fire(float dt);
+	void Fire();
+	void Tick(float dt);
 };
+
 
 class T1Projectile : public Weapon
 {
@@ -43,12 +50,17 @@ public:
 	T1Projectile(Ogre::Vector3 placement, Entity381* own);
 	~T1Projectile();
 
-	void Fire(float dt);
+	void Fire();
+	void Tick(float dt);
+
 
 	float cooldown;
 	float coolstate;
 
+    std::string projmeshfilename;
+	std::string projmatname;
 
 };
+
 
 #endif /* INC_WEAPON_H_ */

@@ -6,6 +6,7 @@
  */
 
 #include <EntityMgr.h>
+#include <GfxMgr.h>
 #include <Engine.h>
 
 EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
@@ -20,6 +21,15 @@ EntityMgr::EntityMgr(Engine *eng): Mgr(eng){
 
 EntityMgr::~EntityMgr(){
 
+}
+
+void EntityMgr::CreateProjectile(Ogre::Vector3 pos, Weapon* owner)
+{
+	Entity381* ent;
+	ent = new Projectile(engine, pos, projCount++, owner);
+
+	ent->Init();
+	projectiles.push_back(ent);
 }
 
 void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 pos){
@@ -50,36 +60,52 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	case enemyStation:
 		ent = new Yggdrasil(engine, pos, entCount++);
 		break;
+	case projectileGeneric:
+		ent = new Projectile(engine, pos, projCount++, NULL);
+		break;
 	default:
 		ent = new friendlyOne(engine, pos, entCount++);//CreateEntity("robot.mesh", pos);
 		break;
 	}
 	ent->Init();
 
-	entities.push_back(ent);
+	if(ent->identity < 1000) entities.push_back(ent);
+	else projectiles.push_back(ent);
 
 }
 
 void EntityMgr::Tick(float dt){
 	// Don't simulate during pausetime.
 
-	if(engine->paused == false)
-	{
-		for(unsigned int i = 0; i < entities.size(); i++){
-			entities[i]->Tick(dt);
-		}
-
-		for(unsigned int i = 0; i < projectiles.size(); i++)
+	Ogre::SceneNode* kill;
+		if(engine->paused == false)
 		{
-			projectiles[i]->Tick(dt);
-		}
+			for(unsigned int i = 0; i < entities.size(); i++){
+				entities[i]->Tick(dt);
+			}
 
-		for(unsigned int i = 0; i < projectiles.size(); i++)
-		{
-			if(projectiles[i]->killMe) projectiles.erase(projectiles.begin()+i);
-			i--;
-		}
+			for(unsigned int i = 0; i < projectiles.size(); i++)
+			{
+				projectiles[i]->Tick(dt);
+			}
 
-	}
+			for(unsigned int i = 0; i < projectiles.size(); i++)
+			{
+				kill = NULL;
+				if(projectiles[i]->position.length() > 5000)
+				{
+					projectiles[i]->killMe = true;
+				}
+
+				if(projectiles[i]->killMe)
+				{
+					kill = projectiles[i]->sceneNode;
+					engine->gfxMgr->mSceneMgr->destroySceneNode(kill);
+					projectiles.erase(projectiles.begin()+i);
+					i--;
+					}
+			}
+
+		}
 
 }

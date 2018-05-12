@@ -66,6 +66,9 @@ public:
 
   std::vector<Weapon*> weapons; //nevuh enough dakka
   bool killMe;
+  Weapon* owner;
+
+  int count;
 
 
   void Init();
@@ -77,6 +80,7 @@ protected:
 
 
 };
+
 //-------------------------------------------------------------------------------------------------------------------------------
 
 class friendlyOne : public Entity381{
@@ -141,4 +145,14 @@ public:
 	~Yggdrasil();
 private:
 };
+
+
+//PROJECTILES//-----------------------------------------------------------------------------------------------------------------
+class Projectile : public Entity381{
+public:
+	Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* owner);
+	~Projectile();
+private:
+};
+
 #endif // #ifndef __Entity381_h_

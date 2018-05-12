@@ -80,18 +80,27 @@ void healthStatus::resetStats(){
 void healthStatus::Tick(float dt){
 
 	if(entity->currentHealth <= 0){
+
 		entity->position = entity->startPosition;
 		entity->currentHealth = entity->maxHealth;
+
 		resetStats();
+
+		if( entity == entity->engine->entityMgr->caelestion || entity ==  entity->engine->entityMgr->yggdrasil)
+		{
+			entity->currentHealth = 0;
+		}
 
 		if(entity == entity->engine->entityMgr->playerEntity){
 			entity->engine->uiMgr->prevState = entity->engine->uiMgr->uiState;
+			Ogre::Degree z = Ogre::Degree(180.);
+			entity->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 			entity->engine->uiMgr->uiState = respawState;
 
 		}
 	}
 
-	if( (entity == entity->engine->entityMgr->caelestion || entity == entity->engine->entityMgr->yggdrasil) && !entity->engine->gameMgr->waveTwoUnlocked){
+	if( (entity == entity->engine->entityMgr->yggdrasil) && !entity->engine->gameMgr->waveThreeUnlocked){
 		entity->currentHealth = entity->maxHealth;
 	}
 }

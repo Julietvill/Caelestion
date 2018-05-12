@@ -21,7 +21,9 @@ public:
 
 	void MakeGround();
 	void MakeSky();
+	void CreateMainEntities();
 	void MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int amount);
+	void restart();
 	void Tick(float dt);
 
 	bool waveOneUnlocked;
