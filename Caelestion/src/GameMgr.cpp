@@ -22,7 +22,7 @@
 //Has no tick. Unaffected by pausing as a result.
 
 
-GameMgr::GameMgr(Engine *engine): Mgr(engine), points(300)
+GameMgr::GameMgr(Engine *engine): Mgr(engine), points(200)
 {
 	this->waveOneUnlocked = false;
 	this->waveTwoUnlocked = false;
@@ -70,6 +70,8 @@ void GameMgr::CreateMainEntities(){
 	  sceneNode->attachObject(ogreEntityFixed);
 	  sceneNode->showBoundingBox(true);
 	  sceneNode->setScale(25,25,25);
+
+	  engine->entityMgr->playerEntity->currentHealth = -1;
 }
 
 void GameMgr::Tick(float dt){

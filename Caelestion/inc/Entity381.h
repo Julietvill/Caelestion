@@ -69,10 +69,10 @@ public:
   Weapon* owner;
 
   int count;
-
+  float age;
 
   void Init();
-  void Tick(float dt);
+  virtual void Tick(float dt);
   void Lobotomize();
   void switchPlayerEnt( EntityTypes type);
 
@@ -151,7 +151,10 @@ private:
 class Projectile : public Entity381{
 public:
 	Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* owner);
+	void Tick(float dt);
 	~Projectile();
+
+	float agelim; //Cap for lifetime.
 private:
 };
 

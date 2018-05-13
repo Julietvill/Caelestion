@@ -139,6 +139,7 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 	Ogre::Vector3 relativeFaceAdjust = Ogre::Vector3::ZERO;
 	bool resetKT = false;
 
+	deltaDesiredHeading = engine->entityMgr->playerEntity->turnRate * keyTime;
 
 	//Player Acceleration Controls.
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_LSHIFT) && !mKeyboard->isKeyDown(OIS::KC_Z)){
@@ -178,33 +179,39 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 		//YAW
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD8)){
 		resetKT = true;
-		relativeFaceAdjust.x -= deltaDesiredHeading;
+		relativeFaceAdjust.x -= 1;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD2)){
 		resetKT = true;
-		relativeFaceAdjust.x += deltaDesiredHeading;
+		relativeFaceAdjust.x += 1;
 	}
 		//Yaw, ideally
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD4)){
 		resetKT = true;
-		relativeFaceAdjust.y -= deltaDesiredHeading;
+		relativeFaceAdjust.y -= 1;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD6)){
 		resetKT = true;
-		relativeFaceAdjust.y += deltaDesiredHeading;
+		relativeFaceAdjust.y += 1;
 	}
 
 		//Roll?
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD7)){
 		resetKT = true;
-		relativeFaceAdjust.z -= deltaDesiredHeading;
+		relativeFaceAdjust.z -= 1;
 	}
 	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_NUMPAD9)){
 		resetKT = true;
-		relativeFaceAdjust.z += deltaDesiredHeading;
+		relativeFaceAdjust.z += 1;
 	}
 
 	if(resetKT) keyboardTimer = keyTime;
+
+	relativeFaceAdjust.normalise();
+	relativeFaceAdjust *= deltaDesiredHeading;
+
+	std::cout << relativeFaceAdjust << std::endl;
+
 
 
 	engine->entityMgr->playerEntity->desiredRotation = engine->entityMgr->playerEntity->desiredRotation + relativeFaceAdjust;

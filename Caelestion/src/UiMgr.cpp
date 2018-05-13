@@ -135,21 +135,21 @@ void UiMgr::Tick(float dt){
 		if(hp == NULL)
 			hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "PLAYER HEALTH", 250., 240.);
 		hp->show();
-		hp->setProgress(engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth));
+		hp->setProgress((Ogre::Real)((float)engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth)));
 
 		OgreBites::ProgressBar* hp2;
 		hp2 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("YGGDRASIL_HP");
 		if(hp2 == NULL)
 			hp2 = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "YGGDRASIL_HP", "YGGRASIL HEALTH", 250., 240.);
 		hp2->show();
-		hp2->setProgress(engine->entityMgr->yggdrasil->currentHealth/(engine->entityMgr->yggdrasil->maxHealth));
+		hp2->setProgress((Ogre::Real)((float)engine->entityMgr->yggdrasil->currentHealth*100.f/(engine->entityMgr->yggdrasil->maxHealth)));
 
 		OgreBites::ProgressBar* hp3;
 		hp3 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("CAELESTION_HP");
 		if(hp3 == NULL)
 			hp3 = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOM, "CAELESTION_HP", "CAELESTION HEALTH", 250., 240.);
 		hp3->show();
-		hp3->setProgress(engine->entityMgr->caelestion->currentHealth/(engine->entityMgr->caelestion->maxHealth));
+		hp3->setProgress((Ogre::Real)((float)engine->entityMgr->caelestion->currentHealth/(engine->entityMgr->caelestion->maxHealth)));
 
 		//Wave that you are currently on
 		waveLbl = (OgreBites::Label*)mTrayMgr->getWidget("WAVE");
@@ -202,20 +202,20 @@ void UiMgr::Tick(float dt){
 
 		friendlyThreeLbl= (OgreBites::Label*)mTrayMgr->getWidget("friendlyThree_label");
 		if(friendlyThreeLbl == NULL)
-			friendlyThreeLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "friendlyThree_label", "# of points for frd3", 250);
+			friendlyThreeLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "friendlyThree_label", "500 Points", 250);
 		friendlyThreeLbl->getOverlayElement()->setPosition(140,5.);
 		friendlyThreeLbl->getOverlayElement()->setWidth(250);
 
 
 		GladiusLbl= (OgreBites::Label*)mTrayMgr->getWidget("gladius_label");
 		if(GladiusLbl == NULL)
-			GladiusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "gladius_label", "# of points for Gladuis", 250);
+			GladiusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "gladius_label", "150 Points", 250);
 		GladiusLbl->getOverlayElement()->setPosition(-125,5.);
 		GladiusLbl->getOverlayElement()->setWidth(250);
 
 		HastatusLbl = (OgreBites::Label*)mTrayMgr->getWidget("Hastatus_label");
 		if(HastatusLbl == NULL)
-			HastatusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Hastatus_label", "# of points for Hastatus", 250);
+			HastatusLbl = mTrayMgr->createLabel(OgreBites::TL_CENTER, "Hastatus_label", "50 Points", 250);
 		HastatusLbl->getOverlayElement()->setPosition(-390.,5.);
 		HastatusLbl->getOverlayElement()->setWidth(250);
 

@@ -92,10 +92,12 @@ void EntityMgr::Tick(float dt){
 			for(unsigned int i = 0; i < projectiles.size(); i++)
 			{
 				kill = NULL;
+				/*
 				if(projectiles[i]->position.length() > 5000)
 				{
 					projectiles[i]->killMe = true;
 				}
+				*/
 
 				if(projectiles[i]->killMe)
 				{
@@ -105,6 +107,7 @@ void EntityMgr::Tick(float dt){
 					i--;
 					}
 			}
+			std::cout << "Projectiles Count: " << projectiles.size() << std::endl;
 
 		}
 

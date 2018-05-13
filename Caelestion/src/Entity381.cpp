@@ -81,6 +81,7 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 
 	this->owner = NULL;
 	this->count = 20000;
+	this->age = 0.f;
 }
 
 Entity381::~Entity381(){
@@ -112,6 +113,7 @@ void Entity381::Tick(float dt){
 	for(unsigned int i = 0; i < aspects.size(); i++){
 		aspects[i]->Tick(dt);
 	}
+	age += dt;
 }
 
 void Entity381::Lobotomize()
@@ -307,7 +309,7 @@ caelestionStation::caelestionStation(Engine *engine, Ogre::Vector3 pos, int iden
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 100000;
 
 	this->speed = 0.f;
 	this->turnRate = 0.f;
@@ -425,7 +427,7 @@ Yggdrasil::Yggdrasil(Engine *engine, Ogre::Vector3 pos, int identity):
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 100000;
 
 	this->speed = 0.f;
 	this->turnRate = 0.f;
@@ -445,9 +447,11 @@ Projectile::Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* 
 	meshfilename = "cube.mesh";
 	entityType = projectileGeneric;
 
+	float osp = owner->entity->velocity.length();
+
 	if(owner != NULL && owner->entity != NULL)
 	{
-		this->velocity = Ogre::Vector3(0,0,-500) + owner->entity->velocity;
+		this->velocity =  Ogre::Vector3(0,0,-500-osp);
 		this->actualFacing = owner->entity->actualFacing;
 	}
 	else
@@ -465,6 +469,18 @@ Projectile::Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* 
 	enemy = false;
 
 	this->owner= owner;
+
+	this->agelim = 5.f;
 }
 
 Projectile::~Projectile(){}
+
+void Projectile::Tick(float dt)
+{
+	for(unsigned int i = 0; i < aspects.size(); i++){
+		aspects[i]->Tick(dt);
+	}
+	age += dt;
+
+	if(age > agelim) killMe = true;
+}
