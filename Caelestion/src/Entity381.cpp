@@ -14,6 +14,7 @@
 #include <UnitAI.h>
 #include <SoundMgr.h>
 #include <EntityMgr.h>
+#include <cstdlib>
 
 std::string IntToString(int x){
 	char tmp[10000];
@@ -68,9 +69,13 @@ Entity381::Entity381(Engine *engine, Ogre::Vector3 pos, int ident){
 
 	//sound
 	this->playSound = false;
-	this->auioID = 0;
-	this->soundFile = "Boat-Sound.wav";		//this will need to be changed **NEEDS UPDATE**
-	this->didSelectSoundPlay = false;
+	this->deathAudioID = 1;
+	this->fireAudioID = 2;
+	this->deathSound = "explosion.wav";
+	this->fireSound = "Laser_light.wav"; //TODO: Replace this sound
+	this->fireDone = false;
+	this->deathDone = false;
+
 
 	this->currentHealth = this->maxHealth = 100;				//we can change this based on how much health we want each entity to have
 	this->hit = false;						//determines if the entity was hit or not.
@@ -100,12 +105,18 @@ void Entity381::Init(){
 		sceneNode->setScale(0.005, 0.005, 0.05);
 		this->Lobotomize();
 	}
-/*
-	if(entityType == friendlyTypeTwo )
+
+	if(entityType == asteroidDefault )
 	{
-		sceneNode->setScale(0.1,0.1,0.1);
+		int num = (rand() % 25) + 1;
+		sceneNode->setScale(10.0/num,10.0/num,10.0/num);
 	}
-	*/
+
+	if(entityType == enemyTypeTwo)
+	{
+		sceneNode->setScale(5,5,5);
+	}
+
 }
 
 
@@ -149,6 +160,7 @@ void Entity381::switchPlayerEnt( EntityTypes type){
 	delete ogreEntity;
 	ogreEntity = NULL;
 
+	this->weapons.clear();
 
 	Ogre::Entity* newTypeOfEntity = NULL;
 
@@ -166,32 +178,57 @@ void Entity381::switchPlayerEnt( EntityTypes type){
 		this->climbRate = 1;
 		this->currentHealth = this->maxHealth = 100;
 
+		this->weapons.push_back((Weapon*) new T1Projectile(Ogre::Vector3(0,0,0), this));
+//		this->weapons.push_back((Weapon*) new TestMcHuge(Ogre::Vector3(0,0,0), this));
+
+		for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
+		engine->gfxMgr->cameraNode->setPosition(0, 3, 20);
+
 		break;
 	case friendlyTypeTwo:
 		this->name =  meshfilename + IntToString(count);
 		count++;
 		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"gladius.mesh");
-		if(matname != "") newTypeOfEntity->setMaterialName("Gladius/Texture");
+		if(matname != "") newTypeOfEntity->setMaterialName("Gladius");
 
 		this->velocity = Ogre::Vector3(0,0,30);
 
 		this->speed = 30.0f;
 		this->turnRate = 30.0f;
 		this->climbRate = 1;
-		this->currentHealth = this->maxHealth = 100;
+		this->currentHealth = this->maxHealth = 200;
 
+		this->weapons.push_back((Weapon*) new T2Projectile(Ogre::Vector3(0,0,0), this));
+		for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
+		engine->gfxMgr->cameraNode->setPosition(0, 3, 20);
 		break;
 	case friendlyTypeThree:
 		this->name =  meshfilename + IntToString(count);
 		count++;
-		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"gladius.mesh");
-		if(matname != "") newTypeOfEntity->setMaterialName("Gladius/Texture");
+		newTypeOfEntity = engine->gfxMgr->mSceneMgr->createEntity(name,"Centurion.mesh");
+		if(matname != "") newTypeOfEntity->setMaterialName("Centurion");
 
 		this->velocity = Ogre::Vector3(0,0,0.1);
 		this->speed = 15.0f;
 		this->turnRate = 40.0f;
 		this->climbRate = 1;
-		this->currentHealth = this->maxHealth = 100;
+		this->currentHealth = this->maxHealth = 400;
+
+		this->weapons.push_back((Weapon*) new T3Projectile(Ogre::Vector3(0,0,0), this));
+		for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
+		engine->gfxMgr->cameraNode->setPosition(0, 7, 40);
 
 		break;
 	default:
@@ -229,7 +266,7 @@ friendlyOne::friendlyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 	this->pointValue = -100;
 
 	this->weapons.push_back((Weapon*) new T1Projectile(Ogre::Vector3(0,0,0), this));
-	this->soundFile = "Assets/SFX/Laser_light.wav";
+	this->fireSound = "Assets/SFX/Laser_light.wav";
 
 	for (unsigned int i = 0; i < weapons.size(); i++)
 		{
@@ -246,7 +283,7 @@ friendlyOne::~friendlyOne(){
 friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
 	meshfilename = "gladius.mesh";
-	matname = "Gladius/Texture";
+	matname = "Gladius";
 	entityType = friendlyTypeTwo;
 
 	Ogre::Degree z = Ogre::Degree(180.);
@@ -259,11 +296,18 @@ friendlyTwo::friendlyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 	this->speed = 30.0f;
 	this->turnRate = 30.0f;
 	this->climbRate = 1;
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 200;
 
 	enemy = false;
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = -250;
+
+	this->weapons.push_back((Weapon*) new T2Projectile(Ogre::Vector3(0,0,0), this));
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
 }
 
 friendlyTwo::~friendlyTwo(){
@@ -273,23 +317,30 @@ friendlyTwo::~friendlyTwo(){
 
 friendlyThree::friendlyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "gladius.mesh";
-	matname = "Gladius/Texture";
+	meshfilename = "Centurion.mesh";
+	matname = "Centurion";
 	entityType = friendlyTypeThree;
 
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->velocity = Ogre::Vector3(0,0,0.1);
+	this->velocity = Ogre::Vector3(0,0,20);
 	this->speed = 15.0f;
 	this->turnRate = 40.0f;
 	this->climbRate = 1;
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 400;
 
 	enemy = false;
 
 	//for friendlies this will be the number of points that you lose if you kill them.
 	this->pointValue = -1000;
+
+	this->weapons.push_back((Weapon*) new T3Projectile(Ogre::Vector3(0,0,0), this));
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
 }
 
 friendlyThree::~friendlyThree(){
@@ -309,7 +360,7 @@ caelestionStation::caelestionStation(Engine *engine, Ogre::Vector3 pos, int iden
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100000;
+	this->currentHealth = this->maxHealth = 250000;
 
 	this->speed = 0.f;
 	this->turnRate = 0.f;
@@ -344,7 +395,7 @@ enemyOne::enemyOne(Engine *engine, Ogre::Vector3 pos, int identity):
 
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->weapons.push_back((Weapon*) new T1Projectile(Ogre::Vector3(0,0,0), this));
-	this->soundFile = "Assets/SFX/Laser_light.wav";
+	this->fireSound = "Assets/SFX/Laser_light.wav";
 	this->pointValue = 25;
 
 	for (unsigned int i = 0; i < weapons.size(); i++)
@@ -360,8 +411,8 @@ enemyOne::~enemyOne(){
 
 enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "Aesir.mesh";
-	matname = "Aesir/Texture";
+	meshfilename = "Jotnar.mesh";
+	matname = "Jotnar/SOLID/TEX/Jotnar.png";
 	entityType = enemyTypeTwo;
 
 	this->velocity = Ogre::Vector3(0,0,-15);
@@ -370,7 +421,7 @@ enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 200;
 
 	//these values will need to be changed
 	this->speed = 15.0f;
@@ -380,6 +431,12 @@ enemyTwo::enemyTwo(Engine *engine, Ogre::Vector3 pos, int identity):
 
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 50;
+	this->weapons.push_back((Weapon*) new T2Projectile(Ogre::Vector3(0,0,0), this));
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
 }
 
 enemyTwo::~enemyTwo(){
@@ -389,16 +446,16 @@ enemyTwo::~enemyTwo(){
 
 enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 				Entity381(engine, pos, identity){
-	meshfilename = "Aesir.mesh";
-	matname = "Aesir/Texture";
+	meshfilename = "Valkyrie.mesh";
+	matname = "Valkyrie";
 	entityType = enemyTypeThree;
 
-	this->velocity = Ogre::Vector3(0,0,-0.1);
+	this->velocity = Ogre::Vector3(0,0,-20);
 
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100;
+	this->currentHealth = this->maxHealth = 400;
 
 
 	//these values will need to be changed
@@ -408,6 +465,12 @@ enemyThree::enemyThree(Engine *engine, Ogre::Vector3 pos, int identity):
 	enemy = false;
 	//for enemies this will be the number of points that you gain when you kill them.
 	this->pointValue = 75;
+	this->weapons.push_back((Weapon*) new T3Projectile(Ogre::Vector3(0,0,0), this));
+	for (unsigned int i = 0; i < weapons.size(); i++)
+		{
+			aspects.push_back(weapons[i]);
+		}
+
 }
 
 enemyThree::~enemyThree(){
@@ -427,7 +490,7 @@ Yggdrasil::Yggdrasil(Engine *engine, Ogre::Vector3 pos, int identity):
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 100000;
+	this->currentHealth = this->maxHealth = 250000;
 
 	this->speed = 0.f;
 	this->turnRate = 0.f;
@@ -440,11 +503,36 @@ Yggdrasil::~Yggdrasil(){
 
 }
 
+Asteroid::Asteroid(Engine *engine, Ogre::Vector3 pos, int identity):
+	Entity381(engine, pos, identity)
+{
+	//TODO: Randomize Asteroids
+	int num = (rand() % 2) + 1;
+	std::string f_name = "Asteroid_" + IntToString(num);
+	meshfilename = f_name + ".mesh";
+	matname = f_name;
+	entityType = asteroidDefault;
+
+	Ogre::Degree z = Ogre::Degree(180.);
+
+	this->velocity = Ogre::Vector3(0,0,0);
+	this->speed = 0.f;
+	this->turnRate = 0.f;
+	this->climbRate = 0;
+	this->currentHealth = this->maxHealth = 2500000;
+	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
+
+	enemy = false;
+}
+
+Asteroid::~Asteroid(){}
+
 //--------------------------------------------------------------------------------------------------------------------------
 Projectile::Projectile(Engine* engine, Ogre::Vector3 pos, int identity, Weapon* owner):
 		Entity381(engine,pos,identity)
 {
 	meshfilename = "cube.mesh";
+
 	entityType = projectileGeneric;
 
 	float osp = owner->entity->velocity.length();

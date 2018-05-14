@@ -119,6 +119,7 @@ void Physics3DqCS::Tick(float dt){
 		}
 		intersect = false;
 	}
+
 }
 
 #endif /* Physics3DqConstSpeed_C_ */

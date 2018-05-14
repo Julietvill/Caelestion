@@ -47,7 +47,7 @@ void T1Killray::Tick(float dt)
 	if (fire)
 	{
 		Entity381* owner = entity;
-		owner->engine->soundMgr->playSelectionSound(*owner);
+		//owner->engine->soundMgr->playSelectionSound(*owner);
 		Ogre::Vector3 realFirept = owner->actualFacing.Inverse() * placement;
 		Ogre::Vector3 endPoint = placement + Ogre::Vector3(0,0,-10000);
 		endPoint = owner->actualFacing.Inverse() * endPoint;
@@ -83,12 +83,14 @@ void T1Killray::Tick(float dt)
 
 
 T1Projectile::T1Projectile(Ogre::Vector3 placement, Entity381* own):
-		Weapon(20, placement, own)
+		Weapon(50, placement, own)
 {
 	projmeshfilename = "cube.mesh";
 
 	cooldown = .5f;
 	coolstate = 0.f;
+	own->fireSound = "Laser_light.wav";
+	own->fireAudioID = 2;
 }
 
 T1Projectile::~T1Projectile(){}
@@ -109,15 +111,51 @@ void T1Projectile::Tick(float dt)
 	{
 		coolstate = cooldown;
 		Entity381* owner = entity;
-		owner->engine->soundMgr->playSelectionSound(*owner);
+		if(owner->engine->entityMgr->playerEntity == owner)	owner->engine->soundMgr->playLightSound(owner);
+
 		Ogre::Vector3 realFirept = owner->actualFacing.Inverse() * placement;
 
 		realFirept = realFirept + owner->position;
 
-		std::cout << "FIRE FROM" << realFirept << std::endl;
+		//std::cout << "FIRE FROM" << realFirept << std::endl;
 
 		entity->engine->entityMgr->CreateProjectile(realFirept, this);
 	}
 
 	fire = false;
 }
+
+T2Projectile::T2Projectile(Ogre::Vector3 placement, Entity381* own):
+		T1Projectile(placement, own)
+{
+	dmgOnHit = 100;
+	cooldown = 1.f;
+	own->fireSound = "Laser_light.wav";
+	own->fireAudioID = 2;
+}
+
+T2Projectile::~T2Projectile(){};
+
+T3Projectile::T3Projectile(Ogre::Vector3 placement, Entity381* own):
+		T1Projectile(placement, own)
+{
+	dmgOnHit = 200;
+	cooldown = 1.5f;
+	own->fireSound = "Laser_heavy.wav";
+	own->fireAudioID = 3;
+}
+
+T3Projectile::~T3Projectile(){};
+
+TestMcHuge::TestMcHuge(Ogre::Vector3 placement, Entity381* own):
+		T1Projectile(placement, own)
+{
+	dmgOnHit = 200000;
+	cooldown = 0.5f;
+	own->fireSound = "Laser_heavy.wav";
+	own->fireAudioID = 3;
+}
+
+TestMcHuge::~TestMcHuge(){};
+
+

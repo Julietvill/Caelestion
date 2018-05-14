@@ -52,6 +52,7 @@ Attack::Attack(Entity381* Ent, Entity381* target): MoveTo(Ent){
 	this->enemyTarget = target;
 	this->attackTimer = this->attackTime;
 	myEnt->attacking = true;
+	this->distance = 0;
 
 }
 
@@ -66,13 +67,15 @@ void Attack::Tick(float dt){
 	double dyaw = atan2(difference.x, -difference.z) * 180/PI;
 	double dpitch = atan2(difference.y, difference.z) * 180/PI;
 
+	distance = myEnt->position.squaredDistance(enemyTarget->position);
+
 	myEnt->desiredRotation = Ogre::Vector3(-dpitch,dyaw,0);
 
 	//need to add a dimention of time
 	if( !myEnt->weapons.empty()){
 		myEnt->weapons[0]->Fire();
 	}
-	if( enemyTarget->currentHealth == 0){
+	if( enemyTarget->currentHealth <= 0 || distance >= 250000 ){
 		isComplete = true;
 		myEnt->attacking = false;
 	}

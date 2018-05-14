@@ -12,6 +12,7 @@
 #include <EntityMgr.h>
 #include <GameMgr.h>
 #include <UiMgr.h>
+#include <SoundMgr.h>
 #include <MenuStates.h>
 #include <Physics3DqConstSpeed.h>
 #include <UnitAI.h>
@@ -86,6 +87,8 @@ void healthStatus::Tick(float dt){
 
 		resetStats();
 
+		entity->engine->soundMgr->playDeathSound(entity);
+
 		if( entity == entity->engine->entityMgr->caelestion || entity ==  entity->engine->entityMgr->yggdrasil)
 		{
 			entity->currentHealth = 0;
@@ -95,7 +98,9 @@ void healthStatus::Tick(float dt){
 			entity->engine->uiMgr->prevState = entity->engine->uiMgr->uiState;
 			Ogre::Degree z = Ogre::Degree(180.);
 			entity->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
-			entity->engine->uiMgr->uiState = respawState;
+			if( entity->engine->gameMgr->points < 50)
+				entity->engine->uiMgr->uiState = gameLostState;
+			else entity->engine->uiMgr->uiState = respawState;
 
 		}
 	}

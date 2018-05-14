@@ -67,8 +67,12 @@ namespace OgreSND {
                 
                 //First dimension holds types and inner one holds different sounds for that type
                 //int creationSoundsDictionary[FastEcslent::NENTITYTYPES][soundPerEnt];
-                int selectionSoundsDictionary[6][soundPerEnt];
+                //int selectionSoundsDictionary[6][soundPerEnt];
                 //int battleSoundsDictionary[FastEcslent::NENTITYTYPES][soundPerEnt];
+
+                int fireSoundsLight[soundPerEnt]; // Light Firesounds, for Light Firing Ships
+                int fireSoundsHeavy[soundPerEnt]; // Heavy Firesounds, for Light Firing Ships
+                int explosions[soundPerEnt];      //Horrifying Death sounds, for everyone.
 
 		//other formats with time
 		std::string getFQFNFromFilename(std::string filename);
@@ -107,7 +111,11 @@ namespace OgreSND {
                 //bool playEntityBornSound(FastEcslent::EntityType et, OgreGFX::GFXNode *gfxNode);
                 //bool playExplosionSound(FastEcslent::EntityType et, OgreGFX::GFXNode *gfxNode);
                 //bool playExplosionSound(OgreGFX::GFXNode *gfxNode);
-                bool playSelectionSound(Entity381 et);
+                //bool playSelectionSound(Entity381 et);
+                bool playDeathSound(Entity381 *et);
+
+                bool playLightSound(Entity381 *et);
+                bool playHeavySound(Entity381 *et);
                 
 		//specific for sound managers everywhere
 		bool loadAudio(std::string filename, int sid);
@@ -118,10 +126,14 @@ namespace OgreSND {
 		bool resumeBackground();
 
 		//bool registerCreate(FastEcslent::EntityType et, std::string filename);
-                bool registerSelection(Entity381 et, std::string filename);
+                //bool registerArbitrary(Entity381 et, std::string filename);
                 //bool registerBattleSound(FastEcslent::EntityType et, std::string filename);
                 //bool isEntityShip(FastEcslent::EntityType et);
-                bool initWatercraftSounds();
+		bool registerDeath(std::string filename);
+		bool registerHeavy(std::string filename);
+		bool registerLight(std::string filename);
+
+                bool initSounds();
                 
 		bool reserveAudio(std::string filename, bool loop, unsigned int &alSourceInfoIndex);
 		bool releaseSource(ALuint audioId);

@@ -48,7 +48,10 @@ public:
 	void LoadLevel();
 
 	float keyboardTimer;
-	const static float keyTime = 0.1f;
+	const static float keyTime = 0.01667f;
+	const static float bkt = 0.1f;
+	float bkTimer;
+
 	float deltaDesiredHeading, deltaDesiredAltitude;
 	void UpdateCamera(float dt);
 	void UpdatePlayerShipControl(float dt);

@@ -56,6 +56,7 @@ void GameMgr::CreateMainEntities(){
 	  engine->entityMgr->playerEntity = engine->entityMgr->entities[0];
 	  engine->entityMgr->playerEntity->Lobotomize();
 
+
 	  engine->entityMgr->CreateEntityOfTypeAtPosition(enemyStation,engine->entityMgr->yggdrasilPos);
 	  engine->entityMgr->yggdrasil = engine->entityMgr->entities[1];
 	  engine->entityMgr->entities[1]->sceneNode->setScale(100,100,100);
@@ -64,19 +65,14 @@ void GameMgr::CreateMainEntities(){
 	  engine->entityMgr->caelestion = engine->entityMgr->entities[2];
 	  engine->entityMgr->entities[2]->sceneNode->setScale(100,100,100);
 
-	  // a fixed point in the ocean so you can see relative motion
-	  Ogre::Entity* ogreEntityFixed = engine->gfxMgr->mSceneMgr->createEntity("Asteroid_1.mesh");
-	  Ogre::SceneNode* sceneNode = engine->gfxMgr->mSceneMgr->getRootSceneNode()->createChildSceneNode(Ogre::Vector3(0, 0, 0));
-	  sceneNode->attachObject(ogreEntityFixed);
-	  sceneNode->showBoundingBox(true);
-	  sceneNode->setScale(25,25,25);
-
-	  engine->entityMgr->playerEntity->currentHealth = -1;
+	  // a fixed point in the SPACE so you can see relative motion
+      CreateAsteroidField();
+	  //engine->entityMgr->playerEntity->currentHealth = -1;
 }
 
 void GameMgr::Tick(float dt){
 
-	if( !waveOneUnlocked && points >= 200){
+	if( !waveOneUnlocked && points >= 0){
 		waveOneUnlocked = true;
 		MakeEntities(friendlyTypeOne, enemyTypeOne, 25);
 	}
@@ -84,7 +80,7 @@ void GameMgr::Tick(float dt){
 		waveTwoUnlocked = true;
 		MakeEntities(friendlyTypeTwo, enemyTypeTwo, 10);
 	}
-	if( !waveThreeUnlocked && points >= 400){
+	if( !waveThreeUnlocked && points >= 500){
 		waveThreeUnlocked = true;
 		MakeEntities(friendlyTypeThree, enemyTypeThree, 5);
 	}
@@ -122,5 +118,18 @@ void GameMgr::MakeEntities(EntityTypes friendlyType, EntityTypes enemyType, int 
 		  engine->entityMgr->CreateEntityOfTypeAtPosition(friendlyType,position);
 	}
 
+}
+
+void GameMgr::CreateAsteroidField()
+{
+    int num = rand() % 15 + 11;
+    for (int g = 0; g < num; g++)
+    {
+        int x = (rand() % 1000) - 500;
+        int y = (rand() % 1000) - 500;
+        int z = (rand() % 1000) - 500;
+        engine->entityMgr->CreateEntityOfTypeAtPosition(asteroidDefault,Ogre::Vector3(x,y,z));
+
+    }
 }
 

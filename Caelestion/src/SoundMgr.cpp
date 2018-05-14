@@ -56,6 +56,7 @@ OgreSND::SoundMgr::~SoundMgr(){
 
 void OgreSND::SoundMgr::Init(){
 	initialize();
+
 }
 
 void OgreSND::SoundMgr::initialize(void){
@@ -93,12 +94,9 @@ void OgreSND::SoundMgr::initialize(void){
         isEnabled = true;
         
         //initialize vectors
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < soundPerEnt; j++){
-                //this->battleSoundsDictionary[i][j] = -1;
-                //this->creationSoundsDictionary[i][j] = -1;
-                this->selectionSoundsDictionary[i][j] = -1;
-            }
+        for (int i = 0; i < soundPerEnt; i ++)
+        {
+        	fireSoundsLight[i] = fireSoundsHeavy[i] = explosions[i] = -1;
         }
 
 
@@ -112,9 +110,9 @@ void OgreSND::SoundMgr::initialize(void){
         }
 	std::cout << "background music loaded" << std::endl;
         
-        initWatercraftSounds();
+        initSounds();
   
-        //filename = "data/watercraft/sounds/explosion.wav";
+        filename = "Assets/SFX/Explosion.wav";
         //default explosion sound for all entities
         if (this->reserveAudio(filename, false, sid)){
             battleSoundSource = sourceInfo[sid].source;
@@ -126,16 +124,29 @@ void OgreSND::SoundMgr::initialize(void){
 
 }
 
-bool OgreSND::SoundMgr::initWatercraftSounds(){
+bool OgreSND::SoundMgr::initSounds(){
         //registering all sounds
-		std::string selectionFilename = "data/watercraft/sounds/takeYourOrder.wav";
-        std::string selection2Filename = "data/watercraft/sounds/GoodDay.wav";
+		//std::string selectionFilename = "data/watercraft/sounds/takeYourOrder.wav";
+        //std::string selection2Filename = "data/watercraft/sounds/GoodDay.wav";
         //std::string createShipFilename = "data/watercraft/sounds/boatMoving.wav";
         //std::string createBuildingFilename = "data/watercraft/sounds/clong.wav";
-        for(std::vector<Entity381 *>::const_iterator et = engine->entityMgr->entities.begin(); et != engine->entityMgr->entities.end(); ++et)
+		std::string explosion1 = "Assets/SFX/Explosion.wav";
+
+		std::string laserlight = "Assets/SFX/Laser_light.wav";
+		std::string laserheavy = "Assets/SFX/Laser_Heavy.wav";
+
+
+
+		for(std::vector<Entity381 *>::const_iterator et = engine->entityMgr->entities.begin(); et != engine->entityMgr->entities.end(); ++et)
         	{
+				this->registerDeath(explosion1);
+				this->registerHeavy(laserheavy);
+				this->registerLight(laserlight);
+
             //this->registerBattleSound(et, battleFilename);
-            if (true){
+
+        	/*
+        	if (true){
                 if ((*et)->auioID == 1){
                         this->registerSelection(**et, selection2Filename);
                 }
@@ -148,8 +159,138 @@ bool OgreSND::SoundMgr::initWatercraftSounds(){
                 //no selection sound for buildings right now
                 //this->registerCreate(et, createBuildingFilename);
             }
+            */
         }
         return true;
+}
+
+bool SoundMgr::registerDeath(std::string filename){
+    unsigned int sid;
+    //check if that file is already assigned to a source
+    for (int j = 0; j < maxAudioSources; j++){
+        if (std::strcmp(sourceDictionary[j].c_str(), filename.c_str()) == 0){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->explosions[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new sound, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->explosions[lastIndex] = j;
+                return true;
+        }
+    }
+    if (this->reserveAudio(filename, false, sid)){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->explosions[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new EXPLOSION, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->explosions[lastIndex] = sid;
+                alSourcei(this->sourceInfo[sid].source, AL_REFERENCE_DISTANCE, 2000.0f);
+                alSourcei(this->sourceInfo[sid].source, AL_MAX_DISTANCE, 8000.0f);
+
+                sourceDictionary[sid] = filename;
+                return true;
+    }
+    else
+        return false;
+}
+
+bool SoundMgr::registerHeavy(std::string filename){
+    unsigned int sid;
+    //check if that file is already assigned to a source
+    for (int j = 0; j < maxAudioSources; j++){
+        if (std::strcmp(sourceDictionary[j].c_str(), filename.c_str()) == 0){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->fireSoundsHeavy[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new sound, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->fireSoundsHeavy[lastIndex] = j;
+                return true;
+        }
+    }
+    if (this->reserveAudio(filename, false, sid)){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->fireSoundsHeavy[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new EXPLOSION, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->fireSoundsHeavy[lastIndex] = sid;
+                alSourcei(this->sourceInfo[sid].source, AL_REFERENCE_DISTANCE, 2000.0f);
+                alSourcei(this->sourceInfo[sid].source, AL_MAX_DISTANCE, 8000.0f);
+
+                sourceDictionary[sid] = filename;
+                return true;
+    }
+    else
+        return false;
+}
+
+bool SoundMgr::registerLight(std::string filename){
+    unsigned int sid;
+    //check if that file is already assigned to a source
+    for (int j = 0; j < maxAudioSources; j++){
+        if (std::strcmp(sourceDictionary[j].c_str(), filename.c_str()) == 0){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->fireSoundsLight[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new sound, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->fireSoundsLight[lastIndex] = j;
+                return true;
+        }
+    }
+    if (this->reserveAudio(filename, false, sid)){
+                int lastIndex = -1;
+                for (int i = 0; i < soundPerEnt; i++){
+                    if (this->fireSoundsLight[i] == -1){
+                        lastIndex = i;
+                        break;
+                    }
+                }
+                if (lastIndex == -1){ //all permitted number of sounds for this type are already assigned
+                    std::cout << "Could not register new EXPLOSION, max allowed number per entity reached" << std::endl;
+                    return false;
+                }
+                this->fireSoundsLight[lastIndex] = sid;
+                alSourcei(this->sourceInfo[sid].source, AL_REFERENCE_DISTANCE, 2000.0f);
+                alSourcei(this->sourceInfo[sid].source, AL_MAX_DISTANCE, 8000.0f);
+
+                sourceDictionary[sid] = filename;
+                return true;
+    }
+    else
+        return false;
 }
 
 /*bool SoundMgr::isEntityShip(FastEcslent::EntityType et){
@@ -252,17 +393,21 @@ void OgreSND::SoundMgr::attachSelectedNodeToSoundIndex(Entity381 *ent, unsigned 
 void OgreSND::SoundMgr::Tick(float dt){
 
 	syncListenerToCamera();
-        
-        //selection sound
-		for(std::vector<Entity381 *>::const_iterator it = engine->entityMgr->entities.begin(); it != engine->entityMgr->entities.end(); ++it){
-           if ((*it)->isSelected && !(*it)->didSelectSoundPlay){
-        	   playSelectionSound(*(*it));
-        	   (*it)->didSelectSoundPlay = true;
-           }
-           else if (!(*it)->isSelected && (*it)->didSelectSoundPlay){
-        	   (*it)->didSelectSoundPlay = false;
-           }
-        }
+/*
+	for(std::vector<Entity381 *>::const_iterator it = engine->entityMgr->entities.begin(); it != engine->entityMgr->entities.end(); ++it){
+
+			if((*it)->currentHealth <= 0 && !(*it)->deathDone)
+			{
+				playDeathSound(*(*it));
+				(*it)->deathDone = true;
+				std::cout << "DED" << std::endl;
+			}
+			else if ((*it)->currentHealth > 0 && (*it)->deathDone)
+			{
+				(*it)->deathDone = false;
+			}
+
+        }*/
 
 }
         
@@ -282,6 +427,57 @@ void OgreSND::SoundMgr::Tick(float dt){
 //	return;
 //}
 
+bool OgreSND::SoundMgr::playDeathSound(Entity381 *et)
+{
+	Ogre::Vector3 pos = et->position;
+
+	if (et->deathSound == "")
+	{
+		std::cout << "There is no registered selection sounds for this entity type" << std::endl;
+		return false; //there is no sound to play
+	}
+	this->playAudioSourceIndex(et->deathAudioID);
+	setSoundPosition(sourceInfo[et->deathAudioID].source, pos);
+
+
+	return true;
+
+}
+
+bool OgreSND::SoundMgr::playHeavySound(Entity381 *et)
+{
+	Ogre::Vector3 pos = et->position;
+
+	if (et->fireSound == "")
+	{
+		std::cout << "There is no registered selection sounds for this entity type" << std::endl;
+		return false; //there is no sound to play
+	}
+	this->playAudioSourceIndex(et->fireAudioID);
+	setSoundPosition(sourceInfo[et->fireAudioID].source, pos);
+
+	return true;
+
+}
+
+bool OgreSND::SoundMgr::playLightSound(Entity381 *et)
+{
+	Ogre::Vector3 pos = et->position;
+
+	if (et->fireSound == "")
+	{
+		std::cout << "There is no registered selection sounds for this entity type" << std::endl;
+		return false; //there is no sound to play
+	}
+	this->playAudioSourceIndex(et->fireAudioID);
+	setSoundPosition(sourceInfo[et->fireAudioID].source, pos);
+
+	return true;
+
+}
+
+
+/*
 bool OgreSND::SoundMgr::playSelectionSound(Entity381 et){
         Ogre::Vector3 pos = et.position;
         
@@ -294,7 +490,7 @@ bool OgreSND::SoundMgr::playSelectionSound(Entity381 et){
         
         return true;
 }
-
+*/
 /*bool SoundMgr::playEntityBornSound(FastEcslent::EntityType et, OgreGFX::GFXNode *gfxNode){
         Ogre::Vector3 pos = gfxNode->node->getPosition();
         
@@ -453,7 +649,8 @@ int OgreSND::SoundMgr::getEmptySourceIndex(){
 	return -1;
 }
 
-/*bool SoundMgr::registerCreate(FastEcslent::EntityType et, std::string filename){
+/*
+bool SoundMgr::registerArbitrary(EntityType et, std::string filename){
     unsigned int sid;
     //check if that file is already assigned to a source
     for (int j = 0; j < maxAudioSources; j++){
@@ -495,8 +692,9 @@ int OgreSND::SoundMgr::getEmptySourceIndex(){
     else
         return false;
 }
-
 */
+
+/*
 bool OgreSND::SoundMgr::registerSelection(Entity381 et, std::string filename){
     unsigned int sid;
     if (this->reserveAudio(filename, false, sid)){
@@ -522,7 +720,7 @@ bool OgreSND::SoundMgr::registerSelection(Entity381 et, std::string filename){
     else
         return false;
 }
-
+*/
 /*bool SoundMgr::registerBattleSound(FastEcslent::EntityType et, std::string filename){
     unsigned int sid;
     //check if that file is already assigned to a source

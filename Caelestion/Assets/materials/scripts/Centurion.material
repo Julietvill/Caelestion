@@ -1,4 +1,4 @@
-material Gladius_1
+material Centurion_1
 {
 	receive_shadows on
 	technique
@@ -12,14 +12,14 @@ material Gladius_1
 			lighting off
 			texture_unit
 			{
-				texture Gladius.png
+				texture Centurion.png
 				tex_address_mode wrap
 				filtering trilinear
 			}
 		}
 	}
 }
-material Gladius
+material Centurion
 {
 	receive_shadows on
 	technique
@@ -32,7 +32,7 @@ material Gladius
 			emissive 0.000000 0.000000 0.000000 1.000000
 			texture_unit
 			{
-				texture Gladius.png
+				texture Centurion.png
 				tex_address_mode wrap
 				filtering trilinear
 			}

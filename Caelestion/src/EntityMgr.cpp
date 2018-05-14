@@ -63,6 +63,10 @@ void EntityMgr::CreateEntityOfTypeAtPosition(EntityTypes entType, Ogre::Vector3 
 	case projectileGeneric:
 		ent = new Projectile(engine, pos, projCount++, NULL);
 		break;
+	case asteroidDefault:
+		ent = new Asteroid(engine, pos, entCount++);
+		break;
+
 	default:
 		ent = new friendlyOne(engine, pos, entCount++);//CreateEntity("robot.mesh", pos);
 		break;
@@ -107,7 +111,6 @@ void EntityMgr::Tick(float dt){
 					i--;
 					}
 			}
-			std::cout << "Projectiles Count: " << projectiles.size() << std::endl;
 
 		}
 

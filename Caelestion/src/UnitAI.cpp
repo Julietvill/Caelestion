@@ -10,6 +10,7 @@
 #include <Entity381.h>
 #include <Engine.h>
 #include <EntityMgr.h>
+#include <GameMgr.h>
 
 using namespace std;
 
@@ -39,8 +40,23 @@ void UnitAI::Tick(float dt){
 					entity->engine->entityMgr->entities[index] != this->entity &&
 					!entity->attacking &&
 					entity->enemy != entity->engine->entityMgr->entities[index]->enemy){
-				Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
-				listOfCommands.push(attackEnemy);
+				if( entity->engine->entityMgr->entities[index]->entityType != asteroidDefault){
+					if(!entity->enemy )
+					{
+						if(entity->engine->entityMgr->yggdrasil == entity->engine->entityMgr->entities[index] && entity->engine->gameMgr->waveThreeUnlocked){
+							Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
+							listOfCommands.push(attackEnemy);
+						}
+						else if(entity->engine->entityMgr->yggdrasil != entity->engine->entityMgr->entities[index]){
+							Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
+							listOfCommands.push(attackEnemy);
+						}
+					}
+					else{
+						Attack* attackEnemy = new Attack(entity, entity->engine->entityMgr->entities[index]);
+						listOfCommands.push(attackEnemy);
+					}
+				}
 			}
 		}
 		if( listOfCommands.top()->isComplete ){

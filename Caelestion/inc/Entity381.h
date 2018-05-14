@@ -59,10 +59,13 @@ public:
   std::vector<Aspect* > aspects;
 
   //sound
-  std::string soundFile;
+  std::string deathSound;
+  std::string fireSound;
   bool playSound;
-  unsigned int auioID;
-  bool didSelectSoundPlay;
+  bool fireDone;
+  unsigned int fireAudioID;
+  unsigned int deathAudioID;
+  bool deathDone;
 
   std::vector<Weapon*> weapons; //nevuh enough dakka
   bool killMe;
@@ -146,6 +149,12 @@ public:
 private:
 };
 
+//RANDOM SPACE JUNK//-------------------------------------------------------------------------------------------------------
+class Asteroid : public Entity381{
+public:
+	Asteroid(Engine *engine, Ogre::Vector3 pos, int identity);
+	~Asteroid();
+};
 
 //PROJECTILES//-----------------------------------------------------------------------------------------------------------------
 class Projectile : public Entity381{

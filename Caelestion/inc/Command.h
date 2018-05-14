@@ -48,7 +48,7 @@ public:
 	float attackTimer;
 	const static float attackTime = 0.5f;
 
-
+	float distance;
 	Entity381* enemyTarget;
 };
 

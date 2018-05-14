@@ -1,0 +1,30 @@
+material Jotnar_1/SOLID/TEX/Jotnar.png
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.800000 0.800000 0.800000
+			specular 0.500000 0.500000 0.500000 12.500000
+			texture_unit
+			{
+				texture Jotnar.png
+			}
+		}
+	}
+}
+material Jotnar/SOLID/TEX/Jotnar.png
+{
+	technique
+	{
+		pass
+		{
+			diffuse 0.800000 0.800000 0.800000
+			specular 0.500000 0.500000 0.500000 12.500000
+			texture_unit
+			{
+				texture Jotnar.png
+			}
+		}
+	}
+}

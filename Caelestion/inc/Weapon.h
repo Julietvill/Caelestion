@@ -62,5 +62,26 @@ public:
 
 };
 
+class T2Projectile : public T1Projectile
+{
+public:
+	T2Projectile(Ogre::Vector3 placement, Entity381* own);
+	~T2Projectile();
+
+};
+
+class T3Projectile : public T1Projectile
+{
+public:
+	T3Projectile(Ogre::Vector3 placement, Entity381* own);
+	~T3Projectile();
+};
+
+class TestMcHuge : public T1Projectile
+{
+public:
+	TestMcHuge(Ogre::Vector3 placement, Entity381* own);
+	~TestMcHuge();
+};
 
 #endif /* INC_WEAPON_H_ */

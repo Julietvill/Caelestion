@@ -31,6 +31,7 @@ InputMgr::InputMgr(Engine *engine) : Mgr(engine), OIS::KeyListener(), OIS::Mouse
 	this->keyboardTimer = keyTime;
 	deltaDesiredHeading = 5.f;
 	deltaDesiredAltitude = 20;
+	bkTimer = bkt;
 }
 
 InputMgr::~InputMgr() {
@@ -95,6 +96,7 @@ void InputMgr::Tick(float dt){
 	// Pause-independent code.
 	mKeyboard->capture();
 	keyboardTimer -= dt;
+	bkTimer -= dt;
 
 
 		// Kill-program
@@ -103,7 +105,7 @@ void InputMgr::Tick(float dt){
 	}
 
 		// Pause state engage/disengage (Open pause menu)
-	if((keyboardTimer < 0) && mKeyboard->isKeyDown(OIS::KC_P)){
+	if((bkTimer < 0) && mKeyboard->isKeyDown(OIS::KC_P)){
 		if(engine->uiMgr->uiState != PilotUIState){
 			engine->uiMgr->prevState = engine->uiMgr->uiState;
 			engine->uiMgr->uiState = PilotUIState;
@@ -113,7 +115,7 @@ void InputMgr::Tick(float dt){
 			engine->uiMgr->prevState = engine->uiMgr->uiState;
 			engine->uiMgr->uiState = PauseMenuState;
 		}
-		keyboardTimer = keyTime;
+		bkTimer = bkt;
 	}
 	mMouse->capture();
 
@@ -209,8 +211,6 @@ void InputMgr::UpdatePlayerShipControl(float dt){
 
 	relativeFaceAdjust.normalise();
 	relativeFaceAdjust *= deltaDesiredHeading;
-
-	std::cout << relativeFaceAdjust << std::endl;
 
 
 

@@ -13,6 +13,8 @@ enum EntityTypes {
 	defaultEnt,
 	enemyStation,
 
+	asteroidDefault,
+
 	projectileGeneric
 };
 

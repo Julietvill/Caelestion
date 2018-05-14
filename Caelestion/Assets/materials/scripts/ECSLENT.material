@@ -68,3 +68,40 @@ material ECSLENT/Credits
 		}
 	}
 }
+
+material ECSLENT/Victory
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			
+			texture_unit
+			{
+				texture Victory_screen.png
+			}
+		}
+	}
+}
+
+
+material ECSLENT/Defeat
+{
+	technique
+	{
+		pass
+		{
+			lighting off
+			scene_blend alpha_blend
+			depth_check off
+			
+			texture_unit
+			{
+				texture Defeat_screen.png
+			}
+		}
+	}
+}

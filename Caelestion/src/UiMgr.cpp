@@ -82,6 +82,9 @@ void UiMgr::LoadLevel(){
 void UiMgr::Tick(float dt){
 	mTrayMgr->refreshCursor();
 
+	OgreBites::ProgressBar* hp2;
+	OgreBites::ProgressBar* hp3;
+
 	switch(uiState)
 	{
 	/*************************Splash Screen Invocation States********************************/
@@ -137,14 +140,12 @@ void UiMgr::Tick(float dt){
 		hp->show();
 		hp->setProgress((Ogre::Real)((float)engine->entityMgr->playerEntity->currentHealth/(engine->entityMgr->playerEntity->maxHealth)));
 
-		OgreBites::ProgressBar* hp2;
 		hp2 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("YGGDRASIL_HP");
 		if(hp2 == NULL)
 			hp2 = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "YGGDRASIL_HP", "YGGRASIL HEALTH", 250., 240.);
 		hp2->show();
-		hp2->setProgress((Ogre::Real)((float)engine->entityMgr->yggdrasil->currentHealth*100.f/(engine->entityMgr->yggdrasil->maxHealth)));
+		hp2->setProgress((Ogre::Real)((float)engine->entityMgr->yggdrasil->currentHealth/(engine->entityMgr->yggdrasil->maxHealth)));
 
-		OgreBites::ProgressBar* hp3;
 		hp3 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("CAELESTION_HP");
 		if(hp3 == NULL)
 			hp3 = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOM, "CAELESTION_HP", "CAELESTION HEALTH", 250., 240.);
@@ -199,6 +200,22 @@ void UiMgr::Tick(float dt){
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setPosition(-400.0,0.0);
 		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->setHeight(155.);
 
+		hp = (OgreBites::ProgressBar*)mTrayMgr->getWidget("PILOT_HP");
+		if(hp == NULL)
+			hp = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOMRIGHT, "PILOT_HP", "PLAYER HEALTH", 250., 240.);
+		hp->show();
+		hp->setProgress(0);
+		hp2 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("YGGDRASIL_HP");
+		if(hp2 == NULL)
+			hp2 = mTrayMgr->createProgressBar(OgreBites::TL_TOP, "YGGDRASIL_HP", "YGGRASIL HEALTH", 250., 240.);
+		hp2->show();
+		hp2->setProgress((Ogre::Real)((float)engine->entityMgr->yggdrasil->currentHealth/(engine->entityMgr->yggdrasil->maxHealth)));
+		hp3 = (OgreBites::ProgressBar*)mTrayMgr->getWidget("CAELESTION_HP");
+		if(hp3 == NULL)
+			hp3 = mTrayMgr->createProgressBar(OgreBites::TL_BOTTOM, "CAELESTION_HP", "CAELESTION HEALTH", 250., 240.);
+		hp3->show();
+		hp3->setProgress((Ogre::Real)((float)engine->entityMgr->caelestion->currentHealth/(engine->entityMgr->caelestion->maxHealth)));
+
 
 		friendlyThreeLbl= (OgreBites::Label*)mTrayMgr->getWidget("friendlyThree_label");
 		if(friendlyThreeLbl == NULL)
@@ -243,7 +260,7 @@ void UiMgr::Tick(float dt){
 
 		friendlythreeBtn = (OgreBites::Button*)mTrayMgr->getWidget("friendlythree_button");
 		if(friendlythreeBtn == NULL)
-			friendlythreeBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "friendlythree_button", "FriendlyThree", 250);
+			friendlythreeBtn = mTrayMgr->createButton(OgreBites::TL_CENTER, "friendlythree_button", "Centurion", 250);
 		friendlythreeBtn->getOverlayElement()->setPosition(140.,70.);
 		friendlythreeBtn->getOverlayElement()->setWidth(250);
 		friendlythreeBtn->getOverlayElement()->setHeight(80.);
@@ -285,17 +302,10 @@ void UiMgr::Tick(float dt){
 		//mTrayMgr->hideBackdrop();
 		//mTrayMgr->showBackdrop("");		//replace with the lost screen
 
-		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
-		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
-		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->show();
-		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
-
-		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->setPosition(400,0);
+		mTrayMgr->hideAll();
+		mTrayMgr->showBackdrop("ECSLENT/Defeat");
 
 
-		returnToMM = (OgreBites::Button*)mTrayMgr->getWidget("returnToMM_button");
-				if(returnToMM == NULL)
-					returnToMM = mTrayMgr->createButton(OgreBites::TL_LEFT, "returnToMM_button", "Main Menu", 250);
 		break;
 	case gameWinState:
 		engine->paused = true;
@@ -303,14 +313,10 @@ void UiMgr::Tick(float dt){
 		//mTrayMgr->hideBackdrop();
 		//mTrayMgr->showBackdrop("");		//replace with the win screen
 
-		mTrayMgr->getTrayContainer(OgreBites::TL_CENTER)->hide();
-		mTrayMgr->getTrayContainer(OgreBites::TL_BOTTOMRIGHT)->hide();
-		mTrayMgr->getTrayContainer(OgreBites::TL_LEFT)->show();
-		mTrayMgr->getTrayContainer(OgreBites::TL_TOPRIGHT)->setHeight(85.);
+		mTrayMgr->hideAll();
+		mTrayMgr->showBackdrop("ECSLENT/Victory");
 
-		returnToMM = (OgreBites::Button*)mTrayMgr->getWidget("returnToMM_button");
-						if(returnToMM == NULL)
-							returnToMM = mTrayMgr->createButton(OgreBites::TL_LEFT, "returnToMM_button", "Main Menu", 250);
+
 		break;
 
 	}
@@ -386,24 +392,29 @@ void UiMgr::buttonHit(OgreBites::Button *b){
     if(b->getName()=="hastatus_button")
     {
     	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeOne);
-    	uiState = PilotUIState;
+    	if(engine->gameMgr->points >= 50){
+    		engine->gameMgr->points -= 50;
+    		uiState = PilotUIState;
+    	}
     }
     if(b->getName()=="gladius_button")
     {
     	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeTwo);
-    	uiState = PilotUIState;
+
+    	if(engine->gameMgr->points >= 150){
+    		engine->gameMgr->points -= 150;
+    		uiState = PilotUIState;
+    	}
+
     }
 
     if(b->getName()=="friendlythree_button")
     {
     	engine->entityMgr->playerEntity->switchPlayerEnt(friendlyTypeThree);
-    	uiState = PilotUIState;
-    }
-
-    if(b->getName() == "returnToMM_button"){
-    	std::cout << "Button Pressed" << std::endl;
-    	uiState = InitMenuState;
-    	engine->gameMgr->restart();
+    	if(engine->gameMgr->points >= 500){
+    		engine->gameMgr->points -= 500;
+    		uiState = PilotUIState;
+    	}
     }
 
 }
