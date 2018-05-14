@@ -360,7 +360,7 @@ caelestionStation::caelestionStation(Engine *engine, Ogre::Vector3 pos, int iden
 	Ogre::Degree z = Ogre::Degree(180.);
 	this->actualFacing.FromAngleAxis(z, Ogre::Vector3::UNIT_Y);
 
-	this->currentHealth = this->maxHealth = 250000;
+	this->currentHealth = this->maxHealth = 330000;
 
 	this->speed = 0.f;
 	this->turnRate = 0.f;
